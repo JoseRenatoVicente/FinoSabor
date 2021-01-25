@@ -1,0 +1,28 @@
+Pesquisar 
+
+warn: Microsoft.EntityFrameworkCore.Query[10102]                                                                              The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results.  
+
+
+Resolver excluir imagem 
+
+
+Nome Categoria
+
+CreateMap<Produto, ProdutoViewModel>()
+                .ForMember(dest => dest.NomeCategoria, opt => opt.MapFrom(src => src.Categoria.Nome))
+                .ForMember(dest => dest.NomeFornecedor, opt => opt.MapFrom(src => src.Fornecedor.Nome));
+
+
+paginação com view model
+
+incluir imagens ao buscar produtos
+
+
+
+Checar essa parte do código
+
+if (_fornecedorRepository.ObterFornecedorProdutosEndereco(id).Result.Endereco.Any())
+            {
+                Notificar("O fornecedor possui produtos cadastrados!");
+                return false;
+            }
