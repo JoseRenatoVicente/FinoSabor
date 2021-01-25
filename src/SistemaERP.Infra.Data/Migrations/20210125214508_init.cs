@@ -11,9 +11,9 @@ namespace SistemaERP.Infra.Data.Migrations
                 name: "Categorias",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Nome = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
-                    CategoriaPaiId = table.Column<Guid>(type: "uuid", nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    CategoriaPaiId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -30,12 +30,12 @@ namespace SistemaERP.Infra.Data.Migrations
                 name: "EmailSettings",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Mail = table.Column<string>(type: "text", nullable: true),
-                    DisplayName = table.Column<string>(type: "text", nullable: true),
-                    Password = table.Column<string>(type: "text", nullable: true),
-                    Host = table.Column<string>(type: "text", nullable: true),
-                    Port = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Mail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Host = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Port = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,11 +46,11 @@ namespace SistemaERP.Infra.Data.Migrations
                 name: "Fornecedores",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Nome = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Documento = table.Column<string>(type: "character varying(14)", maxLength: 14, nullable: false),
-                    TipoFornecedor = table.Column<int>(type: "integer", nullable: false),
-                    Ativo = table.Column<bool>(type: "boolean", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Documento = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false),
+                    TipoFornecedor = table.Column<int>(type: "int", nullable: false),
+                    Ativo = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -58,32 +58,18 @@ namespace SistemaERP.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TemplatesEmails",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    Code = table.Column<string>(type: "text", nullable: true),
-                    Using = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TemplatesEmails", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Enderecos",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    FornecedorId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Logradouro = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    Numero = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Complemento = table.Column<string>(type: "text", nullable: true),
-                    Cep = table.Column<string>(type: "character varying(8)", maxLength: 8, nullable: false),
-                    Bairro = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Cidade = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Estado = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FornecedorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Logradouro = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Numero = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Complemento = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Cep = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    Bairro = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Cidade = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Estado = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -100,19 +86,19 @@ namespace SistemaERP.Infra.Data.Migrations
                 name: "Produtos",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Nome = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    Valor = table.Column<decimal>(type: "numeric", nullable: false),
-                    Descricao = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
-                    Ativo = table.Column<bool>(type: "boolean", nullable: false),
-                    QuantidadeEstoque = table.Column<int>(type: "integer", nullable: false),
-                    Peso = table.Column<double>(type: "double precision", nullable: false),
-                    Largura = table.Column<int>(type: "integer", nullable: false),
-                    Altura = table.Column<int>(type: "integer", nullable: false),
-                    Comprimento = table.Column<int>(type: "integer", nullable: false),
-                    DataCadastro = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    FornecedorId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CategoriaId = table.Column<Guid>(type: "uuid", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Ativo = table.Column<bool>(type: "bit", nullable: false),
+                    QuantidadeEstoque = table.Column<int>(type: "int", nullable: false),
+                    Peso = table.Column<double>(type: "float", nullable: false),
+                    Largura = table.Column<int>(type: "int", nullable: false),
+                    Altura = table.Column<int>(type: "int", nullable: false),
+                    Comprimento = table.Column<int>(type: "int", nullable: false),
+                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FornecedorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -135,9 +121,9 @@ namespace SistemaERP.Infra.Data.Migrations
                 name: "Imagens",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Caminho = table.Column<string>(type: "text", nullable: true),
-                    ProdutoId = table.Column<Guid>(type: "uuid", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Caminho = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProdutoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -187,9 +173,6 @@ namespace SistemaERP.Infra.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Imagens");
-
-            migrationBuilder.DropTable(
-                name: "TemplatesEmails");
 
             migrationBuilder.DropTable(
                 name: "Produtos");

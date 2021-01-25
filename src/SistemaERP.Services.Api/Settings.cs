@@ -11,6 +11,6 @@
 
         public static string ValidoEm = "https://localhost";
 
-        public static string ConnectionString = "Server=127.0.0.1; port=5432; user id = postgres; password = 3t3wi7ez; database=SistemaERP; pooling = true";
+        public static string ConnectionString = "Server=tcp:sistemaerp.database.windows.net,1433;Initial Catalog=SistemaERP.Services.Api_db;Persist Security Info=False;User ID=postgres;Password=A$%40pEt;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
     }
 }

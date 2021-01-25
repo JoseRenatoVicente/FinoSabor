@@ -38,7 +38,7 @@ namespace SistemaERP.Infra.Data.Context
 
 
         //Email
-        public DbSet<TemplatesEmail> TemplatesEmails { get; set; }
+        //public DbSet<TemplatesEmail> TemplatesEmails { get; set; }
         public DbSet<EmailSetting> EmailSettings { get; set; }
 
 
