@@ -19,9 +19,9 @@ namespace SistemaERP.Services.Api.Configurations
                 s.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "Fórum Project",
-                    Description = "Fórum API Swagger surface",
-                    Contact = new OpenApiContact { Name = "José Renato", Email = "josetq12@gmail.com" },
+                    Title = "SistemaERP Project",
+                    Description = "SistemaERP API Swagger surface",
+                    //Contact = new OpenApiContact { Name = "José Renato", Email = "josetq12@gmail.com" },
                     License = new OpenApiLicense { Name = "MIT" }
                 });
 

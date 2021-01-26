@@ -162,14 +162,14 @@ namespace SistemaERP.Services.Api.Controllers.Identity
         private string CodificarToken(ClaimsIdentity identityClaims)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var currentIssuer =
-                $"{_aspNetUser.ObterHttpContext().Request.Scheme}://{_aspNetUser.ObterHttpContext().Request.Host}";
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+
             var token = tokenHandler.CreateToken(new SecurityTokenDescriptor
             {
-                Issuer = currentIssuer,
+                Issuer = Settings.Emissor,
+                Audience = Settings.ValidoEm,
                 Subject = identityClaims,
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires = DateTime.UtcNow.AddHours(Settings.ExpiracaoHoras),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             });
 
