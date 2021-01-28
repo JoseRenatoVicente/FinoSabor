@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SistemaERP.Domain.Entities;
 using SistemaERP.Infra.Data.Base.Repository;
-using SistemaERP.Infra.Data.Context;
+using SistemaERP.Infra.Data;
 using SistemaERP.Infra.Data.Repository.Interfaces;
 using System;
 using System.Collections.Generic;

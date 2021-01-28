@@ -1,3 +1,8 @@
+resolver erro da categoria
+
+e mudar variaveis de ambiente
+
+
 Pesquisar 
 
 warn: Microsoft.EntityFrameworkCore.Query[10102]                                                                              The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results.  

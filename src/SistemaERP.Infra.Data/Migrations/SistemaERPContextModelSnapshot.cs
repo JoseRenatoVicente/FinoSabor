@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SistemaERP.Infra.Data.Context;
+using SistemaERP.Infra.Data;
 
 namespace SistemaERP.Infra.Data.Migrations
 {
@@ -28,6 +28,9 @@ namespace SistemaERP.Infra.Data.Migrations
                     b.Property<Guid?>("CategoriaPaiId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("DataCadastro")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -45,6 +48,9 @@ namespace SistemaERP.Infra.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DataCadastro")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("DisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -90,6 +96,9 @@ namespace SistemaERP.Infra.Data.Migrations
                     b.Property<string>("Complemento")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("DataCadastro")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Estado")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -125,6 +134,9 @@ namespace SistemaERP.Infra.Data.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("DataCadastro")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Documento")
                         .IsRequired()
                         .HasMaxLength(14)
@@ -152,6 +164,9 @@ namespace SistemaERP.Infra.Data.Migrations
                     b.Property<string>("Caminho")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("DataCadastro")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("ProdutoId")
                         .HasColumnType("uniqueidentifier");
 
@@ -160,6 +175,38 @@ namespace SistemaERP.Infra.Data.Migrations
                     b.HasIndex("ProdutoId");
 
                     b.ToTable("Imagens");
+                });
+
+            modelBuilder.Entity("SistemaERP.Domain.Entities.LogEntry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DataCadastro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("EntityName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LogDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Operation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ValuesChanges")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LogEntries");
                 });
 
             modelBuilder.Entity("SistemaERP.Domain.Entities.Produto", b =>

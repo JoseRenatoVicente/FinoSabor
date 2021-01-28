@@ -10,5 +10,7 @@ namespace SistemaERP.Domain.Entities.Base
         }
 
         public Guid Id { get; set; }
+        public DateTime? DataCadastro { get; set; } = DateTime.Now;
+
     }
 }

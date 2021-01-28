@@ -7,7 +7,7 @@ namespace SistemaERP.Infra.CrossCutting.Identity.Entities
     {
         public Usuario()
         {
-            DataCadastro = DateTime.UtcNow;
+            DataCadastro = DateTime.Now;
         }
 
         public string Nome { get; set; }

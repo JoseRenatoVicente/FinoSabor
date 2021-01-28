@@ -1,10 +1,8 @@
 {
   "dependencies": {
-    "mssql1": {
-      "type": "mssql",
-      "connectionId": "",
-      "suggestion": "true",
-      "ignored": "true"
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/SistemaERPServicesApiapi/apis/SistemaERPServicesApi",
+      "type": "apis.azure"
     }
   }
 }

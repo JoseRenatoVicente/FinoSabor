@@ -7,7 +7,7 @@ using SistemaERP.Application.Services.Interfaces;
 using SistemaERP.Infra.CrossCutting.Identity.Context;
 using SistemaERP.Infra.CrossCutting.Identity.Extensions;
 using SistemaERP.Infra.CrossCutting.Identity.Extensions.Interfaces;
-using SistemaERP.Infra.Data.Context;
+using SistemaERP.Infra.Data;
 using SistemaERP.Infra.Data.Repository;
 using SistemaERP.Infra.Data.Repository.Interfaces;
 using System;

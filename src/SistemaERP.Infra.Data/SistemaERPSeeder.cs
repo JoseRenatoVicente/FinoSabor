@@ -1,22 +1,23 @@
 ﻿using SistemaERP.Domain.Entities;
 using SistemaERP.Domain.Entities.Enums;
-using SistemaERP.Infra.Data;
 using System;
 using System.Linq;
 
-namespace SistemaERP.Services.Api.Configurations
+namespace SistemaERP.Infra.Data
 {
-    public class SeedingService
+    public class SistemaERPSeeder
     {
-        private SistemaERPContext _context;
+        private readonly SistemaERPContext _context;
 
-        public SeedingService(SistemaERPContext context)
+        public SistemaERPSeeder(SistemaERPContext context)
         {
             _context = context;
         }
 
         public void Seed()
         {
+            _context.Database.EnsureCreated();
+
             if (_context.Produtos.Any() ||
                 _context.Categorias.Any() ||
                 _context.Fornecedores.Any())
@@ -48,11 +49,9 @@ namespace SistemaERP.Services.Api.Configurations
                 _context.Categorias.AddRange(c3);
             }
 
-            
+
 
             _context.SaveChanges();
-
-
         }
     }
 }

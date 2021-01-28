@@ -13,7 +13,8 @@ namespace SistemaERP.Infra.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    CategoriaPaiId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    CategoriaPaiId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -35,7 +36,8 @@ namespace SistemaERP.Infra.Data.Migrations
                     DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Host = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Port = table.Column<int>(type: "int", nullable: false)
+                    Port = table.Column<int>(type: "int", nullable: false),
+                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -50,11 +52,30 @@ namespace SistemaERP.Infra.Data.Migrations
                     Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Documento = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false),
                     TipoFornecedor = table.Column<int>(type: "int", nullable: false),
-                    Ativo = table.Column<bool>(type: "bit", nullable: false)
+                    Ativo = table.Column<bool>(type: "bit", nullable: false),
+                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Fornecedores", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LogEntries",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EntityName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Operation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LogDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ValuesChanges = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LogEntries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,7 +90,8 @@ namespace SistemaERP.Infra.Data.Migrations
                     Cep = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     Bairro = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Cidade = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Estado = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Estado = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -123,7 +145,8 @@ namespace SistemaERP.Infra.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Caminho = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProdutoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ProdutoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -173,6 +196,9 @@ namespace SistemaERP.Infra.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Imagens");
+
+            migrationBuilder.DropTable(
+                name: "LogEntries");
 
             migrationBuilder.DropTable(
                 name: "Produtos");

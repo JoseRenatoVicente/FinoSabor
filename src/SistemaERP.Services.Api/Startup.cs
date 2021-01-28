@@ -56,7 +56,7 @@ namespace SistemaERP.Services.Api
             //services.AddCompressionConfiguration();
 
             // Setting DBContexts
-            services.AddDatabaseConfiguration();
+            services.AddDatabaseConfiguration(Configuration);
 
         }
 
