@@ -12,18 +12,17 @@ namespace SistemaERP.Domain.Entities
         {
         }
 
-        public Produto(string nome, decimal valor, string descricao, bool ativo, int quantidadeEstoque, double peso, int largura, int altura, int comprimento, DateTime dataCadastro, Guid fornecedorId, Guid categoriaId)
+        public Produto(string nome, decimal valor, string descricao, bool situacao, int quantidadeEstoque, double peso, int largura, int altura, int comprimento, Guid fornecedorId, Guid categoriaId)
         {
             Nome = nome;
             Valor = valor;
             Descricao = descricao;
-            Ativo = ativo;
+            Situacao = situacao;
             QuantidadeEstoque = quantidadeEstoque;
             Peso = peso;
             Largura = largura;
             Altura = altura;
             Comprimento = comprimento;
-            DataCadastro = dataCadastro;
             FornecedorId = fornecedorId;
             CategoriaId = categoriaId;
         }
@@ -40,8 +39,7 @@ namespace SistemaERP.Domain.Entities
         [StringLength(1000, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string Descricao { get; set; }
 
-        [DisplayName("Ativo?")]
-        public bool Ativo { get; set; }
+        public bool Situacao { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public int QuantidadeEstoque { get; set; }
@@ -49,8 +47,6 @@ namespace SistemaERP.Domain.Entities
         public int Largura { get; set; }
         public int Altura { get; set; }
         public int Comprimento { get; set; }
-
-        public DateTime DataCadastro { get; set; }
 
 
         //Banco de dados
@@ -72,7 +68,7 @@ namespace SistemaERP.Domain.Entities
 
         public bool EstaDisponivel(int quantidade)
         {
-            return Ativo && QuantidadeEstoque >= quantidade;
+            return Situacao && QuantidadeEstoque >= quantidade;
         }
 
 

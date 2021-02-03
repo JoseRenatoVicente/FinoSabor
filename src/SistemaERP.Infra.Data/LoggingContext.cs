@@ -19,7 +19,7 @@ namespace SistemaERP.Infra.Data
 
         public static async Task LogChanges(this SistemaERPContext context, IAspNetUser appuser)
         {
-            var logTime = DateTime.Now;
+            //var logTime = DateTime.Now;
             const string emptyJson = "{}";
             const string idColumn = "Id";
 
@@ -46,11 +46,11 @@ namespace SistemaERP.Infra.Data
                     if (dbValues != null)
                     {
                         original = JsonConvert.SerializeObject(dbValues.Properties.ToDictionary(pn => pn.Name, pn => dbValues[pn]));
-                        creationDate = dbValues.GetValue<DateTime>("DataCadastro");
+                        //creationDate = dbValues.GetValue<DateTime>("DataCadastro");
                     }
                 }
 
-                item.Property("DataCadastro").CurrentValue = creationDate;
+                //item.Property("DataCadastro").CurrentValue = creationDate;
 
                 string jsonDiff = jdp.Diff(original, updated);
 
@@ -58,17 +58,17 @@ namespace SistemaERP.Infra.Data
                 {
                     var EntityDiff = JToken.Parse(jsonDiff).ToString(Formatting.None);
 
-                    var logEntry = new LogEntry()
+                    var log = new Log()
                     {
-                        EntityName = item.Entity.GetType().Name,
-                        EntityId = new Guid(item.CurrentValues[idColumn].ToString()),
-                        LogDateTime = logTime,
-                        Operation = item.State.ToString(),
-                        UserId = user,
-                        ValuesChanges = EntityDiff,
+                        NomeEntidade = item.Entity.GetType().Name,
+                        EntidadeId = new Guid(item.CurrentValues[idColumn].ToString()),
+                        //LogDateTime = logTime,
+                        Operação = item.State.ToString(),
+                        UsuarioId = user,
+                        ValoresAlterados = EntityDiff,
                     };
 
-                    context.LogEntries.Add(logEntry);
+                    context.Log.Add(log);
                 }
 
             }

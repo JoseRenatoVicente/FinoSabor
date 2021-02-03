@@ -16,7 +16,7 @@ namespace SistemaERP.Infra.Data
 
         public void Seed()
         {
-            _context.Database.EnsureCreated();
+            //_context.Database.EnsureCreated();
 
             if (_context.Produtos.Any() ||
                 _context.Categorias.Any() ||
@@ -41,7 +41,7 @@ namespace SistemaERP.Infra.Data
             for (int i = 0; i < 200; i++)
             {
                 Produto p1 = new Produto("Nutella", 30, "Nutella possui um sabor autêntico de avelã e cacau e sua cremosidade única intensifica o sabor. É tão delicioso que mesmo em pequenas quantidades é altamente satisfatório: 20g/1 colher de sopa de creme Nutella no pão é o suficiente ..."
-                    , true, 51, 10, 100, 12, 20, DateTime.Now, f1.Id, c2.Id);
+                    , true, 51, 10, 100, 12, 20, f1.Id, c2.Id);
                 Categoria c3 = new Categoria("Doces", null);
                 Fornecedor f3 = new Fornecedor("Coca-Cola", "75112514043", TipoFornecedor.PessoaFisica, true);
                 _context.Fornecedores.AddRange(f3);

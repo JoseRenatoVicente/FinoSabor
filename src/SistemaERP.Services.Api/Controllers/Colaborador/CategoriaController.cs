@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace SistemaERP.Services.Api.Controllers.Colaborador
 {
+    [AllowAnonymous]
     [Route("api/Colaborador/[controller]")]
     public class CategoriaController : MainController
     {

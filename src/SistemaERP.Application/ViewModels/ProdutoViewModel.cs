@@ -6,8 +6,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SistemaERP.Application.ViewModels
 {
-    public class ProdutoViewModel : EntityBase
+    public class ProdutoViewModel
     {
+        public Guid Id { get; set; }
+
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(200, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string Nome { get; set; }
@@ -28,7 +30,7 @@ namespace SistemaERP.Application.ViewModels
         public int Altura { get; set; }
         public int Comprimento { get; set; }
 
-        public DateTime DataCadastro { get; set; }
+        //public DateTime DataCadastro { get; set; }
 
         [ScaffoldColumn(false)]
         public string NomeFornecedor { get; set; }

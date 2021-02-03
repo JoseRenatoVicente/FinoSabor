@@ -3,7 +3,7 @@ using SistemaERP.Infra.Data.Repository.Base;
 
 namespace SistemaERP.Infra.Data.Repository.Interfaces
 {
-    public interface ITemplatesEmailRepository : IBaseRepository<EmailModelo>
+    public interface IEmailConfigRepository : IBaseRepository<EmailConfig>
     {
     }
 }

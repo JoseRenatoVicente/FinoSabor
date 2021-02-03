@@ -1,13 +1,11 @@
 using AutoMapper;
-using SistemaERP.Application.Settings;
-using SistemaERP.Services.Api.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.ResponseCompression;
-using System.Linq;
+using SistemaERP.Infra.Data;
+using SistemaERP.Services.Api.Configurations;
 
 namespace SistemaERP.Services.Api
 {
@@ -26,7 +24,7 @@ namespace SistemaERP.Services.Api
             services.AddIdentityConfig(Configuration);
 
             //EmailSettings
-            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            //services.Configure<EmailConfig>(Configuration.GetSection("EmailSettings"));
 
             //Config Repositories
             services.ResolveDependencies();
@@ -36,7 +34,7 @@ namespace SistemaERP.Services.Api
 
             // WebAPI Config
             services.AddControllers();
-            
+
             // AutoMapper Settings
             //services.AddAutoMapperConfiguration();
 
@@ -60,9 +58,9 @@ namespace SistemaERP.Services.Api
 
         }
 
-        
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedingService seedingService)
+
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SistemaERPSeeder seedingService)
         {
             if (env.IsDevelopment())
             {

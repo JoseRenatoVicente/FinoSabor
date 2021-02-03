@@ -2,8 +2,8 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SistemaERP.Infra.Data;
 
 namespace SistemaERP.Infra.Data.Migrations
@@ -15,26 +15,23 @@ namespace SistemaERP.Infra.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .UseIdentityByDefaultColumns()
+                .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.2");
 
             modelBuilder.Entity("SistemaERP.Domain.Entities.Categoria", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("CategoriaPaiId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DataCadastro")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("character varying(30)");
 
                     b.HasKey("Id");
 
@@ -43,79 +40,96 @@ namespace SistemaERP.Infra.Data.Migrations
                     b.ToTable("Categorias");
                 });
 
-            modelBuilder.Entity("SistemaERP.Domain.Entities.Email.EmailSetting", b =>
+            modelBuilder.Entity("SistemaERP.Domain.Entities.EmailConfig", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("DataCadastro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DisplayName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
 
                     b.Property<string>("Host")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
-                    b.Property<string>("Mail")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Porta")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Prioridade")
+                        .HasColumnType("integer");
 
-                    b.Property<int>("Port")
-                        .HasColumnType("int");
+                    b.Property<string>("Senha")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("UsarSSL")
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmailSettings");
+                    b.ToTable("EmailConfigs");
+                });
+
+            modelBuilder.Entity("SistemaERP.Domain.Entities.EmailModelo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Using")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmailModelos");
                 });
 
             modelBuilder.Entity("SistemaERP.Domain.Entities.Endereco", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Bairro")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Cep")
                         .IsRequired()
                         .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
+                        .HasColumnType("character varying(8)");
 
                     b.Property<string>("Cidade")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Complemento")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DataCadastro")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("text");
 
                     b.Property<string>("Estado")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<Guid>("FornecedorId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Logradouro")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("Numero")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 
@@ -129,26 +143,23 @@ namespace SistemaERP.Infra.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("DataCadastro")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Documento")
                         .IsRequired()
                         .HasMaxLength(14)
-                        .HasColumnType("nvarchar(14)");
+                        .HasColumnType("character varying(14)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<bool>("Situacao")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("TipoFornecedor")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -159,16 +170,13 @@ namespace SistemaERP.Infra.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Caminho")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DataCadastro")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("text");
 
                     b.Property<Guid>("ProdutoId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -177,83 +185,77 @@ namespace SistemaERP.Infra.Data.Migrations
                     b.ToTable("Imagens");
                 });
 
-            modelBuilder.Entity("SistemaERP.Domain.Entities.LogEntry", b =>
+            modelBuilder.Entity("SistemaERP.Domain.Entities.Log", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("DataCadastro")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid>("EntityId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<Guid>("EntidadeId")
+                        .HasColumnType("uuid");
 
-                    b.Property<string>("EntityName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("NomeEntidade")
+                        .HasColumnType("text");
 
-                    b.Property<DateTime>("LogDateTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Operação")
+                        .HasColumnType("text");
 
-                    b.Property<string>("Operation")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("UsuarioId")
+                        .HasColumnType("uuid");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ValuesChanges")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("ValoresAlterados")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("LogEntries");
+                    b.ToTable("Log");
                 });
 
             modelBuilder.Entity("SistemaERP.Domain.Entities.Produto", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Altura")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("CategoriaId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Comprimento")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<Guid>("FornecedorId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Largura")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<double>("Peso")
-                        .HasColumnType("float");
+                        .HasColumnType("double precision");
 
                     b.Property<int>("QuantidadeEstoque")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Situacao")
+                        .HasColumnType("boolean");
 
                     b.Property<decimal>("Valor")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 

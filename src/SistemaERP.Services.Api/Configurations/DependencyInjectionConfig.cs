@@ -26,7 +26,7 @@ namespace SistemaERP.Services.Api.Configurations
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddScoped<SeedingService>();
+            services.AddScoped<SistemaERPSeeder>();
             services.AddScoped<SistemaERPContext>();
             services.AddScoped<ApplicationDbContext>();
 
@@ -36,7 +36,7 @@ namespace SistemaERP.Services.Api.Configurations
             //Email            
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<ITemplatesEmailRepository, TemplatesEmailRepository>();
-            services.AddTransient<IEmailSettingRepository, EmailSettingRepository>();
+            services.AddTransient<IEmailConfigRepository, EmailConfigRepository>();
 
 
             services.AddScoped<IImagemRepository, ImagemRepository>();

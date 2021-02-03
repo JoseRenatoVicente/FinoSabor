@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SistemaERP.Domain.Entities;
-using SistemaERP.Domain.Entities.Email;
-using SistemaERP.Infra.CrossCutting.Identity.Extensions;
 using SistemaERP.Infra.CrossCutting.Identity.Extensions.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,26 +26,14 @@ namespace SistemaERP.Infra.Data
             optionsBuilder.UseLoggerFactory(MyLoggerFactory);
         }
 
-        //Logging
-        public DbSet<LogEntry> LogEntries { get; set; }
-
-        //Identity
-        //public DbSet<Usuario> Usuarios { get; set; }
-
-        //SistemaERP
-
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Fornecedor> Fornecedores { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Imagem> Imagens { get; set; }
-
-
-        //Email
-        //public DbSet<TemplatesEmail> TemplatesEmails { get; set; }
-        public DbSet<EmailSetting> EmailSettings { get; set; }
-
-
+        public DbSet<Log> Log { get; set; }
+        public DbSet<EmailModelo> EmailModelos { get; set; }
+        public DbSet<EmailConfig> EmailConfigs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

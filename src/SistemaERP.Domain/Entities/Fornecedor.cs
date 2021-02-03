@@ -1,7 +1,6 @@
 ﻿using SistemaERP.Domain.Entities.Base;
 using SistemaERP.Domain.Entities.Enums;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace SistemaERP.Domain.Entities
@@ -12,12 +11,12 @@ namespace SistemaERP.Domain.Entities
         {
         }
 
-        public Fornecedor(string nome, string documento, TipoFornecedor tipoFornecedor, bool ativo)
+        public Fornecedor(string nome, string documento, TipoFornecedor tipoFornecedor, bool situacao)
         {
             Nome = nome;
             Documento = documento;
             TipoFornecedor = tipoFornecedor;
-            Ativo = ativo;
+            Situacao = situacao;
         }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
@@ -32,9 +31,7 @@ namespace SistemaERP.Domain.Entities
 
         public Endereco Endereco { get; set; }
 
-
-        [DisplayName("Ativo?")]
-        public bool Ativo { get; set; }
+        public bool Situacao { get; set; }
 
         /* EF Relations */
         public IEnumerable<Produto> Produtos { get; set; }

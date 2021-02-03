@@ -4,14 +4,13 @@ using SistemaERP.Infra.Data.Repository.Interfaces;
 
 namespace SistemaERP.Infra.Data.Repository
 {
-    public class TemplatesEmailRepository : BaseRepository<EmailModelo>, ITemplatesEmailRepository
+    public class EmailConfigRepository : BaseRepository<EmailConfig>, IEmailConfigRepository
     {
-        public TemplatesEmailRepository(SistemaERPContext db) : base(db)
+        public EmailConfigRepository(SistemaERPContext db) : base(db)
         {
         }
 
 
 
     }
-
 }
