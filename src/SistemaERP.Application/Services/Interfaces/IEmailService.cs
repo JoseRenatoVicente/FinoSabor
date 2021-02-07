@@ -1,11 +1,10 @@
-﻿using SistemaERP.Application.ViewModels;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace SistemaERP.Application.Services.Interfaces
 {
     public interface IEmailService
     {
-        Task SendEmailAsync(string ToEmail, string Subject, string Body);
-        
+        Task<bool> SendAsync(string to, string subject, string html, int tentativa = 1);
+        Task Test(string email, string nome);
     }
 }

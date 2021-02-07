@@ -110,6 +110,7 @@ namespace SistemaERP.Infra.Data.Base.Repository
             return query;
         }
 
+
         public virtual async Task<TEntity> GetByIdAsync(Guid id)
         {
             var iquerable = await GetAllAsync();

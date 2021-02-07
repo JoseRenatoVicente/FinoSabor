@@ -60,7 +60,8 @@ namespace SistemaERP.Services.Api.Controllers.Identity
 
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
             var callbackUrl = "localhost:5001/ResetPassword?userId=" + user.Id + "?token="+ code ;
-            await _emailService.SendEmailAsync(user.Email, "Esqueci minha senha", "Por favor altere sua senha clicando aqui: " + callbackUrl);
+            await _emailService.SendAsync(user.Email, "Esqueci minha senha", "Por favor altere sua senha clicando aqui: " + callbackUrl);
+            //await _emailService.SendEmailAsync(user.Email, "Esqueci minha senha", "Por favor altere sua senha clicando aqui: " + callbackUrl);
             //await _emailSender.SendEmailAsync(message);
             return Ok();
 

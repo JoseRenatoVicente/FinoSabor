@@ -32,8 +32,18 @@ namespace SistemaERP.Infra.Data
             Categoria c1 = new Categoria("Doces", null);
             Categoria c2 = new Categoria("Chocolate", c1.Id);
 
+            EmailConfig email1 = new EmailConfig
+            {
+                Host = "smtp.gmail.com",
+                Email = "tempforum333@gmail.com",
+                Senha = "3t3wi7ez",
+                Prioridade = 1,
+                UsarSSL = true,
+                Porta = 587
+            };
 
 
+            _context.EmailConfigs.AddRange(email1);
             _context.Fornecedores.AddRange(f1, f2);
             _context.Categorias.AddRange(c1, c2);
 

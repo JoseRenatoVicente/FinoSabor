@@ -1,22 +1,76 @@
-﻿using MailKit.Net.Smtp;
+﻿using MailKit.Net.Pop3;
+using MailKit.Net.Smtp;
 using MailKit.Security;
-using Microsoft.Extensions.Options;
 using MimeKit;
+using MimeKit.Text;
 using SistemaERP.Application.Services.Interfaces;
 using SistemaERP.Application.ViewModels;
-using System.IO;
+using SistemaERP.Domain.Entities;
+using SistemaERP.Infra.Data.Repository.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SistemaERP.Application.Services
 {
     public class EmailService : IEmailService
     {
-        public async Task SendEmailAsync(string ToEmail, string Subject, string Body)
+        private readonly IEmailConfigRepository _emailConfigRepository;
+
+        public EmailService(IEmailConfigRepository emailConfigRepository)
         {
+            _emailConfigRepository = emailConfigRepository;
+        }
+
+        public async Task Execute(string to, string subject, string html)
+        {
+            if (!await SendAsync(to, subject, html)) await SendAsync(to, subject, html, 2);
+        }
+        public async Task<bool> SendAsync(string to, string subject, string html, int tentativa = 1)
+        {
+
+            try
+            {
+
+                var emailPrioridade = await _emailConfigRepository.PegarEmailPorPrioridade(tentativa);
+
+                // create message
+                var email = new MimeMessage();
+                email.From.Add(MailboxAddress.Parse(emailPrioridade.Email));
+                email.To.Add(MailboxAddress.Parse(to));
+                email.Subject = subject;
+                email.Body = new TextPart(TextFormat.Html) { Text = html };
+
+
+                // send email
+                using var smtp = new SmtpClient();
+                smtp.Connect(emailPrioridade.Host, emailPrioridade.Porta, emailPrioridade.UsarSSL);
+                smtp.Authenticate(emailPrioridade.Email, emailPrioridade.Senha);
+                await smtp.SendAsync(email);
+                smtp.Disconnect(true);
+                return true;
+            }
+
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public async Task Test(string email, string nome)
+        {
+            var titulo = "SistemaERP - teste de email";
+            var mensagem = $"<p>Olá {nome},</p> <p>Esse é um email de teste para verificar se o sistema consegue fazer contato com você. Por favor avise o facilitador quando esse email chegar. Obrigado.</p>";
+            await SendAsync(email, titulo, mensagem);
+            //await Execute(email, titulo, mensagem);
+        }
+        /*
+        public async Task SendEmailAsync(string ParaEmail, string Titulo, string mensagem)
+        {
+            var emailPrioridade = await _emailConfigRepository.PegarEmailPorPrioridade(1);
             var email = new MimeMessage();
-            //email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
-            email.To.Add(MailboxAddress.Parse(ToEmail));
-            email.Subject = Subject;
+            email.To.Add(MailboxAddress.Parse(ParaEmail));
+            email.Subject = Titulo;
             var builder = new BodyBuilder();
             /*if (mailRequest.Attachments != null)
             {
@@ -34,14 +88,78 @@ namespace SistemaERP.Application.Services
                     }
                 }
             }
-        builder.HtmlBody = Body;
+            builder.HtmlBody = mensagem;
             email.Body = builder.ToMessageBody();
             using var smtp = new SmtpClient();
-            smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-            smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
+            smtp.Connect(emailPrioridade.Host, emailPrioridade.Porta, emailPrioridade.UsarSSL);
+            smtp.Authenticate(emailPrioridade.Email, emailPrioridade.Senha);
             await smtp.SendAsync(email);
             smtp.Disconnect(true);
-        */}
+
+        }
+
+        public async Task<List<EmailMessage>> ReceiveEmail(int maxCount = 10)
+        {
+
+            using (var emailClient = new Pop3Client())
+            {
+                var emailPrioridade = await _emailConfigRepository.PegarEmailPorPrioridade(1);
+                emailClient.Connect(emailPrioridade.Host, emailPrioridade.Porta, true);
+
+                emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
+
+                emailClient.Authenticate(emailPrioridade.Email, emailPrioridade.Senha);
+
+                List<EmailMessage> emails = new List<EmailMessage>();
+                for (int i = 0; i < emailClient.Count && i < maxCount; i++)
+                {
+                    var message = emailClient.GetMessage(i);
+                    var emailMessage = new EmailMessage
+                    {
+                        Content = !string.IsNullOrEmpty(message.HtmlBody) ? message.HtmlBody : message.TextBody,
+                        Subject = message.Subject
+                    };
+                    emailMessage.ToAddresses.AddRange(message.To.Select(x => (MailboxAddress)x).Select(x => new EmailAddress { Address = x.Address, Name = x.Name }));
+                    emailMessage.FromAddresses.AddRange(message.From.Select(x => (MailboxAddress)x).Select(x => new EmailAddress { Address = x.Address, Name = x.Name }));
+                    emails.Add(emailMessage);
+                }
+
+                return emails;
+            }
+        }
+
+        /*public async Task Send(EmailMessage emailMessage)
+        {
+            var message = new MimeMessage();
+            message.To.AddRange(emailMessage.ToAddresses.Select(x => new MailboxAddress(x.Name, x.Address)));
+            message.From.AddRange(emailMessage.FromAddresses.Select(x => new MailboxAddress(x.Name, x.Address)));
+
+            message.Subject = emailMessage.Subject;
+            //We will say we are sending HTML. But there are options for plaintext etc. 
+            message.Body = new TextPart(TextFormat.Html)
+            {
+                Text = emailMessage.Content
+            };
+
+            //Be careful that the SmtpClient class is the one from Mailkit not the framework!
+            using (var emailClient = new SmtpClient())
+            {
+                var emailPrioridade = await _emailConfigRepository.PegarEmailPorPrioridade(1);
+                //The last parameter here is to use SSL (Which you should!)
+                emailClient.Connect(emailPrioridade.Host, emailPrioridade.Porta, true);
+
+                //Remove any OAuth functionality as we won't be using it. 
+                emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
+
+                emailClient.Authenticate(emailPrioridade.Email, emailPrioridade.Senha);
+
+                emailClient.Send(message);
+
+                emailClient.Disconnect(true);
+            }
+
+        }*/
+
         /*
         public async Task SendWelcomeEmailAsync(WelcomeRequest request)
         {
@@ -68,24 +186,26 @@ namespace SistemaERP.Application.Services
         {
             await Send(_settings.Username, "Administradores Sharebook", messageText, subject, true);
         }
-
+        
         public async Task Send(string emailRecipient, string nameRecipient, string messageText, string subject)
             => await Send(emailRecipient, nameRecipient, messageText, subject, false);
+
 
         public async Task Send(string emailRecipient, string nameRecipient, string messageText, string subject, bool copyAdmins = false)
         {
             var message = FormatEmail(emailRecipient, nameRecipient, messageText, subject, copyAdmins);
             try
             {
+                var email = await _emailConfigRepository.PegarEmailPorPrioridade(1);
                 using (var client = new SmtpClient())
                 {
-                    if (_settings.UseSSL)
+                    if (email.UsarSSL)
                     {
                         client.ServerCertificateValidationCallback = (s, c, h, e) => true;
                     }
 
-                    client.Connect(_settings.HostName, _settings.Port, _settings.UseSSL);
-                    client.Authenticate(_settings.Username, _settings.Password);
+                    client.Connect(email.Host, email.Porta, email.UsarSSL);
+                    client.Authenticate(email.Email, email.Senha);
                     await client.SendAsync(message);
                     client.Disconnect(true);
                 }
@@ -101,13 +221,13 @@ namespace SistemaERP.Application.Services
         private MimeMessage FormatEmail(string emailRecipient, string nameRecipient, string messageText, string subject, bool copyAdmins)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("SistemaERP", _settings.Username));
-            message.To.Add(new MailboxAddress(nameRecipient, emailRecipient));
+            //message.From.Add(new MailboxAddress());
+            message.To.Add(MailboxAddress.Parse(emailRecipient));
 
             if (copyAdmins)
             {
-                var adminsEmails = GetAdminEmails();
-                message.Cc.AddRange(adminsEmails);
+                //var adminsEmails = GetAdminEmails();
+                //message.Cc.AddRange(adminsEmails);
             }
 
             message.Subject = subject;
@@ -117,7 +237,7 @@ namespace SistemaERP.Application.Services
             };
             return message;
         }
-
+        
         private InternetAddressList GetAdminEmails()
         {
             var admins = _userRepository.Get()
@@ -138,13 +258,8 @@ namespace SistemaERP.Application.Services
 
             return list;
         }
+        */
 
-        public async Task Test(string email, string name)
-        {
-            var subject = "Sharebook - teste de email";
-            var message = $"<p>Olá {name},</p> <p>Esse é um email de teste para verificar se o sharebook consegue fazer contato com você. Por favor avise o facilitador quando esse email chegar. Obrigado.</p>";
-            await this.Send(email, name, message, subject);
-        }*/
 
     }
 }

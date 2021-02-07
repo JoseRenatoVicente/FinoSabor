@@ -23,9 +23,6 @@ namespace SistemaERP.Services.Api
             //Setting Identity
             services.AddIdentityConfig(Configuration);
 
-            //EmailSettings
-            //services.Configure<EmailConfig>(Configuration.GetSection("EmailSettings"));
-
             //Config Repositories
             services.ResolveDependencies();
 
