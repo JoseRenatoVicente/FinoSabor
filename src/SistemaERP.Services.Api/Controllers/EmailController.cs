@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using SistemaERP.Application.Notificacoes.Interface;
 using SistemaERP.Application.Services.Interfaces;
 using SistemaERP.Domain.Entities;

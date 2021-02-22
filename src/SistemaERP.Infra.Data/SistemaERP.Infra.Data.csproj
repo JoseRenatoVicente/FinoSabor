@@ -5,12 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210208193645_init.cs" />
+    <Compile Remove="Migrations\20210208193645_init.Designer.cs" />
+    <Compile Remove="Migrations\SistemaERPContextModelSnapshot.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="JsonDiffPatch.Net" Version="2.3.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="5.0.0" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.2" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0-alpha.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Mappings\" />
     <Folder Include="Migrations\ApplicationDb\" />
   </ItemGroup>
 

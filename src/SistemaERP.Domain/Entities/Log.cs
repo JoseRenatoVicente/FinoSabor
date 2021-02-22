@@ -5,8 +5,6 @@ namespace SistemaERP.Domain.Entities
 {
     public class Log : EntityBase
     {
-
-
         public Guid? UsuarioId { get; set; }
         public string NomeEntidade { get; set; }
         public Guid EntidadeId { get; set; }

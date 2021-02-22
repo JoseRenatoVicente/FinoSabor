@@ -2,7 +2,7 @@
 
 namespace SistemaERP.Domain.Helpers
 {
-    public class Paginacao<T> where T : class
+    public class PagedList<T> where T : class
     {
         public int NumeroPagina { get; set; }
         public int RegistroPorPagina { get; set; }

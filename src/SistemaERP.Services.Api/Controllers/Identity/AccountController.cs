@@ -9,6 +9,7 @@ using SistemaERP.Infra.CrossCutting.Identity.Extensions.Interfaces;
 using SistemaERP.Infra.CrossCutting.Identity.ViewModels;
 using SistemaERP.Infra.Data.Repository.Interfaces;
 using SistemaERP.Services.Api.Controllers.Base;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
@@ -60,9 +61,8 @@ namespace SistemaERP.Services.Api.Controllers.Identity
 
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
             var callbackUrl = "localhost:5001/ResetPassword?userId=" + user.Id + "?token="+ code ;
-            await _emailService.SendAsync(user.Email, "Esqueci minha senha", "Por favor altere sua senha clicando aqui: " + callbackUrl);
-            //await _emailService.SendEmailAsync(user.Email, "Esqueci minha senha", "Por favor altere sua senha clicando aqui: " + callbackUrl);
-            //await _emailSender.SendEmailAsync(message);
+
+            await _emailService.SendEmailAsync(user.Email, "Esqueci minha senha", "Por favor altere sua senha clicando aqui: " + callbackUrl);
             return Ok();
 
 
@@ -78,12 +78,8 @@ namespace SistemaERP.Services.Api.Controllers.Identity
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel resetPassword)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
+
             var user = await _userManager.FindByIdAsync(resetPassword.UserId);
-            if (user == null)
-            {
-                // Não revelar se o usuario nao existe ou nao esta confirmado
-                return BadRequest();
-            }
             var result = await _userManager.ResetPasswordAsync(user, resetPassword.Token, resetPassword.Password);
             if (result.Succeeded)
             {
@@ -108,15 +104,15 @@ namespace SistemaERP.Services.Api.Controllers.Identity
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("ConfirmEmail")]
-        public async Task<ActionResult> ConfirmEmail([Required] string userId, [Required] string code)
+        public async Task<ActionResult> ConfirmEmail([Required] Guid userId, [Required] string code)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
-            if (userId == null || code == null)
-            {
-                return BadRequest();
-            }
-            var result = await _userManager.ConfirmEmailAsync(new Usuario { Id = userId }, code);
-            return CustomResponse(result.Succeeded ? "Email Confirmado" : "Erro");
+            
+            var result = await _userManager.ConfirmEmailAsync(new Usuario { Id = userId  }, code);
+
+            if (!result.Succeeded) NotificarErro("Link expirado");           
+
+            return CustomResponse();
         }
 
         

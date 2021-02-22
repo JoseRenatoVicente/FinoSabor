@@ -1,10 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SistemaERP.Application.Services.Interfaces
 {
     public interface IEmailService
     {
-        Task<bool> SendAsync(string to, string subject, string html, int tentativa = 1);
         Task Test(string email, string nome);
+
+        Task SendEmailAsync(string email, string subject, string message);
+        Task SendEmailsAsync(List<string> emails, string subject, string message);
     }
 }

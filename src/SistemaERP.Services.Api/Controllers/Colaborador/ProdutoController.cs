@@ -98,7 +98,7 @@ namespace SistemaERP.Services.Api.Controllers.Colaborador
                 await file.CopyToAsync(stream);
             }
 
-            await _imagemRepository.AddAsync(new Imagem { Caminho = nome, ProdutoId = id });
+            await _imagemRepository.AddAsync(new ProdutoImagem { Caminho = nome, ProdutoId = id });
 
             return Ok();
         }

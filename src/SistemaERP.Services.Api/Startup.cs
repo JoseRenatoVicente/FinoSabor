@@ -32,9 +32,6 @@ namespace SistemaERP.Services.Api
             // WebAPI Config
             services.AddControllers();
 
-            // AutoMapper Settings
-            //services.AddAutoMapperConfiguration();
-
             // Swagger Config
             services.AddSwaggerConfiguration();
 
@@ -46,6 +43,7 @@ namespace SistemaERP.Services.Api
 
             //Mvc Config
             services.AddMvcConfiguration();
+            services.AddCors();
 
             //Optimization Compression
             //services.AddCompressionConfiguration();

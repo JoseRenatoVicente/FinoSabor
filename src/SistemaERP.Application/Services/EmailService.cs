@@ -1,15 +1,12 @@
-﻿using MailKit.Net.Pop3;
-using MailKit.Net.Smtp;
-using MailKit.Security;
-using MimeKit;
-using MimeKit.Text;
+﻿using SendGrid;
+using SendGrid.Helpers.Mail;
+using Serilog;
 using SistemaERP.Application.Services.Interfaces;
-using SistemaERP.Application.ViewModels;
-using SistemaERP.Domain.Entities;
 using SistemaERP.Infra.Data.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace SistemaERP.Application.Services
@@ -23,7 +20,7 @@ namespace SistemaERP.Application.Services
             _emailConfigRepository = emailConfigRepository;
         }
 
-        public async Task Execute(string to, string subject, string html)
+        /*public async Task Execute(string to, string subject, string html)
         {
             if (!await SendAsync(to, subject, html)) await SendAsync(to, subject, html, 2);
         }
@@ -52,17 +49,56 @@ namespace SistemaERP.Application.Services
                 return true;
             }
 
-            catch (Exception)
+            catch (Exception e)
             {
+                Log.Error("# " + e);                
                 return false;
             }
+        }*/
+
+
+        public async Task SendEmailAsync(string email, string subject, string message)
+        {
+            var emails = new List<string>();
+            emails.Add(email);
+            await Execute("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", subject, message, emails);
         }
+
+        public async Task SendEmailsAsync(List<string> emails, string subject, string message)
+        {
+
+            await Execute("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", subject, message, emails);
+        }
+
+        public async Task Execute(string apiKey, string subject, string message, List<string> emails)
+        {
+
+            var client = new SendGridClient(apiKey);
+            var msg = new SendGridMessage()
+            {
+                From = new EmailAddress("tempforum333@gmail.com", "SistemaERP"),
+                Subject = subject,
+                PlainTextContent = message,
+                HtmlContent = message
+            };
+
+            foreach (var email in emails)
+            {
+                msg.AddTo(new EmailAddress(email));
+            }
+
+            var response = await client.SendEmailAsync(msg);
+
+        }
+
         public async Task Test(string email, string nome)
         {
+            var emails = new List<string>();
+            emails.Add(email);
             var titulo = "SistemaERP - teste de email";
             var mensagem = $"<p>Olá {nome},</p> <p>Esse é um email de teste para verificar se o sistema consegue fazer contato com você. Por favor avise o facilitador quando esse email chegar. Obrigado.</p>";
-            await SendAsync(email, titulo, mensagem);
-            //await Execute(email, titulo, mensagem);
+            
+            await SendEmailsAsync(emails, titulo, mensagem);
         }
         /*
         public async Task SendEmailAsync(string ParaEmail, string Titulo, string mensagem)

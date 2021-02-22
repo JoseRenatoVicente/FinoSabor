@@ -14,12 +14,11 @@ namespace SistemaERP.Services.Api.Configurations
             if (services == null) throw new ArgumentNullException(nameof(services));
 
             services.AddDbContext<SistemaERPContext>(options =>
-                    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
-
+                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("SistemaERP.Infra.Data")));
+                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("SistemaERP.Infra.Data")));
 
         }
     }

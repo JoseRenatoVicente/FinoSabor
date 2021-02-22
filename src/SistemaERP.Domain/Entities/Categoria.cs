@@ -33,6 +33,7 @@ namespace SistemaERP.Domain.Entities
          */
 
         public Guid? CategoriaPaiId { get; set; }
+	//public string Descricao { get; set; }
 
 
         //EF Relation

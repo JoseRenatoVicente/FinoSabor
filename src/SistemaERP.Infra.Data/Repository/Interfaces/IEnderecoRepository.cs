@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace SistemaERP.Infra.Data.Repository.Interfaces
 {
-    public interface IEnderecoRepository : IBaseRepository<Endereco>
+    public interface IEnderecoRepository : IBaseRepository<FornecedorEndereco>
     {
-        Task<Endereco> ObterEnderecoPorFornecedor(Guid fornecedorId);
+        Task<FornecedorEndereco> ObterEnderecoPorFornecedor(Guid fornecedorId);
     }
 }

@@ -117,7 +117,7 @@ namespace SistemaERP.Services.Api.Controllers.Colaborador
                 return CustomResponse();
             }
 
-            await _fornecedorService.AtualizarEndereco(_mapper.Map<Endereco>(enderecoViewModel));
+            await _fornecedorService.AtualizarEndereco(_mapper.Map<FornecedorEndereco>(enderecoViewModel));
 
             return CustomResponse(enderecoViewModel);
         }

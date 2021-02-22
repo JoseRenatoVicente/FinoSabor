@@ -3,16 +3,16 @@ using System;
 
 namespace SistemaERP.Domain.Entities
 {
-    public class Imagem : EntityBase
+    public class ProdutoImagem : EntityBase
     {
 
 
-        public Imagem()
+        public ProdutoImagem()
         {
                 
         }
 
-        public Imagem(string caminho, Guid produtoId)
+        public ProdutoImagem(string caminho, Guid produtoId)
         {
             Caminho = caminho;
             ProdutoId = produtoId;

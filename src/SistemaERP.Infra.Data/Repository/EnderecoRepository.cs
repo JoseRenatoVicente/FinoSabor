@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace SistemaERP.Infra.Data.Repository
 {
-    public class EnderecoRepository : BaseRepository<Endereco>, IEnderecoRepository
+    public class EnderecoRepository : BaseRepository<FornecedorEndereco>, IEnderecoRepository
     {
         public EnderecoRepository(SistemaERPContext context) : base(context) { }
 
-        public async Task<Endereco> ObterEnderecoPorFornecedor(Guid fornecedorId)
+        public async Task<FornecedorEndereco> ObterEnderecoPorFornecedor(Guid fornecedorId)
         {
-            return await Db.Enderecos.AsNoTracking()
+            return await Db.FornecedorEnderecos.AsNoTracking()
                 .FirstOrDefaultAsync(f => f.FornecedorId == fornecedorId);
         }
     }

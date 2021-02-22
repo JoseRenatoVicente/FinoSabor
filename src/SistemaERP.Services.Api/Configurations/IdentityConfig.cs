@@ -20,7 +20,7 @@ namespace SistemaERP.Services.Api.Configurations
             if (services == null) throw new ArgumentNullException(nameof(services));
 
             services.AddDefaultIdentity<Usuario>()
-                .AddRoles<IdentityRole>()
+                .AddRoles<Funcao>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddErrorDescriber<IdentityMensagensPortugues>()
                 .AddDefaultTokenProviders();

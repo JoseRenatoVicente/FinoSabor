@@ -46,7 +46,7 @@ namespace SistemaERP.Services.Api.Controllers.Identity
 
             if (result.Succeeded)
             {
-                await _emailService.SendAsync(user.Email, "Sua senha foi alterada", "proteja sua conta");
+                //await _emailService.SendAsync(user.Email, "Sua senha foi alterada", "proteja sua conta");
                 return CustomResponse();
             }
             foreach (var error in result.Errors)

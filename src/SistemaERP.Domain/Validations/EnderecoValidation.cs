@@ -3,7 +3,7 @@ using SistemaERP.Domain.Entities;
 
 namespace SistemaERP.Domain.Validations
 {
-    public class EnderecoValidation : AbstractValidator<Endereco>
+    public class EnderecoValidation : AbstractValidator<FornecedorEndereco>
     {
         public EnderecoValidation()
         {

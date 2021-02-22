@@ -20,36 +20,33 @@ namespace SistemaERP.Services.Api.Configurations
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 
-
-            services.AddScoped<IAspNetUser, AspNetUser>();
-
-
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            services.AddScoped<SistemaERPSeeder>();
-            services.AddScoped<SistemaERPContext>();
-            services.AddScoped<ApplicationDbContext>();
-
-
-            services.AddScoped<INotificador, Notificador>();
+            //services
+            services.AddScoped<IFornecedorService, FornecedorService>();
+            services.AddScoped<IProdutoService, ProdutoService>();            
 
             //Email            
             services.AddTransient<IEmailService, EmailService>();
-            services.AddTransient<ITemplatesEmailRepository, TemplatesEmailRepository>();
-            services.AddTransient<IEmailConfigRepository, EmailConfigRepository>();
 
-
+            //repositories
+            services.AddScoped<ITemplatesEmailRepository, TemplatesEmailRepository>();
+            services.AddScoped<IEmailConfigRepository, EmailConfigRepository>();
             services.AddScoped<IImagemRepository, ImagemRepository>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IFornecedorRepository, FornecedorRepository>();
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 
-            services.AddScoped<IFornecedorService, FornecedorService>();
-            services.AddScoped<IProdutoService, ProdutoService>();
+            //auth
+            services.AddScoped<IAspNetUser, AspNetUser>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            //seeder
+            services.AddScoped<SistemaERPSeeder>();
 
-            //services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+            services.AddScoped<ApplicationDbContext>();
+
+            //notification
+            services.AddScoped<INotificador, Notificador>();
 
         }
     }

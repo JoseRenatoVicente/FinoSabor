@@ -4,14 +4,15 @@ using SistemaERP.Infra.CrossCutting.Identity.Entities;
 
 namespace SistemaERP.Infra.CrossCutting.Identity.Mappings
 {
-    public class ApplicationUserMap : IEntityTypeConfiguration<Usuario>
+    public class FuncaoMap : IEntityTypeConfiguration<Funcao>
     {
-        public void Configure(EntityTypeBuilder<Usuario> builder)
+        public void Configure(EntityTypeBuilder<Funcao> builder)
         {
-            builder.Ignore(c => c.PhoneNumber);
 
-            builder.ToTable("Usuarios");
+            builder.HasKey(u => u.Id);
 
+
+            builder.ToTable("Funcao");
         }
     }
 }

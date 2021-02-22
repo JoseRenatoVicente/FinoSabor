@@ -53,7 +53,7 @@ namespace SistemaERP.Application.Services
             return true;
         }
 
-        public async Task AtualizarEndereco(Endereco endereco)
+        public async Task AtualizarEndereco(FornecedorEndereco endereco)
         {
             if (!ExecutarValidacao(new EnderecoValidation(), endereco)) return;
             //erro ao atualizar enderço que nao exite

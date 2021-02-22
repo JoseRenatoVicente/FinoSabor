@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+using System;
+using System.IO;
 using System.Security.Authentication;
 
 namespace SistemaERP.Services.Api
@@ -8,6 +11,10 @@ namespace SistemaERP.Services.Api
     {
         public static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .WriteTo.File(Path.Combine(AppContext.BaseDirectory, "wwwroot/Logs.txt"), rollingInterval: RollingInterval.Day)
+               .CreateLogger();
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -15,13 +22,6 @@ namespace SistemaERP.Services.Api
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseKestrel(kestrelOptions =>
-                    {
-                        kestrelOptions.ConfigureHttpsDefaults(httpsOptions =>
-                        {
-                            httpsOptions.SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
-                        });
-                    });
                     webBuilder.UseStartup<Startup>();
                 });
     }

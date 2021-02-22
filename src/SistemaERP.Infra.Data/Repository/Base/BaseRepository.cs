@@ -45,14 +45,14 @@ namespace SistemaERP.Infra.Data.Base.Repository
         }
 
 
-        public async Task<Paginacao<TEntity>> GetPagingAsync(int PagNumero, int PagRegistro)
+        public async Task<PagedList<TEntity>> GetPagingAsync(int PagNumero, int PagRegistro)
         {
             var iquerable = await GetAllAsync();
 
             var quantidadeTotalRegistros = await iquerable.CountAsync();
             var list = await iquerable.Skip((PagNumero - 1) * PagRegistro).Take(PagRegistro).ToListAsync();
 
-            return new Paginacao<TEntity>
+            return new PagedList<TEntity>
             {
                 NumeroPagina = PagNumero,
                 RegistroPorPagina = quantidadeTotalRegistros <= PagRegistro ? quantidadeTotalRegistros : PagRegistro,
@@ -67,14 +67,14 @@ namespace SistemaERP.Infra.Data.Base.Repository
             return (await GetAllAsync(includeProperties)).Where(where);
         }
 
-        public async Task<Paginacao<TEntity>> GetPagingAsyncWhere(Expression<Func<TEntity, bool>> where, int PagNumero = 1, int PagRegistro = 4, params Expression<Func<TEntity, object>>[] includeProperties)
+        public async Task<PagedList<TEntity>> GetPagingAsyncWhere(Expression<Func<TEntity, bool>> where, int PagNumero = 1, int PagRegistro = 4, params Expression<Func<TEntity, object>>[] includeProperties)
         {
             var iquerable = (await GetAllAsync(includeProperties)).Where(where);
 
             var quantidadeTotalRegistros = await iquerable.CountAsync();
             var list = await iquerable.Skip((PagNumero - 1) * PagRegistro).Take(PagRegistro).ToListAsync();
 
-            return new Paginacao<TEntity>
+            return new PagedList<TEntity>
             {
                 NumeroPagina = PagNumero,
                 RegistroPorPagina = PagRegistro,
@@ -85,13 +85,13 @@ namespace SistemaERP.Infra.Data.Base.Repository
         }
 
 
-        public async Task<Paginacao<TEntity>> GetAllCount()
+        public async Task<PagedList<TEntity>> GetAllCount()
         {
             var iquerable = await GetAllAsync();
 
             var quantidadeTotalRegistros = await iquerable.CountAsync();
 
-            return new Paginacao<TEntity>
+            return new PagedList<TEntity>
             {
                 TotalRegistros = quantidadeTotalRegistros,
                 Data = iquerable.ToList()

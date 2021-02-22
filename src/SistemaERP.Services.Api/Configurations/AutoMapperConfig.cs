@@ -10,9 +10,9 @@ namespace SistemaERP.Services.Api.Configurations
         public AutomapperConfig()
         {
             CreateMap<Fornecedor, FornecedorViewModel>().ReverseMap();
-            CreateMap<Endereco, EnderecoViewModel>().ReverseMap();
+            CreateMap<FornecedorEndereco, EnderecoViewModel>().ReverseMap();
             CreateMap<ProdutoViewModel, Produto>().ReverseMap();
-            CreateMap<ImagemViewModel, Imagem>().ReverseMap();
+            CreateMap<ImagemViewModel, ProdutoImagem>().ReverseMap();
 
             CreateMap<ProdutoInsertViewModel, Produto>().ReverseMap();
 
