@@ -3,7 +3,7 @@ using SistemaERP.Infra.Data.Repository.Base;
 
 namespace SistemaERP.Infra.Data.Repository.Interfaces
 {
-    public interface IImagemRepository : IBaseRepository<ProdutoImagem>
+    public interface IImagemRepository : IBaseRepository<Imagem_Produto>
     {
     }
 }

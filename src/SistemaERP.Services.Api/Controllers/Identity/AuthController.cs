@@ -68,6 +68,7 @@ namespace SistemaERP.Services.Api.Controllers.Identity
 
             if (result.Succeeded)
             {
+                result = await UserManager.AddToRoleAsync(user, "Usuario");
                 await SignInManager.SignInAsync(user, false);
                 return CustomResponse(await GerarJwt(usuarioRegistro.Email));
             }
@@ -143,9 +144,9 @@ namespace SistemaERP.Services.Api.Controllers.Identity
             var userRoles = await UserManager.GetRolesAsync(user);
 
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, ToUnixEpochDate(DateTime.UtcNow).ToString()));
+            //claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
+            //claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
+            //claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, ToUnixEpochDate(DateTime.UtcNow).ToString()));
             claims.Add(new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(),
                 ClaimValueTypes.Integer64));
             foreach (var userRole in userRoles)
@@ -184,10 +185,10 @@ namespace SistemaERP.Services.Api.Controllers.Identity
                 AccessToken = encodedToken,
                 RefreshToken = refreshToken.Token,
                 ExpiresIn = TimeSpan.FromHours(1).TotalSeconds,
-                UsuarioToken = new UsuarioToken
+                Nome = user.Nome,
+                UsuarioToken = new UsuarioToken                
                 {
                     Id = user.Id,
-                    Nome =user.Nome,
                     Claims = claims.Select(c => new UsuarioClaim { Type = c.Type, Value = c.Value })
                 }
             };

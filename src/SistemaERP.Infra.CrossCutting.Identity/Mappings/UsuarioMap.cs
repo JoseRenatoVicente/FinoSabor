@@ -12,25 +12,28 @@ namespace SistemaERP.Infra.CrossCutting.Identity.Mappings
             builder.Ignore(c => c.PhoneNumber);
 
             builder
-                .HasMany(e => e.Claims)
+                .HasMany(e => e.Logins)
                 .WithOne()
                 .HasForeignKey(e => e.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .IsRequired();
 
             builder
                 .HasMany(e => e.Claims)
                 .WithOne()
                 .HasForeignKey(e => e.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .IsRequired();
 
             builder
                 .HasMany(e => e.UsuarioFuncao)
                 .WithOne()
                 .HasForeignKey(e => e.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .IsRequired();
+
+            builder
+                .HasMany(e => e.Tokens)
+                .WithOne()
+                .HasForeignKey(ut => ut.UserId)
+                .IsRequired();
 
             builder.ToTable("Usuario");
 

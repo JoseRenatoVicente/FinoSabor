@@ -17,7 +17,7 @@ namespace SistemaERP.Infra.Data.Repository
         }
 
 
-        public async Task<Categoria> ObterSubCategorias(Guid id)
+        /*public async Task<Categoria> ObterSubCategorias(Guid id)
         {
             return await Db.Categorias.AsNoTracking()
                 .Include(c => c.CategoriaPai)
@@ -27,7 +27,7 @@ namespace SistemaERP.Infra.Data.Repository
         public async Task<List<Categoria>> ObterCategoriasPorCategoriaPai(Guid id)
         {
             return await Db.Categorias.OrderBy(a => a.Nome).Where(a => a.CategoriaPaiId == id).ToListAsync();
-        }
+        }*/
 
     }
 }

@@ -115,7 +115,7 @@ namespace SistemaERP.Infra.Data.Base.Repository
         {
             var iquerable = await GetAllAsync();
 
-            return await iquerable.FirstOrDefaultAsync(x => x.Id == id);
+            return await iquerable.FirstOrDefaultAsync(x => x.id == id);
         }
 
 
@@ -140,7 +140,7 @@ namespace SistemaERP.Infra.Data.Base.Repository
             if (id == null) return true;
 
             var iquerable = await GetAllAsync();
-            return await iquerable.AnyAsync(c => c.Id == id);
+            return await iquerable.AnyAsync(c => c.id == id);
         }
 
         public async Task<IEnumerable<TEntity>> Buscar(Expression<Func<TEntity, bool>> where)
@@ -174,7 +174,7 @@ namespace SistemaERP.Infra.Data.Base.Repository
 
         public virtual async Task DeleteAsync(Guid id)
         {
-            Db.Remove(new TEntity { Id = id });
+            Db.Remove(new TEntity { id = id });
             await SaveChangesAsync();
         }
 

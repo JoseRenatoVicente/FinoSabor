@@ -7,6 +7,7 @@ namespace SistemaERP.Infra.CrossCutting.Identity.ViewModels
         public string AccessToken { get; set; }
         public Guid RefreshToken { get; set; }
         public double ExpiresIn { get; set; }
+        public string Nome { get; set; }
         public UsuarioToken UsuarioToken { get; set; }
     }
 }

@@ -10,6 +10,6 @@ namespace SistemaERP.Application.Services.Interfaces
         Task<bool> Atualizar(Fornecedor fornecedor);
         Task<bool> Remover(Guid id);
 
-        Task AtualizarEndereco(FornecedorEndereco endereco);
+        Task AtualizarEndereco(Endereco_Fornecedor endereco);
     }
 }

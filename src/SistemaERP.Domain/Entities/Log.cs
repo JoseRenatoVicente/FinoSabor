@@ -5,13 +5,11 @@ namespace SistemaERP.Domain.Entities
 {
     public class Log : EntityBase
     {
-        public Guid? UsuarioId { get; set; }
-        public string NomeEntidade { get; set; }
-        public Guid EntidadeId { get; set; }
-        public string Operação { get; set; }
-        //public DateTime LogDateTime { get; set; }
-        public string ValoresAlterados { get; set; }
-
-        public DateTime? DataCadastro { get; set; } = DateTime.UtcNow;
+        public Guid? id_usuario { get; set; }
+        public string nome_entidade { get; set; }
+        public Guid id_entidade { get; set; }
+        public string operacao { get; set; }
+        public string valores_alterados { get; set; }
+        public DateTime? data_cadastro { get; set; } = DateTime.UtcNow;
     }
 }

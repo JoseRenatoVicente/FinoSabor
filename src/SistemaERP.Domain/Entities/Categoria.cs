@@ -1,6 +1,5 @@
 ﻿using SistemaERP.Domain.Entities.Base;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SistemaERP.Domain.Entities
@@ -13,16 +12,12 @@ namespace SistemaERP.Domain.Entities
                 
         }
 
-        public Categoria(string nome, Guid? categoriaPaiId)
+        public Categoria(string nome)
         {
-            Nome = nome;
-            CategoriaPaiId = categoriaPaiId;
+            this.nome = nome;
         }
 
-        [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        [StringLength(30, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
-
-        public string Nome { get; set; }
+        public string nome { get; set; }
 
         /*
          * Auto-relacionamento
@@ -31,13 +26,13 @@ namespace SistemaERP.Domain.Entities
          * -- 3-Mouse sem fio P:2
          * -- 4-Mouse Gamer P:2
          */
-
+        /*
         public Guid? CategoriaPaiId { get; set; }
-	//public string Descricao { get; set; }
+	    //public string Descricao { get; set; }
 
 
         //EF Relation
         public virtual Categoria CategoriaPai { get; set; }
-
+        */
     }
 }

@@ -60,12 +60,12 @@ namespace SistemaERP.Infra.Data
 
                     var log = new Log()
                     {
-                        NomeEntidade = item.Entity.GetType().Name,
-                        EntidadeId = new Guid(item.CurrentValues[idColumn].ToString()),
+                        nome_entidade = item.Entity.GetType().Name,
+                        id_entidade = new Guid(item.CurrentValues[idColumn].ToString()),
                         //LogDateTime = logTime,
-                        Operação = item.State.ToString(),
-                        UsuarioId = user,
-                        ValoresAlterados = EntityDiff,
+                        operacao = item.State.ToString(),
+                        id_usuario = user,
+                        valores_alterados = EntityDiff,
                     };
 
                     context.Log.Add(log);

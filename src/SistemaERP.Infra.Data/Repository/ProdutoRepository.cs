@@ -18,7 +18,7 @@ namespace SistemaERP.Infra.Data.Repository
             return await Db.Produtos.AsNoTracking()
                 .Include(f => f.Imagem)
                 .Include(f => f.Fornecedor)
-                .FirstOrDefaultAsync(p => p.Id == id);
+                .FirstOrDefaultAsync(p => p.id == id);
         }
 
         public async Task<IEnumerable<Produto>> ObterProdutosFornecedores()
@@ -26,17 +26,17 @@ namespace SistemaERP.Infra.Data.Repository
             return await Db.Produtos.AsNoTracking()
                 .Include(f => f.Imagem)
                 .Include(f => f.Fornecedor)
-                .OrderBy(p => p.Nome).ToListAsync();
+                .OrderBy(p => p.nome).ToListAsync();
         }
 
         public async Task<IEnumerable<Produto>> ObterProdutosPorFornecedor(Guid fornecedorId)
         {
-            return await Buscar(p => p.FornecedorId == fornecedorId);
+            return await Buscar(p => p.id_fornecedor == fornecedorId);
         }
 
         public async Task<List<Produto>> ObterProdutoPorCategoria(Guid id)
         {
-            return await Db.Produtos.OrderBy(a => a.Nome).Where(a => a.CategoriaId == id).ToListAsync();
+            return await Db.Produtos.OrderBy(a => a.nome).Where(a => a.id_categoria == id).ToListAsync();
         }
     }
 }

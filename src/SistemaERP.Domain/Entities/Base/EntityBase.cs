@@ -6,10 +6,10 @@ namespace SistemaERP.Domain.Entities.Base
     {
         protected EntityBase()
         {
-            Id = Guid.NewGuid();
+            id = Guid.NewGuid();
         }
 
-        public Guid Id { get; set; }
+        public Guid id { get; set; }
 
     }
 }

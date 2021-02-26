@@ -1,7 +1,8 @@
 ﻿using SistemaERP.Domain.Entities.Base;
 using SistemaERP.Domain.Entities.Enums;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SistemaERP.Domain.Entities
 {
@@ -11,20 +12,24 @@ namespace SistemaERP.Domain.Entities
         {
         }
 
-        public Fornecedor(string nome, string documento, TipoFornecedor tipoFornecedor, bool situacao)
+        public Fornecedor(string nome, TipoFornecedor tipo_fornecedor, string documento, bool situacao, Guid id_endereco)
         {
-            Nome = nome;
-            Documento = documento;
-            TipoFornecedor = tipoFornecedor;
-            Situacao = situacao;
+            this.nome = nome;
+            this.tipo_fornecedor = tipo_fornecedor;
+            this.documento = documento;
+            this.situacao = situacao;
+            this.id_endereco = id_endereco;
         }
-        public string Nome { get; set; }
-        public string Documento { get; set; }
-        public TipoFornecedor TipoFornecedor { get; set; }
-        public FornecedorEndereco Endereco { get; set; }
-        public bool Situacao { get; set; }
+
+        public string nome { get; set; }
+        public TipoFornecedor tipo_fornecedor { get; set; }
+        public string documento { get; set; }
+        public bool situacao { get; set; }
+        public Guid id_endereco { get; set; }
 
         /* EF Relations */
+        [ForeignKey("id_endereco")]
+        public Endereco_Fornecedor Endereco { get; set; }
         public IEnumerable<Produto> Produtos { get; set; }
     }
 }

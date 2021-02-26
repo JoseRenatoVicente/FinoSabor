@@ -1,8 +1,7 @@
 ﻿using SistemaERP.Domain.Entities.Base;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SistemaERP.Domain.Entities
 {
@@ -12,57 +11,55 @@ namespace SistemaERP.Domain.Entities
         {
         }
 
-        public Produto(string nome, decimal valor, string descricao, bool situacao, int quantidadeEstoque, double peso, int largura, int altura, int comprimento, Guid fornecedorId, Guid categoriaId)
+        public Produto(string nome, decimal valor, string descricao, bool situacao, int quantidade_estoque, double peso, int largura, int altura, int comprimento, Guid id_fornecedor, Guid id_categoria)
         {
-            Nome = nome;
-            Valor = valor;
-            Descricao = descricao;
-            Situacao = situacao;
-            QuantidadeEstoque = quantidadeEstoque;
-            Peso = peso;
-            Largura = largura;
-            Altura = altura;
-            Comprimento = comprimento;
-            FornecedorId = fornecedorId;
-            CategoriaId = categoriaId;
+            this.nome = nome;
+            this.valor = valor;
+            this.descricao = descricao;
+            this.situacao = situacao;
+            this.quantidade_estoque = quantidade_estoque;
+            this.peso = peso;
+            this.largura = largura;
+            this.altura = altura;
+            this.comprimento = comprimento;
+            this.id_fornecedor = id_fornecedor;
+            this.id_categoria = id_categoria;
         }
 
-        public string Nome { get; set; }
-        public decimal Valor { get; set; }
-        public string Descricao { get; set; }
-
-        public bool Situacao { get; set; }
-
-	    //public string Slug { get; set; }
-        public int QuantidadeEstoque { get; set; }
-        public double Peso { get; set; }
-        public int Largura { get; set; }
-        public int Altura { get; set; }
-        public int Comprimento { get; set; }
+        public string nome { get; set; }
+        public decimal valor { get; set; }
+        public string descricao { get; set; }
+        public bool situacao { get; set; }
+	    //public string slug { get; set; }
+        public int quantidade_estoque { get; set; }
+        public double peso { get; set; }
+        public int largura { get; set; }
+        public int altura { get; set; }
+        public int comprimento { get; set; }
 
 
         //Banco de dados
-        public Guid FornecedorId { get; set; }
-        public Guid CategoriaId { get; set; }
+        public Guid id_fornecedor { get; set; }
+        public Guid id_categoria { get; set; }
 
         //EF Relation
+        [ForeignKey("id_fornecedor")]
         public Fornecedor Fornecedor { get; set; }
+        [ForeignKey("id_categoria")]
         public Categoria Categoria { get; set; }
 
 
-        public IEnumerable<ProdutoImagem> Imagem { get; set; }
+        public IEnumerable<Imagem_Produto> Imagem { get; set; }
 
         public void RetirarEstoque(int quantidade)
         {
-            if (QuantidadeEstoque >= quantidade)
-                QuantidadeEstoque -= quantidade;
+            if (quantidade_estoque >= quantidade)
+                quantidade_estoque -= quantidade;
         }
 
         public bool EstaDisponivel(int quantidade)
         {
-            return Situacao && QuantidadeEstoque >= quantidade;
+            return situacao && quantidade_estoque >= quantidade;
         }
-
-
     }
 }

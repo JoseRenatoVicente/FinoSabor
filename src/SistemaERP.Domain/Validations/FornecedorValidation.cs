@@ -9,24 +9,24 @@ namespace SistemaERP.Domain.Validations
     {
         public FornecedorValidation()
         {
-            RuleFor(f => f.Nome)
+            RuleFor(f => f.nome)
                 .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
                 .Length(2, 100)
                 .WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");
 
-            When(f => f.TipoFornecedor == TipoFornecedor.PessoaFisica, () =>
+            When(f => f.tipo_fornecedor == TipoFornecedor.PessoaFisica, () =>
             {
-                RuleFor(f => f.Documento.Length).Equal(CpfValidacao.TamanhoCpf)
+                RuleFor(f => f.documento.Length).Equal(CpfValidacao.TamanhoCpf)
                     .WithMessage("O campo Documento precisa ter {ComparisonValue} caracteres e foi fornecido {PropertyValue}.");
-                RuleFor(f => CpfValidacao.Validar(f.Documento)).Equal(true)
+                RuleFor(f => CpfValidacao.Validar(f.documento)).Equal(true)
                     .WithMessage("O documento fornecido é inválido.");
             });
 
-            When(f => f.TipoFornecedor == TipoFornecedor.PessoaJuridica, () =>
+            When(f => f.tipo_fornecedor == TipoFornecedor.PessoaJuridica, () =>
             {
-                RuleFor(f => f.Documento.Length).Equal(CnpjValidacao.TamanhoCnpj)
+                RuleFor(f => f.documento.Length).Equal(CnpjValidacao.TamanhoCnpj)
                     .WithMessage("O campo Documento precisa ter {ComparisonValue} caracteres e foi fornecido {PropertyValue}.");
-                RuleFor(f => CnpjValidacao.Validar(f.Documento)).Equal(true)
+                RuleFor(f => CnpjValidacao.Validar(f.documento)).Equal(true)
                     .WithMessage("O documento fornecido é inválido.");
             });
         }

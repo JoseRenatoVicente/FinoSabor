@@ -58,8 +58,8 @@ namespace SistemaERP.Services.Api.Controllers.Colaborador
         {
             try
             {
-                fornecedorViewModel.Id = Guid.NewGuid();
-                fornecedorViewModel.Endereco.Id = Guid.NewGuid();
+                fornecedorViewModel.id = Guid.NewGuid();
+                fornecedorViewModel.Endereco.id = Guid.NewGuid();
 
                 if (!ModelState.IsValid) return CustomResponse(ModelState);
 
@@ -81,7 +81,7 @@ namespace SistemaERP.Services.Api.Controllers.Colaborador
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            fornecedorViewModel.Id = id;
+            fornecedorViewModel.id = id;
 
             await _fornecedorService.Atualizar(_mapper.Map<Fornecedor>(fornecedorViewModel));
 
@@ -109,7 +109,7 @@ namespace SistemaERP.Services.Api.Controllers.Colaborador
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
             
-            enderecoViewModel.Id = id;
+            enderecoViewModel.id = id;
 
             if (!await _fornecedorRepository.ExisteId(enderecoViewModel.FornecedorId))
             { 
@@ -117,7 +117,7 @@ namespace SistemaERP.Services.Api.Controllers.Colaborador
                 return CustomResponse();
             }
 
-            await _fornecedorService.AtualizarEndereco(_mapper.Map<FornecedorEndereco>(enderecoViewModel));
+            await _fornecedorService.AtualizarEndereco(_mapper.Map<Endereco_Fornecedor>(enderecoViewModel));
 
             return CustomResponse(enderecoViewModel);
         }

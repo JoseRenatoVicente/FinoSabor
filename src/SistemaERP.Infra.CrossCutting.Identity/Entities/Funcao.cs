@@ -28,6 +28,6 @@ namespace SistemaERP.Infra.CrossCutting.Identity.Entities
         public Guid ModifyBy { get; set; }
         public int Status { get; set; }
 
-        public virtual ICollection<UsuarioFuncao> Users { get; } = new List<UsuarioFuncao>();
+        public virtual ICollection<UsuarioFuncao> UserRoles { get; } = new List<UsuarioFuncao>();
     }
 }

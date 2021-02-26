@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 using SistemaERP.Infra.CrossCutting.Identity.Entities;
 using SistemaERP.Infra.CrossCutting.Identity.Mappings;
 using System;
@@ -25,7 +24,7 @@ namespace SistemaERP.Infra.CrossCutting.Identity.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+           
             modelBuilder.ApplyConfiguration(new UsuarioFuncaoMap());
             modelBuilder.ApplyConfiguration(new FuncaoMap());
             modelBuilder.ApplyConfiguration(new UsuarioMap());

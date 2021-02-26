@@ -28,7 +28,7 @@ namespace SistemaERP.Application.Services
             if (!ExecutarValidacao(new FornecedorValidation(), fornecedor)
                 || !ExecutarValidacao(new EnderecoValidation(), fornecedor.Endereco)) return false;
 
-            if (_fornecedorRepository.Buscar(f => f.Documento == fornecedor.Documento).Result.Any())
+            if (_fornecedorRepository.Buscar(f => f.documento == fornecedor.documento).Result.Any())
             {
                 Notificar("Já existe um fornecedor com este documento informado.");
                 return false;
@@ -43,7 +43,7 @@ namespace SistemaERP.Application.Services
         {
             if (!ExecutarValidacao(new FornecedorValidation(), fornecedor)) return false;
 
-            if (_fornecedorRepository.Buscar(f => f.Documento == fornecedor.Documento && f.Id != fornecedor.Id).Result.Any())
+            if (_fornecedorRepository.Buscar(f => f.documento == fornecedor.documento && f.id != fornecedor.id).Result.Any())
             {
                 Notificar("Já existe um fornecedor com este documento infomado.");
                 return false;
@@ -53,7 +53,7 @@ namespace SistemaERP.Application.Services
             return true;
         }
 
-        public async Task AtualizarEndereco(FornecedorEndereco endereco)
+        public async Task AtualizarEndereco(Endereco_Fornecedor endereco)
         {
             if (!ExecutarValidacao(new EnderecoValidation(), endereco)) return;
             //erro ao atualizar enderço que nao exite
@@ -62,18 +62,16 @@ namespace SistemaERP.Application.Services
 
         public async Task<bool> Remover(Guid id)
         {
+
             if (_fornecedorRepository.ObterFornecedorProdutosEndereco(id).Result.Produtos.Any())
             {
                 Notificar("O fornecedor possui produtos cadastrados!");
                 return false;
             }
 
-            var endereco = await _enderecoRepository.ObterEnderecoPorFornecedor(id);
-
-            if (endereco != null)
-            {
-                await _enderecoRepository.DeleteAsync(endereco.Id);
-            }
+            
+            await _enderecoRepository.DeleteAsync(id);
+            
 
             await _fornecedorRepository.DeleteAsync(id);
             return true;

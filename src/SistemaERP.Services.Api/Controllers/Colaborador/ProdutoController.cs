@@ -98,7 +98,7 @@ namespace SistemaERP.Services.Api.Controllers.Colaborador
                 await file.CopyToAsync(stream);
             }
 
-            await _imagemRepository.AddAsync(new ProdutoImagem { Caminho = nome, ProdutoId = id });
+            await _imagemRepository.AddAsync(new Imagem_Produto { caminho = nome, id_produto = id });
 
             return Ok();
         }
@@ -141,7 +141,7 @@ namespace SistemaERP.Services.Api.Controllers.Colaborador
 
             if (imagem == null) return NotFound();
 
-            var file = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagens", imagem.Caminho);
+            var file = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagens", imagem.caminho);
 
             using (FileStream stream = new FileStream(file, FileMode.Truncate, FileAccess.Write, FileShare.Delete, 4096, true))
             {

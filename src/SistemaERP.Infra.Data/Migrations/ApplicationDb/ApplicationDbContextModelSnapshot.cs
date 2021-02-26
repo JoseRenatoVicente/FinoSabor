@@ -81,14 +81,9 @@ namespace SistemaERP.Infra.Data.Migrations.ApplicationDb
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("UsuarioId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("LoginProvider", "ProviderKey");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("AspNetUserLogins");
                 });
@@ -301,20 +296,16 @@ namespace SistemaERP.Infra.Data.Migrations.ApplicationDb
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("SistemaERP.Infra.CrossCutting.Identity.Entities.Usuario", null)
-                        .WithMany()
+                        .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("SistemaERP.Infra.CrossCutting.Identity.Entities.Usuario", null)
-                        .WithMany("Logins")
-                        .HasForeignKey("UsuarioId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("SistemaERP.Infra.CrossCutting.Identity.Entities.Usuario", null)
-                        .WithMany()
+                        .WithMany("Tokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -323,7 +314,7 @@ namespace SistemaERP.Infra.Data.Migrations.ApplicationDb
             modelBuilder.Entity("SistemaERP.Infra.CrossCutting.Identity.Entities.UsuarioFuncao", b =>
                 {
                     b.HasOne("SistemaERP.Infra.CrossCutting.Identity.Entities.Funcao", "Funcao")
-                        .WithMany("Users")
+                        .WithMany("UserRoles")
                         .HasForeignKey("FuncaoId");
 
                     b.HasOne("SistemaERP.Infra.CrossCutting.Identity.Entities.Funcao", null)
@@ -349,7 +340,7 @@ namespace SistemaERP.Infra.Data.Migrations.ApplicationDb
 
             modelBuilder.Entity("SistemaERP.Infra.CrossCutting.Identity.Entities.Funcao", b =>
                 {
-                    b.Navigation("Users");
+                    b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("SistemaERP.Infra.CrossCutting.Identity.Entities.Usuario", b =>
@@ -357,6 +348,8 @@ namespace SistemaERP.Infra.Data.Migrations.ApplicationDb
                     b.Navigation("Claims");
 
                     b.Navigation("Logins");
+
+                    b.Navigation("Tokens");
 
                     b.Navigation("UsuarioFuncao");
                 });

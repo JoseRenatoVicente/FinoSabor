@@ -30,7 +30,9 @@ namespace SistemaERP.Infra.CrossCutting.Identity.Entities
         /// <summary>
         /// Navigation property for this users login accounts.
         /// </summary>
-        public virtual ICollection<IdentityUserLogin<Guid>> Logins { get; } = new List<IdentityUserLogin<Guid>>();
+       public virtual ICollection<IdentityUserLogin<Guid>> Logins { get; } = new List<IdentityUserLogin<Guid>>();
+
+       public virtual ICollection<IdentityUserToken<Guid>> Tokens { get; set; }
 
     }
 }

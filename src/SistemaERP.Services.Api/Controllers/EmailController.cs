@@ -47,7 +47,7 @@ namespace SistemaERP.Services.Api.Controllers
                 return CustomResponse();
             }
 
-            email.Id = Guid.NewGuid();
+            email.id = Guid.NewGuid();
 
             await _emailConfigRepository.AddAsync(email);
 
@@ -61,13 +61,13 @@ namespace SistemaERP.Services.Api.Controllers
             if (!await _emailConfigRepository.ExisteId(id)) return NotFound();
 
             var prioridade = await _emailConfigRepository.PegarEmailPorPrioridade(email.Prioridade);
-            if (prioridade != null && prioridade.Id != id )
+            if (prioridade != null && prioridade.id != id )
             {
                 NotificarErro("ja exite um email na prioridade " + email.Prioridade);
                 return CustomResponse();
             }
 
-            email.Id = id;
+            email.id = id;
 
             await _emailConfigRepository.UpdateAsync(email);
 

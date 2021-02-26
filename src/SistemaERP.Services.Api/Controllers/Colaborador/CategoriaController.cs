@@ -46,7 +46,7 @@ namespace SistemaERP.Services.Api.Controllers.Colaborador
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<Categoria>> ObterPorId(Guid id)
         {
-            var categoria = await _categoriaRepository.ObterSubCategorias(id);
+            var categoria = await _categoriaRepository.GetByIdAsync(id);
 
             if (categoria == null) return NotFound();
 
@@ -58,7 +58,7 @@ namespace SistemaERP.Services.Api.Controllers.Colaborador
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            categoria.Id = Guid.NewGuid();
+            categoria.id = Guid.NewGuid();
 
             await _categoriaRepository.AddAsync(categoria);
 
@@ -72,9 +72,9 @@ namespace SistemaERP.Services.Api.Controllers.Colaborador
             if (!ModelState.IsValid) return CustomResponse(ModelState);
             
             if (!await _categoriaRepository.ExisteId(id)) return NotFound();
-            if (!await _categoriaRepository.ExisteId(categoria.CategoriaPaiId)) return NotFound();
+            //if (!await _categoriaRepository.ExisteId(categoria.CategoriaPaiId)) return NotFound();
 
-            categoria.Id = id;
+            categoria.id = id;
 
             await _categoriaRepository.UpdateAsync(categoria);
 
@@ -89,19 +89,19 @@ namespace SistemaERP.Services.Api.Controllers.Colaborador
 
 
 
-            var categoriasFilho = _categoriaRepository.ObterCategoriasPorCategoriaPai(id);
+            /*var categoriasFilho = _categoriaRepository.ObterCategoriasPorCategoriaPai(id);
             if (categoriasFilho.Result.Count > 0)
             {
                 StringBuilder sb = new StringBuilder();
 
                 foreach (var item in categoriasFilho.Result)
                 {
-                    sb.Append($"'{item.Nome}' ");
+                    sb.Append($"'{item.nome}' ");
                 }
 
                 NotificarErro("Não é possível excluir Categorias que possuem categorias vinculados: " + sb.ToString());
                 return CustomResponse();
-            }
+            }*/
 
 
             var produtosCategoria = await _produtoRepository.ObterProdutoPorCategoria(id);
@@ -110,7 +110,7 @@ namespace SistemaERP.Services.Api.Controllers.Colaborador
                 StringBuilder sb = new StringBuilder();
                 foreach (var item in produtosCategoria)
                 {
-                    sb.Append($"'{item.Nome}' ");
+                    sb.Append($"'{item.nome}' ");
                 }
 
                 NotificarErro("Não é possível excluir Categorias que possuem produtos vinculados: " + sb.ToString());

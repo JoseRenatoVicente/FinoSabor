@@ -21,28 +21,41 @@ namespace SistemaERP.Infra.Data.Migrations
 
             modelBuilder.Entity("SistemaERP.Domain.Entities.Categoria", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CategoriaPaiId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("nome")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoriaPaiId");
+                    b.HasKey("id");
 
                     b.ToTable("Categorias");
                 });
 
+            modelBuilder.Entity("SistemaERP.Domain.Entities.Cliente", b =>
+                {
+                    b.Property<Guid>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("cpf")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("data_nascimento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Clientes");
+                });
+
             modelBuilder.Entity("SistemaERP.Domain.Entities.EmailConfig", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -64,14 +77,14 @@ namespace SistemaERP.Infra.Data.Migrations
                     b.Property<bool>("UsarSSL")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.ToTable("EmailConfigs");
                 });
 
             modelBuilder.Entity("SistemaERP.Domain.Entities.EmailModelo", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -84,199 +97,200 @@ namespace SistemaERP.Infra.Data.Migrations
                     b.Property<string>("Using")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.ToTable("EmailModelos");
                 });
 
-            modelBuilder.Entity("SistemaERP.Domain.Entities.Fornecedor", b =>
+            modelBuilder.Entity("SistemaERP.Domain.Entities.Endereco_Fornecedor", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Documento")
+                    b.Property<string>("bairro")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("cep")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Situacao")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("TipoFornecedor")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Fornecedores");
-                });
-
-            modelBuilder.Entity("SistemaERP.Domain.Entities.FornecedorEndereco", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Bairro")
+                    b.Property<string>("cidade")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Cep")
+                    b.Property<string>("complemento")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Cidade")
+                    b.Property<string>("estado")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Complemento")
+                    b.Property<string>("logradouro")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Estado")
+                    b.Property<string>("numero")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("FornecedorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Logradouro")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Numero")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FornecedorId")
-                        .IsUnique();
+                    b.HasKey("id");
 
                     b.ToTable("FornecedorEnderecos");
                 });
 
-            modelBuilder.Entity("SistemaERP.Domain.Entities.Log", b =>
+            modelBuilder.Entity("SistemaERP.Domain.Entities.Fornecedor", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DataCadastro")
+                    b.Property<string>("documento")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("id_endereco")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("situacao")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("tipo_fornecedor")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("id_endereco");
+
+                    b.ToTable("Fornecedores");
+                });
+
+            modelBuilder.Entity("SistemaERP.Domain.Entities.Imagem_Produto", b =>
+                {
+                    b.Property<Guid>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("caminho")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("id_produto")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("id_produto");
+
+                    b.ToTable("ProdutoImagems");
+                });
+
+            modelBuilder.Entity("SistemaERP.Domain.Entities.Log", b =>
+                {
+                    b.Property<Guid>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("data_cadastro")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("EntidadeId")
+                    b.Property<Guid>("id_entidade")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("NomeEntidade")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Operação")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("UsuarioId")
+                    b.Property<Guid?>("id_usuario")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ValoresAlterados")
+                    b.Property<string>("nome_entidade")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("operacao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("valores_alterados")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
 
                     b.ToTable("Log");
                 });
 
             modelBuilder.Entity("SistemaERP.Domain.Entities.Produto", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Altura")
+                    b.Property<int>("altura")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("CategoriaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Comprimento")
+                    b.Property<int>("comprimento")
                         .HasColumnType("int");
 
-                    b.Property<string>("Descricao")
+                    b.Property<string>("descricao")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("FornecedorId")
+                    b.Property<Guid>("id_categoria")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Largura")
+                    b.Property<Guid>("id_fornecedor")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("largura")
                         .HasColumnType("int");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("nome")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Peso")
+                    b.Property<double>("peso")
                         .HasColumnType("float");
 
-                    b.Property<int>("QuantidadeEstoque")
+                    b.Property<int>("quantidade_estoque")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Situacao")
+                    b.Property<bool>("situacao")
                         .HasColumnType("bit");
 
-                    b.Property<decimal>("Valor")
+                    b.Property<decimal>("valor")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
-                    b.HasIndex("CategoriaId");
+                    b.HasIndex("id_categoria");
 
-                    b.HasIndex("FornecedorId");
+                    b.HasIndex("id_fornecedor");
 
                     b.ToTable("Produtos");
                 });
 
-            modelBuilder.Entity("SistemaERP.Domain.Entities.ProdutoImagem", b =>
+            modelBuilder.Entity("SistemaERP.Domain.Entities.Fornecedor", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Caminho")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("ProdutoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProdutoId");
-
-                    b.ToTable("ProdutoImagems");
-                });
-
-            modelBuilder.Entity("SistemaERP.Domain.Entities.Categoria", b =>
-                {
-                    b.HasOne("SistemaERP.Domain.Entities.Categoria", "CategoriaPai")
+                    b.HasOne("SistemaERP.Domain.Entities.Endereco_Fornecedor", "Endereco")
                         .WithMany()
-                        .HasForeignKey("CategoriaPaiId");
-
-                    b.Navigation("CategoriaPai");
-                });
-
-            modelBuilder.Entity("SistemaERP.Domain.Entities.FornecedorEndereco", b =>
-                {
-                    b.HasOne("SistemaERP.Domain.Entities.Fornecedor", "Fornecedor")
-                        .WithOne("Endereco")
-                        .HasForeignKey("SistemaERP.Domain.Entities.FornecedorEndereco", "FornecedorId")
+                        .HasForeignKey("id_endereco")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Fornecedor");
+                    b.Navigation("Endereco");
+                });
+
+            modelBuilder.Entity("SistemaERP.Domain.Entities.Imagem_Produto", b =>
+                {
+                    b.HasOne("SistemaERP.Domain.Entities.Produto", "Produto")
+                        .WithMany("Imagem")
+                        .HasForeignKey("id_produto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Produto");
                 });
 
             modelBuilder.Entity("SistemaERP.Domain.Entities.Produto", b =>
                 {
                     b.HasOne("SistemaERP.Domain.Entities.Categoria", "Categoria")
                         .WithMany()
-                        .HasForeignKey("CategoriaId")
+                        .HasForeignKey("id_categoria")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SistemaERP.Domain.Entities.Fornecedor", "Fornecedor")
                         .WithMany("Produtos")
-                        .HasForeignKey("FornecedorId")
+                        .HasForeignKey("id_fornecedor")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -285,21 +299,8 @@ namespace SistemaERP.Infra.Data.Migrations
                     b.Navigation("Fornecedor");
                 });
 
-            modelBuilder.Entity("SistemaERP.Domain.Entities.ProdutoImagem", b =>
-                {
-                    b.HasOne("SistemaERP.Domain.Entities.Produto", "Produto")
-                        .WithMany("Imagem")
-                        .HasForeignKey("ProdutoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Produto");
-                });
-
             modelBuilder.Entity("SistemaERP.Domain.Entities.Fornecedor", b =>
                 {
-                    b.Navigation("Endereco");
-
                     b.Navigation("Produtos");
                 });
 

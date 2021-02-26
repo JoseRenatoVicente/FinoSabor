@@ -9,7 +9,7 @@ namespace SistemaERP.Infra.CrossCutting.Identity.Extensions.Interfaces
     {
         string Name { get; }
         Guid ObterUserId();
-        string ObterUserEmail();
+        //string ObterUserEmail();
         string ObterUserToken();
         string ObterUserRefreshToken();
         bool EstaAutenticado();

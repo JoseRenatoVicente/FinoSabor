@@ -22,10 +22,10 @@ namespace SistemaERP.Infra.CrossCutting.Identity.Extensions
             return EstaAutenticado() ? Guid.Parse(_accessor.HttpContext.User.GetUserId()) : Guid.Empty;
         }
 
-        public string ObterUserEmail()
+        /*public string ObterUserEmail()
         {
             return EstaAutenticado() ? _accessor.HttpContext.User.GetUserEmail() : "";
-        }
+        }*/
 
         public string ObterUserToken()
         {
