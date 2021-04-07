@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FinoSabor.Domain.Entities.Produto" Collapsed="true">
+    <Position X="8" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAEAEQAAQEAAAAABAAABACAAEAAAA=</HashCode>
+      <FileName>Entities\Produto.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Fornecedor" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="FinoSabor.Domain.Entities.Fornecedor" Collapsed="true">
+    <Position X="4.25" Y="1.25" Width="1.5" />
+    <Members>
+      <Property Name="Endereco" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAIAAIAAAAAAAAAAAEAAAAAAAAIAAAAAAAAAAEAEAA=</HashCode>
+      <FileName>Entities\Fornecedor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Endereco" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="FinoSabor.Domain.Entities.Endereco" Collapsed="true">
+    <Position X="1" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAACIEEAAAAACAAAAAAAAAAAACAAABAAg=</HashCode>
+      <FileName>Entities\Endereco.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Fornecedor" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="FinoSabor.Domain.Entities.Email.EmailSetting" Collapsed="true">
+    <Position X="3" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAACAAACAACAAAAAQAAAAA=</HashCode>
+      <FileName>Entities\Email\EmailSetting.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinoSabor.Domain.Entities.Email.TemplatesEmail" Collapsed="true">
+    <Position X="4.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAQAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Email\TemplatesEmail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

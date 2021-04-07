@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FinoSabor.Services.Api</name>
+    </assembly>
+    <members>
+        <member name="M:FinoSabor.Services.Api.Controllers.Colaborador.ProdutoAdminController.ObterTodos">
+            <summary>
+            Retorna todos os produtos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FinoSabor.Services.Api.Controllers.Colaborador.ProdutoAdminController.ObterPorId(System.Guid)">
+            <summary>
+            Retrieves a specific product by unique id
+            </summary>
+            <remarks>Awesomeness!</remarks>
+            <param name="id" example="123">The product id</param>
+            <response code="200">Product created</response>
+            <response code="400">Product has missing/invalid values</response>
+            <response code="500">Oops! Can't create your product right now</response>
+        </member>
+        <member name="M:FinoSabor.Services.Api.Controllers.Admin.CompraAdminController.ObterTodos">
+            <summary>
+            Retorna todos os produtos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FinoSabor.Services.Api.Controllers.Identity.ContaController.EsqueceuSenha(System.String)">
+            <summary>
+            Requisição usada para recuperação da conta
+            </summary>
+            <param name="email">É necessário enviar o email da conta</param>
+            <returns></returns>
+        </member>
+        <member name="M:FinoSabor.Services.Api.Controllers.Identity.ContaController.ResetSenha(FinoSabor.Infra.CrossCutting.Identity.ViewModels.ResetPasswordViewModel)">
+            <summary>
+            Requisição usada para trocar a senha após receber um link de reset de senha
+            </summary>
+            <param name="resetPassword">É necessário enviar o userId, code e uma nova senha</param>
+            <returns></returns>
+        </member>
+        <member name="M:FinoSabor.Services.Api.Controllers.Identity.ContaController.ConfirmarEmail(System.Guid,System.String)">
+            <summary>
+            Requisição usada para confirmar o email
+            </summary>
+            <param name="userId">É necessário enviar o userId e code </param>
+            <param name="code">É necessário enviar o userId e code </param>
+            <returns></returns>
+        </member>
+        <member name="M:FinoSabor.Services.Api.Controllers.Identity.PerfilController.MudarSenha(FinoSabor.Infra.CrossCutting.Identity.ViewModels.MudarSenhaViewModel)">
+            <summary>
+            Requisição usada para mudar a senha de um usuário que esta logado
+            </summary>
+            <param name="changePassword">É necessário enviar a senha atual e a nova senha</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
