@@ -26,7 +26,3 @@ Sistema E-commerce de uma Padaria usando o asp.net core 5 como WebAPI e angular 
 - Domain Driven Design
 - Domain Notification
 - Domain Validations
-
-## Modelagem de Banco de dados
-
-
