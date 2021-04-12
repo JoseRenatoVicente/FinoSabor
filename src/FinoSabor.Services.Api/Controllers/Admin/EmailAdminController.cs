@@ -92,9 +92,9 @@ namespace FinoSabor.Services.Api.Controllers
                 await _mailService.Test(email, nome);
                 return CustomResponse();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                NotificarErro("erro ao enviar email");
+                NotificarErro("erro ao enviar email, tente novamente mais tarde "+e);
                 return CustomResponse();
             }
             

@@ -44,9 +44,9 @@ namespace FinoSabor.Services.Api.Controllers.Colaborador
         }
 
         [HttpPost]
-        public async Task<ActionResult<FornecedorViewModel>> Adicionar(FornecedorViewModel fornecedorViewModel)
+        public async Task<ActionResult<Fornecedor>> Adicionar(Fornecedor fornecedor)
         {
-            return !ModelState.IsValid ? CustomResponse(ModelState) : CustomResponse(await _fornecedorService.Adicionar(_mapper.Map<Fornecedor>(fornecedorViewModel)));
+            return !ModelState.IsValid ? CustomResponse(ModelState) : CustomResponse(await _fornecedorService.Adicionar(fornecedor));
         }
 
         [HttpPut]

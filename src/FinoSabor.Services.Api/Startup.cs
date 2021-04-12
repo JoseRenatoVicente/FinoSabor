@@ -86,8 +86,6 @@ namespace FinoSabor.Services.Api
 
             app.UseStaticFiles();
 
-            app.UseHttpsRedirection();
-
             //app.UseHealthChecks("/status");
 
             // Ativa a compressão

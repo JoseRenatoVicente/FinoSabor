@@ -47,52 +47,7 @@ namespace FinoSabor.Services.Api.Controllers.Colaborador
         }
 
 
-        [HttpGet("UsuariosAdmin")]
-        public async Task<List<UsuarioViewModel>> UsuariosAdmin()
-        {
-            var model = new List<UsuarioViewModel>();
-
-            var listaUsuarios = await UserManager.GetUsersInRoleAsync("admin");
-            foreach (var user in listaUsuarios)
-            {
-                var userViewModel = new UsuarioViewModel
-                {
-                    Id = user.Id,
-                    Nome = user.Nome,
-                    DataCadastro = user.DataCadastro,
-                    Email = user.Email,
-                    LockoutEnabled = user.LockoutEnabled 
-                };
-
-                model.Add(userViewModel);
-            }
-
-            return model;
-        }
-
-        [HttpGet("UsuariosComuns")]
-        public async Task<List<UsuarioViewModel>> UsuariosComuns()
-        {
-
-            var model = new List<UsuarioViewModel>();
-
-            var listaUsuarios = await UserManager.GetUsersInRoleAsync("usuario");
-            foreach (var user in listaUsuarios)
-            {
-                var userViewModel = new UsuarioViewModel
-                {
-                    Id = user.Id,
-                    Nome = user.Nome,
-                    DataCadastro = user.DataCadastro,
-                    Email = user.Email,
-                    LockoutEnabled = user.LockoutEnabled
-                };
-
-                model.Add(userViewModel);
-            }
-
-            return model;
-        }
+        
 
         [HttpPost("AdicionarFuncaoAdmin")]
         public async Task<ActionResult> AdicionarFuncaoUsuario(string email)

@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using FinoSabor.Domain.Helpers;
 
 namespace FinoSabor.Application.Services
 {
@@ -47,11 +48,6 @@ namespace FinoSabor.Application.Services
             return await _produtoRepository.ObterProdutoPorId(id);
         }
 
-        public async Task CalcularFrete(int CEP)
-        {
-            
-        }
-
         public async Task<bool> Adicionar(Produto produto)
         {
             if (!ExecutarValidacao(new ProdutoValidation(), produto)) return false;
@@ -61,6 +57,12 @@ namespace FinoSabor.Application.Services
                 Notificar("Categoria não encontrada");
                 return false;
             }
+            if (await _produtoRepository.Existe(c => c.slug == produto.slug))
+            {
+                Notificar("Já existe um produto com o nome " + produto.nome);
+                return false;
+            }
+            produto.slug = produto.nome.Slugify();
 
             await _produtoRepository.AddAsync(produto);
             return true;
@@ -98,9 +100,6 @@ namespace FinoSabor.Application.Services
 
             var nome = Guid.NewGuid() + "_" + file.FileName;
             var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagens", nome);
-
-
-            if (File.Exists(path)) path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagens", file.FileName + Guid.NewGuid());
 
             using (var stream = new FileStream(path, FileMode.Create))
             {

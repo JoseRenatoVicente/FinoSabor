@@ -11,7 +11,6 @@ namespace FinoSabor.Application.Services.Interfaces
     {
         Task<IEnumerable<ProdutoViewModel>> ObterProdutos();
         Task<ProdutoViewModel> ObterProdutosPorId(Guid id);
-        Task CalcularFrete(int CEP);
         Task<bool> Adicionar(Produto produto);
         Task<bool> MudarImagemPrincipal(string caminhoImagem);
         Task<bool> Atualizar(Produto produto);

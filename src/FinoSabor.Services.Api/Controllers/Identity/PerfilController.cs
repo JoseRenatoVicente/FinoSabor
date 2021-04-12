@@ -35,7 +35,7 @@ namespace FinoSabor.Services.Api.Controllers.Identity
         /// <summary>
         /// Requisição usada para mudar a senha de um usuário que esta logado
         /// </summary>
-        /// <param name="changePassword">É necessário enviar a senha atual e a nova senha</param>
+        /// <param name="mudarSenha">É necessário enviar a senha atual e a nova senha</param>
         /// <returns></returns>
         [HttpPost("MudarSenha")]
         public async Task<ActionResult> MudarSenha(MudarSenhaViewModel mudarSenha)

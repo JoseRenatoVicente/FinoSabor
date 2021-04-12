@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="FinoSabor.Services.Api.xml" />
     <None Remove="v0.12.4\32 bit\libwkhtmltox.dll" />
     <None Remove="v0.12.4\32 bit\libwkhtmltox.dylib" />
     <None Remove="v0.12.4\32 bit\libwkhtmltox.so" />
@@ -21,11 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="FinoSabor.Services.Api.xml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="assets\styles.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FinoSabor.Services.Api.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="v0.12.4\32 bit\libwkhtmltox.dll">
@@ -63,7 +63,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.2" />
   </ItemGroup>
 
   <ItemGroup>

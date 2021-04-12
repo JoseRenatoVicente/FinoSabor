@@ -61,13 +61,13 @@ namespace FinoSabor.Application.Services
         {
             var emails = new List<string>();
             emails.Add(email);
-            await Execute("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", subject, message, emails);
+            await Execute("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", subject, message, emails);
         }
 
         public async Task SendEmailsAsync(List<string> emails, string subject, string message)
         {
 
-            await Execute("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", subject, message, emails);
+            await Execute("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", subject, message, emails);
         }
 
         public async Task Execute(string apiKey, string subject, string message, List<string> emails)

@@ -595,3 +595,4 @@ sandbox
 
 # production settings
 appsettings.Production.json
+appsettings.json

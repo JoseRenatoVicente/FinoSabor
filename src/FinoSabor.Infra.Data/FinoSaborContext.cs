@@ -57,12 +57,24 @@ namespace FinoSabor.Infra.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new PessoaMap());
+            modelBuilder.ApplyConfiguration(new CategoriaMap());
+            modelBuilder.ApplyConfiguration(new ProdutoMap());
+            modelBuilder.ApplyConfiguration(new LogMap());
+            modelBuilder.ApplyConfiguration(new PedidoMap());
+            modelBuilder.ApplyConfiguration(new Itens_PedidoMap());
+            modelBuilder.ApplyConfiguration(new CompraMap());
+            modelBuilder.ApplyConfiguration(new Itens_CompraMap());
+            modelBuilder.ApplyConfiguration(new Imagem_ProdutoMap());
+            modelBuilder.ApplyConfiguration(new FornecedorMap());
+            modelBuilder.ApplyConfiguration(new Endereco_FornecedorMap());
+
+
 
             //identity
             modelBuilder.ApplyConfiguration(new UsuarioFuncaoMap());
             modelBuilder.ApplyConfiguration(new FuncaoMap());
             modelBuilder.ApplyConfiguration(new UsuarioMap());
-
+            //modelBuilder.ApplyConfiguration(new RefreshTokenMap());
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
