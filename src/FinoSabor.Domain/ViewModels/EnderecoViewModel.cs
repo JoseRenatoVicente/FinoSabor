@@ -7,7 +7,7 @@ namespace FinoSabor.Application.ViewModels
     public class EnderecoViewModel : EntityBase
     {
         public string rua { get; set; }
-        public string numero { get; set; }
+        public int numero { get; set; }
         public string complemento { get; set; }
         public string cep { get; set; }
         public string bairro { get; set; }

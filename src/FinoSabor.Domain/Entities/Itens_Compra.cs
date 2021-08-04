@@ -7,8 +7,7 @@ namespace FinoSabor.Domain.Entities
     public class Itens_Compra : EntityBase
     {
         public int quantidade { get; set; }
-        public int valor_unitario { get; set; }
-        [NotMapped] public decimal valor_item { get; set; }
+        public decimal valor_unitario { get; set; }
 
         //Banco de dados
         public Guid id_compra { get; set; }

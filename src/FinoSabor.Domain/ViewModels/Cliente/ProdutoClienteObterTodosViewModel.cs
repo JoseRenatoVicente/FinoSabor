@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FinoSabor.Domain.Entities.Base;
 
 namespace FinoSabor.Application.ViewModels.Cliente
 {
-    public class ProdutoClienteObterTodosViewModel
+    public class ProdutoClienteObterTodosViewModel : EntityBase
     {
         public string Nome { get; set; }
         public decimal Valor { get; set; }

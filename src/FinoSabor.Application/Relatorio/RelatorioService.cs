@@ -19,19 +19,19 @@ namespace FinoSabor.Application.Relatorio
 
             return Task.Run(() =>
             {
-                if (optionalGlobalSettings == null)
+                if (optionalGlobalSettings is null)
                     optionalGlobalSettings = new GlobalSettings();
 
-                if (optionalGlobalSettings.ColorMode == null)
+                if (optionalGlobalSettings.ColorMode is null)
                     optionalGlobalSettings.ColorMode = ColorMode.Color;
 
-                if (optionalGlobalSettings.Orientation == null)
+                if (optionalGlobalSettings.Orientation is null)
                     optionalGlobalSettings.Orientation = Orientation.Portrait;
 
-                if (optionalGlobalSettings.PaperSize == null)
+                if (optionalGlobalSettings.PaperSize is null)
                     optionalGlobalSettings.PaperSize = PaperKind.A4;
 
-                if (optionalGlobalSettings.DocumentTitle == null)
+                if (optionalGlobalSettings.DocumentTitle is null)
                     optionalGlobalSettings.DocumentTitle = "Relatório";
 
                 var pdf = new HtmlToPdfDocument()

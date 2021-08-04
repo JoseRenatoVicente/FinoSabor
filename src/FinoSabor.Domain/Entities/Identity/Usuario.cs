@@ -8,12 +8,10 @@ namespace FinoSabor.Domain.Entities.Identity
     {
         public Usuario()
         {
-            DataCadastro = DateTime.Now;
+            
         }
 
-        public string Nome { get; set; }
-        public DateTime DataCadastro { get; private set; }
-
+        
         /// <summary>
         /// Navigation property for the roles this user belongs to.
         /// </summary>

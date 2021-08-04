@@ -18,13 +18,16 @@ namespace FinoSabor.Services.Api.Configurations
     {
         public static void ResolveDependencies(this IServiceCollection services)
         {
-            if (services == null) throw new ArgumentNullException(nameof(services));
+            if (services is null) throw new ArgumentNullException(nameof(services));
 
             //services
             services.AddScoped<IFornecedorService, FornecedorService>();
             services.AddScoped<IProdutoService, ProdutoService>();
             services.AddScoped<ICategoriaService, CategoriaService>();
             services.AddScoped<IRelatorioService, RelatorioService>();
+            services.AddScoped<ICompraService, CompraService>();
+            services.AddScoped<IPedidoService, PedidoService>();
+            services.AddScoped<IPerfilService, PerfilService>();
 
             //Email            
             services.AddTransient<IEmailService, EmailService>();
@@ -38,8 +41,11 @@ namespace FinoSabor.Services.Api.Configurations
             services.AddScoped<IEnderecoRepository, Endereco_FornecedorRepository>();
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
             services.AddScoped<IItens_PedidoRepository, Itens_PedidoRepository>();
+            services.AddScoped<ICompraRepository, CompraRepository>();
+            services.AddScoped<IPessoaRepository, PessoaRepository>();
 
             //auth
+            services.AddScoped<AuthenticationService>();
             services.AddScoped<IAspNetUser, AspNetUser>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

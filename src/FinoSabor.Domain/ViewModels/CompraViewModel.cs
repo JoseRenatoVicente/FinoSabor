@@ -1,6 +1,7 @@
 ﻿using FinoSabor.Application.ViewModels;
 using FinoSabor.Domain.Entities;
 using FinoSabor.Domain.Entities.Base;
+using FinoSabor.Domain.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,15 +14,14 @@ namespace FinoSabor.Domain.ViewModels
     public class CompraViewModel : EntityBase
     {
         public DateTime data { get; set; }
+        public StatusCompra status_compra { get; set; }
 
-
-        [NotMapped] public decimal Total { get; set; }
-        
         //Banco de dados
-        public Guid id_fornecedor { get; set; }
-        public FornecedorViewModel Fornecedor { get; set; }
+        public string nomeFornecedor{ get; set; }
+
+        //Valor a ser calculado
+        public decimal Total { get; set; }
 
         /* EF Relations */
-        public IEnumerable<Itens_Compra> Itens { get; set; }
     }
 }

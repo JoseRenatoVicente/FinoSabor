@@ -11,7 +11,7 @@ namespace FinoSabor.Services.Api.Configurations
     {
         public static void AddSwaggerConfiguration(this IServiceCollection services)
         {
-            if (services == null) throw new ArgumentNullException(nameof(services));
+            if (services is null) throw new ArgumentNullException(nameof(services));
 
 
             services.AddSwaggerGen(s =>
@@ -62,7 +62,7 @@ namespace FinoSabor.Services.Api.Configurations
 
         public static void UseSwaggerSetup(this IApplicationBuilder app)
         {
-            if (app == null) throw new ArgumentNullException(nameof(app));
+            if (app is null) throw new ArgumentNullException(nameof(app));
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

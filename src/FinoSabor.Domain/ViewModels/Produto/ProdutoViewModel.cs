@@ -13,10 +13,6 @@ namespace FinoSabor.Application.ViewModels
         public bool ativo { get; set; }
         public int quantidade_estoque { get; set; }
         public int quantidade_minima { get; set; }
-        public double peso { get; set; }
-        public int largura { get; set; }
-        public int altura { get; set; }
-        public int comprimento { get; set; }
         public string slug { get; set; }
 
         [ScaffoldColumn(false)]

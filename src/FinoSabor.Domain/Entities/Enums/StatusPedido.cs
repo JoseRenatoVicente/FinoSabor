@@ -2,10 +2,9 @@
 {
     public enum StatusPedido
     {
-        EmAndamento  = 0,//Carrinho
-        Processando = 1,
-        Cancelado = 2,
-        Enviado = 3,
-        Entregue = 4
+        EmAndamento  = 0,//Acabou de ser adicionado
+        Preparando = 1,//Confirmado pelo empresa
+        EmRota = 2,//Saindo para entrega
+        Entregue = 3//Entregue
     }
 }

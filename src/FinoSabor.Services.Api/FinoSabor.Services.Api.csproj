@@ -1,18 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>5ef9b6c5-c2a3-4c3f-9340-7a817cee39a8</UserSecretsId>
     <Nullable>warnings</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\Desktop\FinoSabor\src\FinoSabor.Services.Api\FinoSabor.Services.Api.xml</DocumentationFile>
+    <DocumentationFile>C:\Users\opc\Desktop\FinoSabor\src\FinoSabor.Services.Api\FinoSabor.Services.Api.xml</DocumentationFile>
     <NoWarn>1701;1702;CS1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="FinoSabor.Services.Api.xml" />
     <None Remove="v0.12.4\32 bit\libwkhtmltox.dll" />
     <None Remove="v0.12.4\32 bit\libwkhtmltox.dylib" />
     <None Remove="v0.12.4\32 bit\libwkhtmltox.so" />
@@ -23,9 +22,6 @@
 
   <ItemGroup>
     <Content Include="assets\styles.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="FinoSabor.Services.Api.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="v0.12.4\32 bit\libwkhtmltox.dll">
@@ -57,13 +53,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.5">
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0-preview.6.21355.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.0-preview.6.21355.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0-preview.6.21352.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
   </ItemGroup>
 
   <ItemGroup>

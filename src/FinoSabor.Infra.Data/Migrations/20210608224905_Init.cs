@@ -88,8 +88,6 @@ namespace FinoSabor.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -269,9 +267,18 @@ namespace FinoSabor.Infra.Data.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    telefone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    data_cadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     cpf = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     data_nascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    rua = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    numero = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    complemento = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    cep = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    bairro = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    cidade = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    estado = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     id_usuario = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -291,12 +298,17 @@ namespace FinoSabor.Infra.Data.Migrations
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    RoleId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    FuncaoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_usuario_funcao", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_usuario_funcao_funcao_FuncaoId",
+                        column: x => x.FuncaoId,
+                        principalTable: "funcao",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_usuario_funcao_funcao_RoleId",
                         column: x => x.RoleId,
@@ -304,23 +316,11 @@ namespace FinoSabor.Infra.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_usuario_funcao_funcao_RoleId1",
-                        column: x => x.RoleId1,
-                        principalTable: "funcao",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_usuario_funcao_usuario_UserId",
                         column: x => x.UserId,
                         principalTable: "usuario",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_usuario_funcao_usuario_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "usuario",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -348,6 +348,7 @@ namespace FinoSabor.Infra.Data.Migrations
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     data = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    status_compra = table.Column<int>(type: "int", nullable: false),
                     id_fornecedor = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -366,7 +367,7 @@ namespace FinoSabor.Infra.Data.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    valor_unitario = table.Column<int>(type: "int", nullable: false),
+                    valor_unitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     quantidade = table.Column<int>(type: "int", nullable: false),
                     id_produto = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     id_pedido = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
@@ -394,7 +395,7 @@ namespace FinoSabor.Infra.Data.Migrations
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     quantidade = table.Column<int>(type: "int", nullable: false),
-                    valor_unitario = table.Column<int>(type: "int", nullable: false),
+                    valor_unitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     id_compra = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     id_produto = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -501,19 +502,14 @@ namespace FinoSabor.Infra.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_usuario_funcao_FuncaoId",
+                table: "usuario_funcao",
+                column: "FuncaoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_usuario_funcao_RoleId",
                 table: "usuario_funcao",
                 column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_usuario_funcao_RoleId1",
-                table: "usuario_funcao",
-                column: "RoleId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_usuario_funcao_UserId1",
-                table: "usuario_funcao",
-                column: "UserId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

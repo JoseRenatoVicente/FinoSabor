@@ -29,7 +29,7 @@ namespace FinoSabor.Domain.Validations
 
             RuleFor(c => c.numero)
                 .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
-                .Length(1, 50).WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");
+                .GreaterThan(0).WithMessage("O campo {PropertyName} precisa ser maior que {ComparisonValue}");
         }
     }
 }

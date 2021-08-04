@@ -9,6 +9,12 @@ using FinoSabor.Services.Api.Controllers.Base;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using FinoSabor.Infra.Data.Repository.Interfaces;
+using FinoSabor.Domain.ViewModels.Pessoa;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace FinoSabor.Services.Api.Controllers.Identity
 {
@@ -16,80 +22,41 @@ namespace FinoSabor.Services.Api.Controllers.Identity
     [Route("api/[controller]")]
     public class UsuarioController : MainController
     {
+        private readonly IPessoaRepository _pessoaRepository;
 
         private readonly UserManager<Usuario> _userManager;
-        public UsuarioController(INotificador notificador, IAspNetUser appUser,
+
+        private readonly IMapper _mapper;
+        public UsuarioController(IPessoaRepository pessoaRepository,
+            INotificador notificador, IAspNetUser appUser,
+            IMapper mapper,
                                  UserManager<Usuario> userManager) : base(notificador, appUser)
         {
+            _pessoaRepository = pessoaRepository;
+            _mapper = mapper;
             _userManager = userManager;
         }
 
 
-        [HttpGet("{email}")]
-        public async Task<ActionResult<UsuarioViewModel>> ObterPorId(string email)
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<PessoaDetalhesViewModel>> ObterPorId(Guid id)
         {
+            return await (await _pessoaRepository.GetAllAsync())
+            .ProjectTo<PessoaDetalhesViewModel>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync(x => x.id == id);
 
-            var user = await _userManager.FindByEmailAsync(email);
-
-            if (user == null) return NotFound();
-
-                var userViewModel = new UsuarioViewModel
-                {
-                    Id = user.Id,
-                    Nome = user.Nome,
-                    DataCadastro = user.DataCadastro,
-                    Email = user.Email,
-                    LockoutEnabled = user.LockoutEnabled
-                };
-
-            return userViewModel;
         }
 
         [HttpGet("UsuariosAdmin")]
-        public async Task<List<UsuarioViewModel>> UsuariosAdmin()
+        public async Task<IEnumerable<PessoaViewModel>> UsuariosAdmin()
         {
-            var model = new List<UsuarioViewModel>();
-
-            var listaUsuarios = await _userManager.GetUsersInRoleAsync("admin");
-            foreach (var user in listaUsuarios)
-            {
-                var userViewModel = new UsuarioViewModel
-                {
-                    Id = user.Id,
-                    Nome = user.Nome,
-                    DataCadastro = user.DataCadastro,
-                    Email = user.Email,
-                    LockoutEnabled = user.LockoutEnabled
-                };
-
-                model.Add(userViewModel);
-            }
-
-            return model;
+            return await _pessoaRepository.GetAllAdmins();
         }
 
         [HttpGet("UsuariosComuns")]
-        public async Task<List<UsuarioViewModel>> UsuariosComuns()
+        public async Task<IEnumerable<PessoaViewModel>> UsuariosComuns()
         {
-
-            var model = new List<UsuarioViewModel>();
-
-            var listaUsuarios = await _userManager.GetUsersInRoleAsync("usuario");
-            foreach (var user in listaUsuarios)
-            {
-                var userViewModel = new UsuarioViewModel
-                {
-                    Id = user.Id,
-                    Nome = user.Nome,
-                    DataCadastro = user.DataCadastro,
-                    Email = user.Email,
-                    LockoutEnabled = user.LockoutEnabled
-                };
-
-                model.Add(userViewModel);
-            }
-
-            return model;
+            return await _pessoaRepository.GetAllComuns();
         }
 
     }

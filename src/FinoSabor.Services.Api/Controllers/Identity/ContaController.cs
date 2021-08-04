@@ -27,7 +27,7 @@ namespace FinoSabor.Services.Api.Controllers.Identity
         public ContaController(INotificador notificador, IAspNetUser user,
                               SignInManager<Usuario> signInManager,
                               IEmailService emailService,
-        UserManager<Usuario> userManager, ILogger<AutenticacaoController> logger) : base(notificador, user)
+        UserManager<Usuario> userManager, ILogger<AutenticaçãoController> logger) : base(notificador, user)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -49,7 +49,7 @@ namespace FinoSabor.Services.Api.Controllers.Identity
             if (!ModelState.IsValid) return CustomResponse(ModelState);
             var user = await _userManager.FindByEmailAsync(email);
 
-            if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+            if (user == null)
             {
                 // Não revelar se o usuario nao existe ou nao esta confirmado
                 NotificarErro("O Usuário já tem um email enviado para confirmação");
@@ -57,7 +57,7 @@ namespace FinoSabor.Services.Api.Controllers.Identity
             }
 
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var callbackUrl = "localhost:5001/ResetPassword?userId=" + user.Id + "?token="+ code ;
+            var callbackUrl = "https://www.finosabor.me/conta/reset-senha?userId=" + user.Id + "&token=" + code;
 
             await _emailService.SendEmailAsync(user.Email, "Esqueci minha senha", "Por favor altere sua senha clicando aqui: " + callbackUrl);
             return Ok();
@@ -77,7 +77,7 @@ namespace FinoSabor.Services.Api.Controllers.Identity
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var user = await _userManager.FindByIdAsync(resetPassword.UserId);
-            var result = await _userManager.ResetPasswordAsync(user, resetPassword.Token, resetPassword.Password);
+            var result = await _userManager.ResetPasswordAsync(user, resetPassword.Token.Replace(" ", "+"), resetPassword.Password);
             if (result.Succeeded)
             {
                 return Ok();
@@ -104,15 +104,15 @@ namespace FinoSabor.Services.Api.Controllers.Identity
         public async Task<ActionResult> ConfirmarEmail([Required] Guid userId, [Required] string code)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
-            
-            var result = await _userManager.ConfirmEmailAsync(new Usuario { Id = userId  }, code);
 
-            if (!result.Succeeded) NotificarErro("Link expirado");           
+            var result = await _userManager.ConfirmEmailAsync(new Usuario { Id = userId }, code);
+
+            if (!result.Succeeded) NotificarErro("Link expirado");
 
             return CustomResponse();
         }
 
-        
+
 
 
 

@@ -1,59 +1,73 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
 using FinoSabor.Application.Notificacoes.Interface;
+using FinoSabor.Application.Services.Interfaces;
 using FinoSabor.Domain.Entities;
+using FinoSabor.Domain.ViewModels;
+using FinoSabor.Domain.ViewModels.Cliente.Pedido;
 using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
 using FinoSabor.Infra.Data.Repository.Interfaces;
 using FinoSabor.Services.Api.Controllers.Base;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FinoSabor.Services.Api.Controllers.Colaborador
 {
-    [AllowAnonymous]
-
     [Route("api/[controller]")]
     public class PedidoController : MainController
     {
-        private readonly IPedidoRepository _pedidoRepository;
+        private readonly IMapper _mapper;
+        private readonly IPedidoService _pedidoService;
 
         public PedidoController(INotificador notificador, IAspNetUser appUser,
-                                IPedidoRepository pedidoRepository) : base(notificador, appUser)
+                                IMapper mapper,
+                                IPedidoService pedidoService) : base(notificador, appUser)
         {
-            _pedidoRepository = pedidoRepository;
+            _mapper = mapper;
+            _pedidoService = pedidoService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<Pedido>> ObterTodos()
+        public async Task<IEnumerable<PedidoViewModel>> ObterPedidosDoUsuario()
         {
-            return CustomResponse(await _pedidoRepository.GetAllAsync());
+            return await _pedidoService.ObterPedidosDoUsuario(AppUser.ObterUserId());
         }
 
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult<Pedido>> ObterPorId(Guid id)
+        public async Task<ActionResult<PedidoDetalhadoViewModel>> ObterPorId(Guid id)
         {
-            var pedido = await _pedidoRepository.GetByIdAsync(id);
+            var pedido = await _pedidoService.ObterPedidoDoUsuarioPorId(id, AppUser.ObterUserId());
 
-            if (pedido == null) return NotFound();
+            if (pedido is null) return NoContent();
 
             return pedido;
         }
 
         [HttpPost]
-        public async Task<ActionResult<Pedido>> Adicionar(Pedido pedido)
+        public async Task<ActionResult<PedidoDetalhadoViewModel>> Adicionar(PedidoInsertViewModel pedido)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
+            pedido.id = Guid.NewGuid();
+            pedido.id_usuario = AppUser.ObterUserId();
 
-            //pedido.id = Guid.NewGuid();
+            await _pedidoService.Adicionar(_mapper.Map<Pedido>(pedido));
 
-            await _pedidoRepository.AddAsync(pedido);
-
-            return CustomResponse(pedido);
+            return CustomResponse(await ObterPorId(pedido.id));
         }
 
+        [HttpPut]
+        public async Task<IActionResult> Atualizar(PedidoInsertViewModel pedido)
+        {
+            return !ModelState.IsValid ? CustomResponse(ModelState) : CustomResponse(await _pedidoService.Atualizar(_mapper.Map<Pedido>(pedido), AppUser.ObterUserId()));
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult> Excluir(Guid id)
+        {
+            return CustomResponse(await _pedidoService.Remover(id, AppUser.ObterUserId()));
+        }
 
     }
 }

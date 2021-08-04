@@ -11,6 +11,6 @@ namespace FinoSabor.Infra.Data.Repository.Interfaces
     {
         Task<Fornecedor> ObterFornecedorEndereco(Guid id);
         Task<Fornecedor> ObterFornecedorProdutosEndereco(Guid id);
-        Task<PagedList<FornecedorViewModel>> PaginacaoAsync(int PagNumero, int PagRegistro);
+        Task<PagedList<FornecedorViewModel>> PaginacaoAsync(int PagNumero, int PagRegistro, string busca = null);
     }
 }

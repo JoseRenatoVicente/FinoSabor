@@ -20,18 +20,14 @@ namespace FinoSabor.Services.Api.Controllers.Cliente
     public class ProdutoController : MainController
     {
         private readonly IProdutoService _produtoService;
-
-        private readonly ICategoriaRepository _categoriaRepository;
         private readonly IProdutoRepository _produtoRepository;
         private readonly IMapper _mapper;
 
         public ProdutoController(INotificador notificador, IAspNetUser appUser,
-                                 ICategoriaRepository categoriaRepository,
                                  IProdutoRepository produtoRepository,
                                  IProdutoService produtoService,
                                  IMapper mapper) : base(notificador, appUser)
         {
-            _categoriaRepository = categoriaRepository;
             _produtoRepository = produtoRepository;
             _produtoService = produtoService;
             _mapper = mapper;
@@ -44,47 +40,10 @@ namespace FinoSabor.Services.Api.Controllers.Cliente
             return await _produtoRepository.ObterProdutosCliente();
         }
 
-        /*[HttpPost]
-        public async Task<ActionResult> CalcularFrete(int cepDestino)
+        /*[HttpGet("catalogo/")]
+        public async Task<PagedResult<Produto>> Index([FromQuery] int ps = 8, [FromQuery] int page = 1, [FromQuery] string q = null)
         {
-            try
-            {
-                //Verifica se existe no Frete o calculo para o mesmo CEP e produtos.
-                Frete frete = null;//_cookieFrete.Consultar().Where(a => a.CEP == cepDestino && a.CodCarrinho == GerarHash(_cookieCarrinhoCompra.Consultar())).FirstOrDefault();
-                if (frete != null)
-                {
-                    return Ok(frete);
-                }
-                else
-                {
-
-                    List<ProdutoItem> produtos = CarregarProdutoDB();
-                    List<Pacote> pacotes = _calcularPacote.CalcularPacotesDeProdutos(produtos);
-
-                    ValorPrazoFrete valorPAC = await _wscorreios.CalcularFrete(cepDestino.ToString(), TipoFreteConstant.PAC, pacotes);
-                    ValorPrazoFrete valorSEDEX = await _wscorreios.CalcularFrete(cepDestino.ToString(), TipoFreteConstant.SEDEX, pacotes);
-                    ValorPrazoFrete valorSEDEX10 = await _wscorreios.CalcularFrete(cepDestino.ToString(), TipoFreteConstant.SEDEX10, pacotes);
-
-                    List<ValorPrazoFrete> lista = new List<ValorPrazoFrete>();
-                    if (valorPAC != null) lista.Add(valorPAC);
-                    if (valorSEDEX != null) lista.Add(valorSEDEX);
-                    if (valorSEDEX10 != null) lista.Add(valorSEDEX10);
-
-                    frete = new Frete()
-                    {
-                        CEP = cepDestino,
-                        CodCarrinho = GerarHash(_cookieCarrinhoCompra.Consultar()),
-                        ListaValores = lista
-                    };
-
-                    return Ok(frete);
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "CarrinhoCompraControler > CalcularFrete");
-                return BadRequest(e);
-            }
+            return await _produtoRepository.ObterTodos(ps, page, q);
         }*/
 
         [HttpGet("{slug}")]
@@ -92,6 +51,13 @@ namespace FinoSabor.Services.Api.Controllers.Cliente
         {
             return await _produtoRepository.ObterProdutoPorSlug(slug);
 
+        }
+
+
+        [HttpGet("lista/{ids}")]
+        public async Task<IEnumerable<ProdutoClienteObterTodosViewModel>> ObterProdutosPorId(string ids)
+        {
+            return await _produtoRepository.ObterProdutosPorIds(ids);
         }
 
     }

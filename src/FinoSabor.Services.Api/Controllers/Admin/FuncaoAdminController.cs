@@ -23,7 +23,6 @@ namespace FinoSabor.Services.Api.Controllers.Colaborador
         public readonly UserManager<Usuario> UserManager;
         public readonly RoleManager<Funcao> _roleManager;
         private readonly AppSettings _appSettings;
-        private readonly AppTokenSettings _appTokenSettingsSettings;
         private readonly IMapper _mapper;
 
         private readonly IAspNetUser _aspNetUser;
@@ -34,14 +33,12 @@ namespace FinoSabor.Services.Api.Controllers.Colaborador
             RoleManager<Funcao> roleManager,
             IOptions<AppSettings> appSettings,
             IMapper mapper,
-            IOptions<AppTokenSettings> appTokenSettingsSettings,
             IAspNetUser aspNetUser) : base(notificador, user)
         {
             SignInManager = signInManager;
             UserManager = userManager;
             _roleManager = roleManager;
             _appSettings = appSettings.Value;
-            _appTokenSettingsSettings = appTokenSettingsSettings.Value;
             _aspNetUser = aspNetUser;
             _mapper = mapper;
         }

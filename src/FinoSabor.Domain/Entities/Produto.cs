@@ -20,10 +20,6 @@ namespace FinoSabor.Domain.Entities
             this.ativo = ativo;
             this.quantidade_estoque = quantidade_estoque;
             this.quantidade_minima = quantidade_minima;
-            this.peso = peso;
-            this.largura = largura;
-            this.altura = altura;
-            this.comprimento = comprimento;
             //TODO:checar
             slug = nome.Slugify();
             this.id_categoria = id_categoria;
@@ -36,10 +32,6 @@ namespace FinoSabor.Domain.Entities
         public bool ativo { get; set; }
         public int quantidade_estoque { get; set; }
         public int quantidade_minima { get; set; }
-        public double peso { get; set; }
-        public int largura { get; set; }
-        public int altura { get; set; }
-        public int comprimento { get; set; }
 	    public string slug { get; set; }
 
         public Guid id_categoria { get; set; }

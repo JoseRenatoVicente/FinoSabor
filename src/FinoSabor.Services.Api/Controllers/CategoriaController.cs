@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FinoSabor.Application.ViewModels;
+using AutoMapper.QueryableExtensions;
 
 namespace FinoSabor.Services.Api.Controllers
 {
@@ -40,7 +42,8 @@ namespace FinoSabor.Services.Api.Controllers
         [HttpGet("produtos/{slug}")]
         public async Task<IEnumerable<ProdutoClienteObterTodosViewModel>> ObterProdutoPorCategoria(string slug)
         {
-            return _mapper.Map<IEnumerable<ProdutoClienteObterTodosViewModel>>(await _produtoRepository.Buscar(c => c.Categoria.slug == slug));
+            return (await _produtoRepository.GetAllAsync()).Where(c => c.Categoria.slug == slug)
+                .ProjectTo<ProdutoClienteObterTodosViewModel>(_mapper.ConfigurationProvider);
         }
     }
 }

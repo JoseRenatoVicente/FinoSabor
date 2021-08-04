@@ -1,12 +1,10 @@
-﻿using FinoSabor.Domain.Entities;
-using FinoSabor.Domain.Entities.Base;
-using System;
+﻿using FinoSabor.Domain.Entities.Base;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FinoSabor.Application.ViewModels.Cliente
 {
-    public class ProdutoClienteViewModel
+    public class ProdutoClienteViewModel : EntityBase
     {
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(200, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
@@ -24,7 +22,7 @@ namespace FinoSabor.Application.ViewModels.Cliente
         public string NomeCategoria { get; set; }
 
         public string SlugCategoria { get; set; }
-
+        public int quantidade_estoque { get; set; }
         public string imagem_principal { get; set; }
         public IEnumerable<ImagemViewModel> Imagem { get; set; }
 

@@ -15,7 +15,7 @@ namespace FinoSabor.Services.Api.Configurations
 
         public static void AddDinkToPDFConfiguration(this IServiceCollection services)
         {
-            if (services == null) throw new ArgumentNullException(nameof(services));
+            if (services is null) throw new ArgumentNullException(nameof(services));
 
             /*
             // Verifica qual a arquiterura para utilizar os arquivos necessários

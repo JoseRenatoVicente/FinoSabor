@@ -9,6 +9,6 @@ namespace FinoSabor.Domain.Helpers
         public int TotalRegistros { get; set; }
         public int TotalPaginas { get; set; }
 
-        public List<T> Data { get; set; }
+        public IEnumerable<T> Data { get; set; }
     }
 }

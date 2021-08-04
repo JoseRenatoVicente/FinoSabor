@@ -24,13 +24,13 @@ namespace FinoSabor.Domain.Validations
                 .Length(2, 30).WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");
 
             RuleFor(c => c.quantidade_estoque)
-               .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido");
+               .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
+               .GreaterThan(0).WithMessage("O campo {PropertyName} precisa ser maior que {ComparisonValue}");
 
             RuleFor(c => c.quantidade_minima)
-               .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido");
+               .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
+               .GreaterThan(0).WithMessage("O campo {PropertyName} precisa ser maior que {ComparisonValue}");
 
-            RuleFor(c => c.ativo)
-               .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido");
 
         }
     }

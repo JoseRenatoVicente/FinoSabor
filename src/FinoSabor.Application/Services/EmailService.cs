@@ -1,12 +1,10 @@
-﻿using SendGrid;
-using SendGrid.Helpers.Mail;
-using Serilog;
-using FinoSabor.Application.Services.Interfaces;
+﻿using FinoSabor.Application.Services.Interfaces;
+using FinoSabor.Infra.CrossCutting.Identity.Extensions;
 using FinoSabor.Infra.Data.Repository.Interfaces;
-using System;
+using Microsoft.Extensions.Options;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace FinoSabor.Application.Services
@@ -14,10 +12,13 @@ namespace FinoSabor.Application.Services
     public class EmailService : IEmailService
     {
         private readonly IEmailConfigRepository _emailConfigRepository;
+        private readonly AppSettings _appSettings;
 
-        public EmailService(IEmailConfigRepository emailConfigRepository)
+        public EmailService(IEmailConfigRepository emailConfigRepository,
+                            IOptions<AppSettings> appSettings)
         {
             _emailConfigRepository = emailConfigRepository;
+            _appSettings = appSettings.Value;
         }
 
         /*public async Task Execute(string to, string subject, string html)
@@ -61,13 +62,13 @@ namespace FinoSabor.Application.Services
         {
             var emails = new List<string>();
             emails.Add(email);
-            await Execute("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", subject, message, emails);
+            await Execute(_appSettings.apiKeyEmail, subject, message, emails);
         }
 
         public async Task SendEmailsAsync(List<string> emails, string subject, string message)
         {
 
-            await Execute("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", subject, message, emails);
+            await Execute(_appSettings.apiKeyEmail, subject, message, emails);
         }
 
         public async Task Execute(string apiKey, string subject, string message, List<string> emails)
@@ -76,7 +77,7 @@ namespace FinoSabor.Application.Services
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("tempforum333@gmail.com", "FinoSabor"),
+                From = new EmailAddress("tcc2021acfgj@gmail.com", "FinoSabor"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message
@@ -97,7 +98,7 @@ namespace FinoSabor.Application.Services
             emails.Add(email);
             var titulo = "FinoSabor - teste de email";
             var mensagem = $"<p>Olá {nome},</p> <p>Esse é um email de teste para verificar se o sistema consegue fazer contato com você. Por favor avise o facilitador quando esse email chegar. Obrigado.</p>";
-            
+
             await SendEmailsAsync(emails, titulo, mensagem);
         }
         /*

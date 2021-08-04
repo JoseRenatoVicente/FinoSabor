@@ -6,6 +6,7 @@
         public int ExpiracaoHoras { get; set; }
         public string Emissor { get; set; }
         public string ValidoEm { get; set; }
-        public string AutenticacaoJwksUrl { get; set; }
+        public int RefreshTokenExpiration { get; set; }
+        public string apiKeyEmail { get; set; }
     }
 }

@@ -4,7 +4,7 @@
         <name>FinoSabor.Services.Api</name>
     </assembly>
     <members>
-        <member name="M:FinoSabor.Services.Api.Controllers.Colaborador.ProdutoAdminController.ObterTodos">
+        <member name="M:FinoSabor.Services.Api.Controllers.Colaborador.ProdutoAdminController.ObterTodos(System.Int32,System.Int32,System.String)">
             <summary>
             Retorna todos os produtos
             </summary>

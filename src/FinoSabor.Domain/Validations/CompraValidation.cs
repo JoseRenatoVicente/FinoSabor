@@ -1,10 +1,6 @@
 ﻿using FluentValidation;
 using FinoSabor.Domain.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinoSabor.Domain.Validations
 {
@@ -12,7 +8,10 @@ namespace FinoSabor.Domain.Validations
     {
         public CompraValidation()
         {
-            
+            RuleFor(c => c.id_fornecedor)
+                    .NotEqual(Guid.Empty)
+                    .WithMessage("Id do Fornecedor inválido");
+
         }
     }
 }

@@ -1,10 +1,5 @@
-﻿using FluentValidation;
-using FinoSabor.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FinoSabor.Domain.Entities;
+using FluentValidation;
 
 namespace FinoSabor.Domain.Validations
 {
@@ -12,7 +7,14 @@ namespace FinoSabor.Domain.Validations
     {
         public Itens_CompraValidation()
         {
-               
+            RuleFor(c => c.quantidade)
+             .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
+             .GreaterThan(0).WithMessage("O campo {PropertyName} precisa ser maior que {ComparisonValue}");
+
+            RuleFor(c => c.valor_unitario)
+             .NotEmpty().WithMessage("O campo valor precisa ser fornecido")
+             .GreaterThan(0).WithMessage("O campo valor precisa ser maior que {ComparisonValue}");
+
         }
     }
 }

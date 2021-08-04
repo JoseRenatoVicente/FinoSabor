@@ -8,9 +8,9 @@ namespace FinoSabor.Domain.Entities
 {
     public class Compra : EntityBase
     {
-        public DateTime data { get; set; }
-        [NotMapped] public decimal Total { get; set; }
+        public DateTime data { get; set; } = DateTime.UtcNow;
 
+        public StatusCompra status_compra { get; set; }
         //Banco de dados
         public Guid id_fornecedor { get; set; }
 
@@ -19,6 +19,6 @@ namespace FinoSabor.Domain.Entities
         public Fornecedor Fornecedor { get; set; }
 
         /* EF Relations */
-        public IEnumerable<Itens_Compra> Itens { get; set; }
+        public ICollection<Itens_Compra> Itens { get; set; }
     }
 }

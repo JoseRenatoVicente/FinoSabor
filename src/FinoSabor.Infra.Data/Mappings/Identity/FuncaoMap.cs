@@ -26,7 +26,7 @@ namespace FinoSabor.Infra.Data.Mappings.Identity
             // Note that these relationships are configured with no navigation properties
 
             // Each Role can have many entries in the UserRole join table
-            b.HasMany<UsuarioFuncao>().WithOne().HasForeignKey(ur => ur.RoleId).IsRequired();
+            //b.HasMany<UsuarioFuncao>().WithOne().HasForeignKey(ur => ur.RoleId).IsRequired();
 
             // Each Role can have many associated RoleClaims
             //b.HasMany<TRoleClaim>().WithOne().HasForeignKey(rc => rc.RoleId).IsRequired();

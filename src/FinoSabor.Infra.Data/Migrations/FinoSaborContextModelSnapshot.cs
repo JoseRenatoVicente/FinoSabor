@@ -16,7 +16,7 @@ namespace FinoSabor.Infra.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
+                .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("FinoSabor.Domain.Entities.Categoria", b =>
@@ -47,6 +47,9 @@ namespace FinoSabor.Infra.Data.Migrations
 
                     b.Property<Guid>("id_fornecedor")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("status_compra")
+                        .HasColumnType("int");
 
                     b.HasKey("id");
 
@@ -173,9 +176,6 @@ namespace FinoSabor.Infra.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -188,9 +188,6 @@ namespace FinoSabor.Infra.Data.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -240,19 +237,14 @@ namespace FinoSabor.Infra.Data.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("RoleId1")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("UserId1")
+                    b.Property<Guid?>("FuncaoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserId", "RoleId");
 
+                    b.HasIndex("FuncaoId");
+
                     b.HasIndex("RoleId");
-
-                    b.HasIndex("RoleId1");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("usuario_funcao");
                 });
@@ -291,8 +283,8 @@ namespace FinoSabor.Infra.Data.Migrations
                     b.Property<int>("quantidade")
                         .HasColumnType("int");
 
-                    b.Property<int>("valor_unitario")
-                        .HasColumnType("int");
+                    b.Property<decimal>("valor_unitario")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("id");
 
@@ -318,8 +310,8 @@ namespace FinoSabor.Infra.Data.Migrations
                     b.Property<int>("quantidade")
                         .HasColumnType("int");
 
-                    b.Property<int>("valor_unitario")
-                        .HasColumnType("int");
+                    b.Property<decimal>("valor_unitario")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("id");
 
@@ -390,16 +382,43 @@ namespace FinoSabor.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("bairro")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("cep")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("cidade")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("complemento")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("cpf")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("data_cadastro")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("data_nascimento")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("estado")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("id_usuario")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("nome")
+                    b.Property<string>("numero")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("rua")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("telefone")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
@@ -577,28 +596,20 @@ namespace FinoSabor.Infra.Data.Migrations
             modelBuilder.Entity("FinoSabor.Domain.Entities.Identity.UsuarioFuncao", b =>
                 {
                     b.HasOne("FinoSabor.Domain.Entities.Identity.Funcao", null)
+                        .WithMany("UserRoles")
+                        .HasForeignKey("FuncaoId");
+
+                    b.HasOne("FinoSabor.Domain.Entities.Identity.Funcao", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("FinoSabor.Domain.Entities.Identity.Funcao", "Role")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("RoleId1");
 
                     b.HasOne("FinoSabor.Domain.Entities.Identity.Usuario", null)
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("FinoSabor.Domain.Entities.Identity.Usuario", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
-
-                    b.Navigation("Role");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FinoSabor.Domain.Entities.Imagem_Produto", b =>

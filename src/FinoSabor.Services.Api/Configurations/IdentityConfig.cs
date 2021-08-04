@@ -8,6 +8,7 @@ using FinoSabor.Infra.CrossCutting.Identity.Extensions;
 using FinoSabor.Infra.Data;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FinoSabor.Services.Api.Configurations
 {
@@ -17,7 +18,7 @@ namespace FinoSabor.Services.Api.Configurations
         public static void AddIdentityConfig(this IServiceCollection services,
             IConfiguration configuration)
         {
-            if (services == null) throw new ArgumentNullException(nameof(services));
+            if (services is null) throw new ArgumentNullException(nameof(services));
 
             services.AddDefaultIdentity<Usuario>()
                 .AddRoles<Funcao>()
@@ -56,11 +57,11 @@ namespace FinoSabor.Services.Api.Configurations
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Settings.Secret)),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(appSettings.Secret)),
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidAudience = Settings.ValidoEm,
-                    ValidIssuer = Settings.Emissor
+                    ValidAudience = appSettings.ValidoEm,
+                    ValidIssuer = appSettings.Emissor
                 };
             });
 
@@ -72,7 +73,7 @@ namespace FinoSabor.Services.Api.Configurations
                     builder.RequireRole("usuario");
                 });
             });*/
-        }
+        }       
     }
     
 }

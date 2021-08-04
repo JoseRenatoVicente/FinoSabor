@@ -10,6 +10,7 @@ using FinoSabor.Infra.Data.Repository.Interfaces;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 
 namespace FinoSabor.Infra.Data.Repository
 {
@@ -30,19 +31,28 @@ namespace FinoSabor.Infra.Data.Repository
                 .FirstOrDefaultAsync(c => c.id == id);
         }
 
-        public async Task<PagedList<FornecedorViewModel>> PaginacaoAsync(int PagNumero, int PagRegistro)
+        public async Task<PagedList<FornecedorViewModel>> PaginacaoAsync(int PagNumero, int PagRegistro, string busca = null)
         {
-            var iquerable = await GetAllAsync();
+            var sql = @$"SELECT * FROM fornecedor
+                      WHERE (@Nome IS NULL OR Nome LIKE '%' + @Nome + '%') 
+                      ORDER BY [Nome] 
+                      OFFSET {PagRegistro * (PagNumero - 1)} ROWS 
+                      FETCH NEXT {PagRegistro} ROWS ONLY 
+                      SELECT COUNT(Id) FROM fornecedor 
+                      WHERE (@Nome IS NULL OR Nome LIKE '%' + @Nome + '%')";
 
-            var quantidadeTotalRegistros = await iquerable.CountAsync();
-            var list = await iquerable.ProjectTo<FornecedorViewModel>(_mapper.ConfigurationProvider).Skip((PagNumero - 1) * PagRegistro).Take(PagRegistro).ToListAsync();
+            var multi = await Db.Database.GetDbConnection()
+                .QueryMultipleAsync(sql, new { Nome = busca });
+
+            var list = multi.Read<FornecedorViewModel>();
+            var total = multi.Read<int>().FirstOrDefault();
 
             return new PagedList<FornecedorViewModel>
             {
                 NumeroPagina = PagNumero,
-                RegistroPorPagina = quantidadeTotalRegistros <= PagRegistro ? quantidadeTotalRegistros : PagRegistro,
-                TotalRegistros = quantidadeTotalRegistros,
-                TotalPaginas = (int)Math.Ceiling((double)quantidadeTotalRegistros / PagRegistro),
+                RegistroPorPagina = total <= PagRegistro ? total : PagRegistro,
+                TotalRegistros = total,
+                TotalPaginas = (int)Math.Ceiling((double)total / PagRegistro),
                 Data = list
             };
         }

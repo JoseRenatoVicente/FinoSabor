@@ -14,8 +14,8 @@ using System.Threading.Tasks;
 
 namespace FinoSabor.Services.Api.Controllers.Colaborador
 {
-    //[AllowAnonymous]
-    [Authorize(Roles = "admin")]
+    [AllowAnonymous]
+    //[Authorize(Roles = "admin")]
     [Route("api/Admin/Fornecedor")]
     public class FornecedoresAdminController : MainController
     {
@@ -32,9 +32,9 @@ namespace FinoSabor.Services.Api.Controllers.Colaborador
 
 
         [HttpGet]
-        public async Task<PagedList<FornecedorViewModel>> ObterTodos(int PagNumero = 1 , int PagRegistro = 10)
+        public async Task<PagedList<FornecedorViewModel>> ObterTodos(int PagNumero = 1 , int PagRegistro = 10, string busca = null)
         {
-            return await _fornecedorService.ObterFornecedores(PagNumero, PagRegistro);
+            return await _fornecedorService.ObterFornecedores(PagNumero, PagRegistro, busca);
         }
 
         [HttpGet("{id:guid}")]
@@ -50,9 +50,9 @@ namespace FinoSabor.Services.Api.Controllers.Colaborador
         }
 
         [HttpPut]
-        public async Task<ActionResult<FornecedorViewModel>> Atualizar(FornecedorViewModel fornecedorViewModel)
+        public async Task<ActionResult<FornecedorViewModel>> Atualizar(Fornecedor fornecedor)
         {
-            return !ModelState.IsValid ? CustomResponse(ModelState) : CustomResponse(await _fornecedorService.Atualizar(_mapper.Map<Fornecedor>(fornecedorViewModel)));
+            return !ModelState.IsValid ? CustomResponse(ModelState) : CustomResponse(await _fornecedorService.Atualizar(fornecedor));
         }
 
         [HttpDelete("{id:guid}")]

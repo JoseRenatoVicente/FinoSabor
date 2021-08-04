@@ -11,7 +11,7 @@ namespace FinoSabor.Domain.Entities
         {
         }
 
-        public Endereco_Fornecedor(string rua, string numero, string complemento, string cep, string bairro, string cidade, string estado)
+        public Endereco_Fornecedor(string rua, int numero, string complemento, string cep, string bairro, string cidade, string estado)
         {
             this.rua = rua;
             this.numero = numero;
@@ -23,7 +23,7 @@ namespace FinoSabor.Domain.Entities
         }
 
         public string rua { get; set; }
-        public string numero { get; set; }
+        public int numero { get; set; }
         public string complemento { get; set; }
         public string cep { get; set; }
         public string bairro { get; set; }

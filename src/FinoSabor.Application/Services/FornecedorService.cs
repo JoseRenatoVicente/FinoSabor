@@ -29,9 +29,9 @@ namespace FinoSabor.Application.Services
             _enderecoRepository = enderecoRepository;
         }
 
-        public async Task<PagedList<FornecedorViewModel>> ObterFornecedores(int PagNumero, int PagRegistro)
+        public async Task<PagedList<FornecedorViewModel>> ObterFornecedores(int PagNumero, int PagRegistro, string busca= null)
         {
-            return await _fornecedorRepository.PaginacaoAsync(PagNumero, PagRegistro);
+            return await _fornecedorRepository.PaginacaoAsync(PagNumero, PagRegistro, busca);
         }
 
         public async Task<Fornecedor> ObterFornecedorPorId(Guid id)
@@ -67,6 +67,11 @@ namespace FinoSabor.Application.Services
         {
             if (!ExecutarValidacao(new FornecedorValidation(), fornecedor)) return false;
 
+            if (await _fornecedorRepository.Existe(f => f.cnpj == fornecedor.cnpj && f.id != fornecedor.id))
+            {
+                Notificar("Já existe um fornecedor com este cnpj informado.");
+                return false;
+            }
 
             await _fornecedorRepository.UpdateAsync(fornecedor);
             return true;

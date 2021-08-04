@@ -1,20 +1,22 @@
-﻿using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Mvc;
+﻿using FinoSabor.Application.Notificacoes.Interface;
 using FinoSabor.Application.Services.Interfaces;
-using FinoSabor.Application.ViewModels;
 using FinoSabor.Domain.Helpers;
+using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
+using FinoSabor.Services.Api.Controllers.Base;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace FinoSabor.Services.Api.Controllers
 {
     [Route("api/[controller]")]
     //[EnableCors("AllowAllHeaders")]
-    public class OperationsController : Controller
+    public class OperationsController : MainController
     {
-        protected string _validToken;
         IEmailService _emailService;
 
-        public OperationsController(IEmailService emailService)
+        public OperationsController(IEmailService emailService,
+            INotificador notificador, IAspNetUser appUser) : base(notificador, appUser)
         {
             _emailService = emailService;
         }
@@ -41,15 +43,22 @@ namespace FinoSabor.Services.Api.Controllers
             return Ok(result);
         }
 
-        /*[HttpPost("EmailTest")]
-        public IActionResult EmailTest([FromBody] EmailTestVM emailVM)
+        [HttpPost("EmailTeste")]
+        public async Task<IActionResult> EnviarEmailTest(string nome, string email)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            try
+            {
+                await _emailService.Test(email, nome);
+                return CustomResponse("Email enviado com sucesso");
+            }
+            catch (Exception e)
+            {
+                NotificarErro("erro ao enviar email, tente novamente mais tarde " + e);
+                return CustomResponse();
+            }
 
-            _emailService.Test(emailVM.Email, emailVM.Name).Wait();
-            return Ok();
-        }*/
+        }
+
 
     }
 }

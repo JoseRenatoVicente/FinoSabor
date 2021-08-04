@@ -7,6 +7,9 @@ namespace FinoSabor.Domain.Validations
     {
         public Itens_PedidoValidation()
         {
+            RuleFor(c => c.quantidade)
+             .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
+             .GreaterThan(0).WithMessage("O campo {PropertyName} precisa ser maior que {ComparisonValue}");
 
         }
     }

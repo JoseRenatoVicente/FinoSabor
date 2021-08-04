@@ -9,7 +9,7 @@ namespace FinoSabor.Domain.Entities
 {
     public class Pedido : EntityBase
     {
-        public DateTime data_pedido { get; set; }
+        public DateTime data_pedido { get; set; } = DateTime.UtcNow;
         public StatusPedido status { get; set; }
         public FormaPagamento forma_pagamento { get; set; }
         public Guid id_usuario { get; set; }

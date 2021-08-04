@@ -12,7 +12,7 @@ namespace FinoSabor.Services.Api.Configurations
     {
         public static void AddMvcConfiguration(this IServiceCollection services)
         {
-            if (services == null) throw new ArgumentNullException(nameof(services));
+            if (services is null) throw new ArgumentNullException(nameof(services));
 
             services.AddMvc(options =>
             {

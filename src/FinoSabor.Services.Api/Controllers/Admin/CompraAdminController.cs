@@ -11,6 +11,7 @@ using FinoSabor.Services.Api.Controllers.Base;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace FinoSabor.Services.Api.Controllers.Admin
 {
@@ -19,11 +20,14 @@ namespace FinoSabor.Services.Api.Controllers.Admin
     public class CompraAdminController : MainController
     {
         private readonly ICompraService _compraService;
+        private readonly IMapper _mapper;
 
         public CompraAdminController(INotificador notificador, IAspNetUser appUser,
-                                     ICompraService compraService) : base(notificador, appUser)
+                                     ICompraService compraService,
+                                     IMapper mapper) : base(notificador, appUser)
         {
             _compraService = compraService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -40,31 +44,31 @@ namespace FinoSabor.Services.Api.Controllers.Admin
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult<CompraViewModel>> ObterPorId(Guid id)
+        public async Task<ActionResult<CompraDetalhadaViewModel>> ObterPorId(Guid id)
         {
-            return await _compraService.ObterPorId(id);
+            var produto = await _compraService.ObterPorId(id);
+
+            return produto is null ? NotFound() : CustomResponse(produto);
         }
 
-        /*
+        
         [HttpPost]
-        public async Task<ActionResult<ProdutoInsertViewModel>> Adicionar(ProdutoInsertViewModel produtoViewModel)
+        public async Task<ActionResult<CompraAddViewModel>> Adicionar(CompraAddViewModel compraAddViewModel)
         {
-            return !ModelState.IsValid ? CustomResponse(ModelState) : CustomResponse(await _produtoService.Adicionar(_mapper.Map<Produto>(produtoViewModel)));
+            return !ModelState.IsValid ? CustomResponse(ModelState) : CustomResponse(await _compraService.Adicionar(_mapper.Map<Compra>(compraAddViewModel)));
         }
-
-        [HttpPut]
-        public async Task<IActionResult> Atualizar(ProdutoInsertViewModel produtoViewModel)
+        
+       [HttpPut]
+        public async Task<IActionResult> Atualizar(CompraAddViewModel compraAddViewModel)
         {
-            return !ModelState.IsValid ? CustomResponse(ModelState) : CustomResponse(await _produtoService.Atualizar(_mapper.Map<Produto>(produtoViewModel)));
+            return !ModelState.IsValid ? CustomResponse(ModelState) : CustomResponse(await _compraService.Atualizar(_mapper.Map<Compra>(compraAddViewModel)));
         }
-        */
-
+        
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<ProdutoViewModel>> Excluir(Guid id)
         {
             return CustomResponse(await _compraService.Remover(id));
         }
-
 
     }
 }

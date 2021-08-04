@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using FinoSabor.Domain.Helpers;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinoSabor.Application.Services
 {
@@ -40,7 +42,16 @@ namespace FinoSabor.Application.Services
 
         public async Task<IEnumerable<ProdutoViewModel>> ObterProdutos()
         {
-            return await _produtoRepository.ObterProdutosCategoria();
+            var iquerable = await _produtoRepository.GetAllAsync();
+
+            return await iquerable
+                .ProjectTo<ProdutoViewModel>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
+
+        public async Task<PagedList<ProdutoViewModel>> ObterProdutos(int PagNumero, int PagRegistro, string busca = null)
+        {
+            return await _produtoRepository.PaginacaoAdminAsync(PagNumero, PagRegistro, busca);
         }
 
         public async Task<ProdutoViewModel> ObterProdutosPorId(Guid id)
@@ -61,7 +72,7 @@ namespace FinoSabor.Application.Services
             {
                 Notificar("Já existe um produto com o nome " + produto.nome);
                 return false;
-            }
+            }            
             produto.slug = produto.nome.Slugify();
 
             await _produtoRepository.AddAsync(produto);
@@ -83,7 +94,7 @@ namespace FinoSabor.Application.Services
         }
         public async Task<bool> AdicionarImagem(Guid id_produto, IFormFile file, bool ImagemPrincipal = false)
         {
-            if (file == null || file.Length == 0)
+            if (file is null || file.Length == 0)
             {
                 Notificar("Forneça uma imagem para este produto!");
                 return false;
@@ -125,7 +136,7 @@ namespace FinoSabor.Application.Services
         {
             var imagem = await _imagemRepository.ObterPor(c => c.caminho == caminhoImagem);
 
-            if (imagem == null)
+            if (imagem is null)
             {
                 Notificar("Imagem não encontrada");
                 return false;

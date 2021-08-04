@@ -2,9 +2,9 @@
 {
     public enum FormaPagamento
     {
-        Boleto,
-        CartaoCredito,
-        CartaoDebito,
-        Pix
+        CartaoCredito = 0,
+        CartaoDebito = 1,
+        Dinheiro = 2,
+        Pix = 3
     }
 }

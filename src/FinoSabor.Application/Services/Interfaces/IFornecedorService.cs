@@ -9,7 +9,7 @@ namespace FinoSabor.Application.Services.Interfaces
 {
     public interface IFornecedorService : IDisposable
     {
-        Task<PagedList<FornecedorViewModel>> ObterFornecedores(int PagNumero, int PagRegistro);
+        Task<PagedList<FornecedorViewModel>> ObterFornecedores(int PagNumero, int PagRegistro, string busca = null);
         Task<Fornecedor> ObterFornecedorPorId(Guid id);
         Task<EnderecoViewModel> ObterEnderecorPorId(Guid id);
         Task<bool> Adicionar(Fornecedor fornecedor);
