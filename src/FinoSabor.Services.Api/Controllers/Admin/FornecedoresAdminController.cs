@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 
 namespace FinoSabor.Services.Api.Controllers.Colaborador
 {
-    [AllowAnonymous]
     //[Authorize(Roles = "admin")]
     [Route("api/Admin/Fornecedor")]
     public class FornecedoresAdminController : MainController

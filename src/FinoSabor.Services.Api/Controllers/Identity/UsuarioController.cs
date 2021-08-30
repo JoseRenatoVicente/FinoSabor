@@ -15,6 +15,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using FinoSabor.Domain.Helpers;
 
 namespace FinoSabor.Services.Api.Controllers.Identity
 {
@@ -48,15 +49,15 @@ namespace FinoSabor.Services.Api.Controllers.Identity
         }
 
         [HttpGet("UsuariosAdmin")]
-        public async Task<IEnumerable<PessoaViewModel>> UsuariosAdmin()
+        public async Task<PagedList<PessoaViewModel>> UsuariosAdmin(int PagNumero = 1, int PagRegistro = 10, string busca = null)
         {
-            return await _pessoaRepository.GetAllAdmins();
+            return await _pessoaRepository.PaginacaoGetAllAdminAsync(PagNumero, PagRegistro, busca);
         }
 
         [HttpGet("UsuariosComuns")]
-        public async Task<IEnumerable<PessoaViewModel>> UsuariosComuns()
+        public async Task<PagedList<PessoaViewModel>> UsuariosComuns(int PagNumero = 1, int PagRegistro = 10, string busca = null)
         {
-            return await _pessoaRepository.GetAllComuns();
+            return await _pessoaRepository.PaginacaoGetAllClientesAsync(PagNumero, PagRegistro, busca);
         }
 
     }

@@ -81,6 +81,7 @@ namespace FinoSabor.Application.Services
 
         public async Task<bool> Atualizar(Produto produto)
         {
+            produto.slug = produto.nome.Slugify();
             if (!ExecutarValidacao(new ProdutoValidation(), produto)) return false;
 
             await _produtoRepository.UpdateAsync(produto);

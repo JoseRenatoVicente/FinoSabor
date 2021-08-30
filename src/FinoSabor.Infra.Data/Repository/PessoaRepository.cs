@@ -1,11 +1,14 @@
 ﻿using Dapper;
+using FinoSabor.Application.ViewModels;
 using FinoSabor.Domain.Entities;
+using FinoSabor.Domain.Helpers;
 using FinoSabor.Domain.ViewModels.Pessoa;
 using FinoSabor.Infra.Data.Base.Repository;
 using FinoSabor.Infra.Data.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FinoSabor.Infra.Data.Repository
@@ -16,27 +19,69 @@ namespace FinoSabor.Infra.Data.Repository
 
 
 
-
-        public async Task<IEnumerable<PessoaViewModel>> GetAllAdmins()
+        public async Task<PagedList<PessoaViewModel>> PaginacaoGetAllAdminAsync(int PagNumero, int PagRegistro, string busca = null)
         {
-            var sql = @"SELECT pessoa.id, pessoa.Nome, pessoa.telefone, pessoa.cpf, pessoa.data_nascimento, pessoa.data_cadastro, usuario.Email
-                        FROM pessoa
-                        INNER JOIN usuario
-                        ON usuario.Id = pessoa.id_usuario
-                        INNER JOIN usuario_funcao
-                        ON usuario.Id = usuario_funcao.UserId 
-                        WHERE RoleId = '4EFE97B7-493D-4EAF-BA0B-7407C76C6803'";
+            var sql = @$"SELECT pessoa.id, pessoa.Nome, pessoa.telefone, pessoa.cpf, pessoa.data_nascimento, pessoa.data_cadastro, usuario.Email
+                      FROM pessoa
+                      INNER JOIN usuario
+                      ON usuario.Id = pessoa.id_usuario
+                      INNER JOIN usuario_funcao
+                      ON usuario.Id = usuario_funcao.UserId 
+                      WHERE RoleId = '4EFE97B7-493D-4EAF-BA0B-7407C76C6803' AND (@Nome IS NULL OR Nome LIKE '%' + @Nome + '%') 
+                      ORDER BY [Nome] 
+                      OFFSET {PagRegistro * (PagNumero - 1)} ROWS 
+                      FETCH NEXT {PagRegistro} ROWS ONLY 
+                      SELECT COUNT(Id) FROM pessoa 
+                      WHERE (@Nome IS NULL OR Nome LIKE '%' + @Nome + '%')";
 
             var multi = await Db.Database.GetDbConnection()
-                .QueryMultipleAsync(sql);
+                .QueryMultipleAsync(sql, new { Nome = busca });
 
-            var pessoa = multi.Read<PessoaViewModel>();
+            var list = multi.Read<PessoaViewModel>();
+            var total = multi.Read<int>().FirstOrDefault();
 
-            return pessoa;
-
+            return new PagedList<PessoaViewModel>
+            {
+                NumeroPagina = PagNumero,
+                RegistroPorPagina = total <= PagRegistro ? total : PagRegistro,
+                TotalRegistros = total,
+                TotalPaginas = (int)Math.Ceiling((double)total / PagRegistro),
+                Data = list
+            };
         }
 
-        public async Task<IEnumerable<PessoaViewModel>> GetAllComuns()
+        public async Task<PagedList<PessoaViewModel>> PaginacaoGetAllClientesAsync(int PagNumero, int PagRegistro, string busca = null)
+        {
+            var sql = @$"SELECT pessoa.id, pessoa.Nome, pessoa.telefone, pessoa.cpf, pessoa.data_nascimento, pessoa.data_cadastro, usuario.Email
+                      FROM pessoa
+                      INNER JOIN usuario
+                      ON usuario.Id = pessoa.id_usuario
+                      INNER JOIN usuario_funcao
+                      ON usuario.Id = usuario_funcao.UserId 
+                      WHERE RoleId = '490018AD-BCD6-4AA9-EC4A-08D9247FB19A' AND (@Nome IS NULL OR Nome LIKE '%' + @Nome + '%') 
+                      ORDER BY [Nome] 
+                      OFFSET {PagRegistro * (PagNumero - 1)} ROWS 
+                      FETCH NEXT {PagRegistro} ROWS ONLY 
+                      SELECT COUNT(Id) FROM pessoa 
+                      WHERE (@Nome IS NULL OR Nome LIKE '%' + @Nome + '%')";
+
+            var multi = await Db.Database.GetDbConnection()
+                .QueryMultipleAsync(sql, new { Nome = busca });
+
+            var list = multi.Read<PessoaViewModel>();
+            var total = multi.Read<int>().FirstOrDefault();
+
+            return new PagedList<PessoaViewModel>
+            {
+                NumeroPagina = PagNumero,
+                RegistroPorPagina = total <= PagRegistro ? total : PagRegistro,
+                TotalRegistros = total,
+                TotalPaginas = (int)Math.Ceiling((double)total / PagRegistro),
+                Data = list
+            };
+        }
+
+        /*public async Task<IEnumerable<PessoaViewModel>> GetAllComuns()
         {
             var sql = @"SELECT pessoa.id, pessoa.Nome, pessoa.telefone, pessoa.cpf, pessoa.data_nascimento, pessoa.data_cadastro, usuario.Email
                         FROM pessoa
@@ -53,7 +98,7 @@ namespace FinoSabor.Infra.Data.Repository
 
             return pessoa;
 
-        }
+        }*/
 
         /*public async Task<PessoaDetalhesViewModel> GetByIdAsync(Guid id)
         {
