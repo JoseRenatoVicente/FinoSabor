@@ -4,9 +4,9 @@ using FinoSabor.Domain.Entities;
 
 namespace FinoSabor.Infra.Data.Mappings
 {
-    public class Itens_PedidoMap : IEntityTypeConfiguration<Itens_Pedido>
+    public class Itens_PedidoMap : IEntityTypeConfiguration<ItensPedido>
     {
-        public void Configure(EntityTypeBuilder<Itens_Pedido> builder)
+        public void Configure(EntityTypeBuilder<ItensPedido> builder)
         {
 
         }

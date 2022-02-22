@@ -60,15 +60,15 @@ namespace FinoSabor.Infra.Data
 
                     var log = new Log()
                     {
-                        nome_entidade = item.Entity.GetType().Name,
-                        id_entidade = new Guid(item.CurrentValues[idColumn].ToString()),
+                        NomeEntidade = item.Entity.GetType().Name,
+                        IdEntidade = new Guid(item.CurrentValues[idColumn].ToString()),
                         //LogDateTime = logTime,
-                        operacao = item.State.ToString(),
-                        id_usuario = user,
-                        valores_alterados = EntityDiff,
+                        Operacao = item.State.ToString(),
+                        IdUsuario = user,
+                        ValoresAlterados = EntityDiff,
                     };
 
-                    context.log.Add(log);
+                    context.Logs.Add(log);
                 }
 
             }

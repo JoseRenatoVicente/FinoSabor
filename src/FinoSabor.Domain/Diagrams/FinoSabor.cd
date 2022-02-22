@@ -1,50 +1,122 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="FinoSabor.Domain.Entities.Produto" Collapsed="true">
-    <Position X="8" Y="1" Width="1.5" />
+  <Class Name="FinoSabor.Domain.Entities.Identity.Funcao" Collapsed="true">
+    <Position X="22.25" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAABAAAAEAEQAAQEAAAAABAAABACAAEAAAA=</HashCode>
-      <FileName>Entities\Produto.cs</FileName>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Identity\Funcao.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Fornecedor" />
-    </ShowAsAssociation>
+  </Class>
+  <Class Name="FinoSabor.Domain.Entities.Identity.RefreshToken" Collapsed="true">
+    <Position X="24" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAQAAAAAAQAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Entities\Identity\RefreshToken.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinoSabor.Domain.Entities.Identity.Usuario" Collapsed="true">
+    <Position X="22.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Identity\Usuario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinoSabor.Domain.Entities.Identity.UsuarioFuncao" Collapsed="true">
+    <Position X="24" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Identity\UsuarioFuncao.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinoSabor.Domain.Entities.Base.EntityBase" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Base\EntityBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinoSabor.Domain.Entities.Categoria" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAA=</HashCode>
+      <FileName>Entities\Categoria.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinoSabor.Domain.Entities.Compra" Collapsed="true">
+    <Position X="6" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAEAAAAAAAAAAAAAAAABAACAACAAAAAAA=</HashCode>
+      <FileName>Entities\Compra.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinoSabor.Domain.Entities.EmailConfig" Collapsed="true">
+    <Position X="9.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAACCAAAAAAAAAAAAAACAACAAAAAAAAAABAAA=</HashCode>
+      <FileName>Entities\EmailConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinoSabor.Domain.Entities.EnderecoFornecedor" Collapsed="true">
+    <Position X="7" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAACAEAAAAAACAAAAAAAAAAAAAAAABAAo=</HashCode>
+      <FileName>Entities\EnderecoFornecedor.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Class Name="FinoSabor.Domain.Entities.Fornecedor" Collapsed="true">
-    <Position X="4.25" Y="1.25" Width="1.5" />
-    <Members>
-      <Property Name="Endereco" Hidden="true" />
-    </Members>
+    <Position X="12.75" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIAAIAAAAAAAAAAAEAAAAAAAAIAAAAAAAAAAEAEAA=</HashCode>
+      <HashCode>AAAAIAAAAAAAAAAAAAEAAAAAAIAAAAAAAAAAAAEAEAA=</HashCode>
       <FileName>Entities\Fornecedor.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Endereco" />
-    </ShowAsAssociation>
   </Class>
-  <Class Name="FinoSabor.Domain.Entities.Endereco" Collapsed="true">
-    <Position X="1" Y="0.5" Width="1.5" />
+  <Class Name="FinoSabor.Domain.Entities.ImagemProduto" Collapsed="true">
+    <Position X="0.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAAAAAAAAAAACIEEAAAAACAAAAAAAAAAAACAAABAAg=</HashCode>
-      <FileName>Entities\Endereco.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Fornecedor" />
-    </ShowAsAssociation>
-  </Class>
-  <Class Name="FinoSabor.Domain.Entities.Email.EmailSetting" Collapsed="true">
-    <Position X="3" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAACAAACAACAAAAAQAAAAA=</HashCode>
-      <FileName>Entities\Email\EmailSetting.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAAQAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Entities\ImagemProduto.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FinoSabor.Domain.Entities.Email.TemplatesEmail" Collapsed="true">
-    <Position X="4.75" Y="2.5" Width="1.5" />
+  <Class Name="FinoSabor.Domain.Entities.ItensCompra" Collapsed="true">
+    <Position X="4" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAgAAQAAAAAAAgAAAAAAAAAAAA=</HashCode>
-      <FileName>Entities\Email\TemplatesEmail.cs</FileName>
+      <HashCode>AAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAUIAAAAAE=</HashCode>
+      <FileName>Entities\ItensCompra.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinoSabor.Domain.Entities.ItensPedido" Collapsed="true">
+    <Position X="8" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAIgAAAAAAAAAAAgAAQIAAAAAE=</HashCode>
+      <FileName>Entities\ItensPedido.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinoSabor.Domain.Entities.Log" Collapsed="true">
+    <Position X="10.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQCAAAAAAAAIAAQAAAAAACAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Entities\Log.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinoSabor.Domain.Entities.Pedido" Collapsed="true">
+    <Position X="11.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQEAAAAEAAAAAAAAAAAEAAAQAAQAAAEAAAAAAA=</HashCode>
+      <FileName>Entities\Pedido.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinoSabor.Domain.Entities.Pessoa" Collapsed="true">
+    <Position X="3.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAQAgAAAACAEAAAQAACAAAIAAAAAAAAEAAGBAAo=</HashCode>
+      <FileName>Entities\Pessoa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinoSabor.Domain.Entities.Produto" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAABAAAgEAUAAIQEAAAAABAAABAAAAUAAAA=</HashCode>
+      <FileName>Entities\Produto.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

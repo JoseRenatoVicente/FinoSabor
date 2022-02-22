@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FinoSabor.Infra.Data.Repository.Interfaces
 {
-    public interface IEnderecoRepository : IBaseRepository<Endereco_Fornecedor>
+    public interface IEnderecoRepository : IBaseRepository<EnderecoFornecedor>
     {
         //Task<Endereco_Fornecedor> ObterEnderecoPorFornecedor(Guid fornecedorId);
     }

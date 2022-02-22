@@ -35,7 +35,7 @@ namespace FinoSabor.Application.Services
         public async Task<IEnumerable<PedidoViewModel>> ObterPedidosDoUsuario(Guid id_usuario)
         {
             return await (await _pedidoRepository.GetAllAsync())
-                .Where(c => c.id_usuario == id_usuario)
+                .Where(c => c.IdUsuario == id_usuario)
                 .ProjectTo<PedidoViewModel>(_mapper.ConfigurationProvider)
                 .OrderByDescending(c => c.data_pedido).ToListAsync();
         }
@@ -43,7 +43,7 @@ namespace FinoSabor.Application.Services
         {
             return await (await _pedidoRepository.GetAllAsync())
             .ProjectTo<PedidoDetalhadoViewModel>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync(x => x.id == id && x.id_usuario == id_usuario);
+                .FirstOrDefaultAsync(x => x.Id == id && x.id_usuario == id_usuario);
         }
 
         public async Task<IEnumerable<PedidoViewModel>> ObterTodosOsPedidos()
@@ -56,7 +56,7 @@ namespace FinoSabor.Application.Services
         {
             return await (await _pedidoRepository.GetAllAsync())
             .ProjectTo<PedidoDetalhadoViewModel>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync(x => x.id == id);
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
 
@@ -76,22 +76,22 @@ namespace FinoSabor.Application.Services
                 if (!ExecutarValidacao(new Itens_PedidoValidation(), item)) return false;
             }
 
-            pedido.status = StatusPedido.EmAndamento;
+            pedido.Status = StatusPedido.EmAndamento;
 
             foreach (var item in pedido.Itens)
             {
-                var produto = await _produtoRepository.GetByIdAsync(item.id_produto);
-                if (produto is null || produto.quantidade_estoque <= 0)
+                var produto = await _produtoRepository.GetByIdAsync(item.IdProduto);
+                if (produto is null || produto.QuantidadeEstoque <= 0)
                 {
                     Notificar("Produto não pode ser adicionado");
                     return false;
                 }
 
-                item.id_pedido = pedido.id;
-                item.valor_unitario = produto.valor;
+                item.IdPedido = pedido.Id;
+                item.ValorUnitario = produto.Valor;
 
 
-                produto.quantidade_estoque -= item.quantidade;
+                produto.QuantidadeEstoque -= item.Quantidade;
 
                 await _produtoRepository.UpdateAsync(produto);
             }
@@ -111,8 +111,8 @@ namespace FinoSabor.Application.Services
             }
 
 
-            var pedidoBD = await _pedidoRepository.GetByIdAsync(pedido.id);
-            if (pedidoBD is null || pedidoBD.id_usuario != id_usuario)
+            var pedidoBD = await _pedidoRepository.GetByIdAsync(pedido.Id);
+            if (pedidoBD is null || pedidoBD.IdUsuario != id_usuario)
             {
                 Notificar("Pedido não encontrado");
                 return false;
@@ -121,18 +121,18 @@ namespace FinoSabor.Application.Services
 
             foreach (var item in pedido.Itens)
             {
-                var produto = await _produtoRepository.GetByIdAsync(item.id_produto);
-                if (produto is null || produto.quantidade_estoque <= 0 || item.quantidade > produto.quantidade_estoque)
+                var produto = await _produtoRepository.GetByIdAsync(item.IdProduto);
+                if (produto is null || produto.QuantidadeEstoque <= 0 || item.Quantidade > produto.QuantidadeEstoque)
                 {
                     Notificar("Produto não pode ser adicionado");
                     return false;
                 }
 
-                item.id_pedido = pedido.id;
-                item.valor_unitario = produto.valor;
+                item.IdPedido = pedido.Id;
+                item.ValorUnitario = produto.Valor;
 
 
-                produto.quantidade_estoque -= item.quantidade;
+                produto.QuantidadeEstoque -= item.Quantidade;
 
                 await _produtoRepository.UpdateAsync(produto);
             }
@@ -154,8 +154,8 @@ namespace FinoSabor.Application.Services
             {
                 var produto = await _produtoRepository.GetByIdAsync(item.id_produto);
 
-                produto.quantidade_estoque =
-                    produto.quantidade_estoque <= 0 ? 0 : produto.quantidade_estoque += item.quantidade;
+                produto.QuantidadeEstoque =
+                    produto.QuantidadeEstoque <= 0 ? 0 : produto.QuantidadeEstoque += item.quantidade;
 
                 await _produtoRepository.UpdateAsync(produto);
             }

@@ -12,21 +12,20 @@ namespace FinoSabor.Domain.Entities
         }
 
         public string Nome { get; set; }
-        public string telefone { get; set; }
-        public DateTime data_cadastro { get; set; }
-        public string cpf { get; set; }
-        public DateTime data_nascimento { get; set; }
-        public string rua { get; set; }
-        public int numero { get; set; }
-        public string complemento { get; set; }
-        public string cep { get; set; }
-        public string bairro { get; set; }
-        public string cidade { get; set; }
-        public string estado { get; set; }
+        public string Telefone { get; set; }
+        public DateTime DataCadastro { get; set; }
+        public string Cpf { get; set; }
+        public DateTime DataNascimento { get; set; }
+        public string Rua { get; set; }
+        public int Numero { get; set; }
+        public string Complemento { get; set; }
+        public string Cep { get; set; }
+        public string Bairro { get; set; }
+        public string Cidade { get; set; }
+        public string Estado { get; set; }
 
-        public Guid id_usuario { get; set; }
-
-        [ForeignKey("id_usuario")]
+        public Guid IdUsuario { get; set; }
+        [ForeignKey("IdUsuario")]
         public Usuario Usuario { get; set; }
     }
 }

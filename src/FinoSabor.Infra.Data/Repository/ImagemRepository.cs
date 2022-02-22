@@ -4,7 +4,7 @@ using FinoSabor.Infra.Data.Repository.Interfaces;
 
 namespace FinoSabor.Infra.Data.Repository
 {
-    public class ImagemRepository : BaseRepository<Imagem_Produto>, IImagemRepository
+    public class ImagemRepository : BaseRepository<ImagemProduto>, IImagemRepository
     {
         public ImagemRepository(FinoSaborContext db) : base(db)
         {

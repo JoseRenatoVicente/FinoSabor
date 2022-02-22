@@ -117,7 +117,7 @@ namespace FinoSabor.Infra.Data.Base.Repository
         {
             var iquerable = await GetAllAsync();
 
-            return await iquerable.FirstOrDefaultAsync(x => x.id == id);
+            return await iquerable.FirstOrDefaultAsync(x => x.Id == id);
         }
 
 
@@ -168,7 +168,7 @@ namespace FinoSabor.Infra.Data.Base.Repository
 
         public virtual async Task DeleteAsync(Guid id)
         {
-            DbSet.Remove(new TEntity { id = id });
+            DbSet.Remove(new TEntity { Id = id });
             await SaveChangesAsync();
         }
 

@@ -27,15 +27,15 @@ namespace FinoSabor.Infra.Data.Repository
 
         public async Task<ProdutoViewModel> ObterProdutoPorId(Guid id)
         {
-            return await Db.produto.AsNoTracking()
+            return await Db.Produtos.AsNoTracking()
                 .ProjectTo<ProdutoViewModel>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync(p => p.id == id);
+                .FirstOrDefaultAsync(p => p.Id == id);
 
         }
 
         public async Task<ProdutoClienteViewModel> ObterProdutoPorSlug(string slug)
         {
-            return await Db.produto.AsNoTracking()
+            return await Db.Produtos.AsNoTracking()
                 .ProjectTo<ProdutoClienteViewModel>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(p => p.slug == slug);
         }
@@ -44,8 +44,8 @@ namespace FinoSabor.Infra.Data.Repository
         public async Task<IEnumerable<ProdutoClienteObterTodosViewModel>> ObterProdutosCliente()
         {
 
-            return await Db.produto.AsNoTracking()
-                .Where(c => c.ativo == true && c.quantidade_estoque > 0)
+            return await Db.Produtos.AsNoTracking()
+                .Where(c => c.Ativo == true && c.QuantidadeEstoque > 0)
                 .ProjectTo<ProdutoClienteObterTodosViewModel>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
@@ -59,8 +59,8 @@ namespace FinoSabor.Infra.Data.Repository
 
             var idsValue = idsGuid.Select(id => id.Value);
 
-            return await Db.produto.AsNoTracking()
-                .Where(p => idsValue.Contains(p.id) && p.ativo).ProjectTo<ProdutoClienteObterTodosViewModel>(_mapper.ConfigurationProvider)
+            return await Db.Produtos.AsNoTracking()
+                .Where(p => idsValue.Contains(p.Id) && p.Ativo).ProjectTo<ProdutoClienteObterTodosViewModel>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
 

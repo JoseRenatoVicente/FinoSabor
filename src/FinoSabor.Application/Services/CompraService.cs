@@ -44,7 +44,7 @@ namespace FinoSabor.Application.Services
         {
             return await (await _compraRepository.GetAllAsync())
             .ProjectTo<CompraDetalhadaViewModel>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync(x => x.id == id);
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<bool> Adicionar(Compra compra)
@@ -56,23 +56,23 @@ namespace FinoSabor.Application.Services
                 if (!ExecutarValidacao(new Itens_CompraValidation(), item)) return false;
             }
 
-            if (!await _fornecedorRepository.Existe(c => c.id == compra.id_fornecedor))
+            if (!await _fornecedorRepository.Existe(c => c.Id == compra.IdFornecedor))
             {
                 Notificar("Fornecedor não encontrado");
                 return false;
             }
-            if (compra.status_compra == StatusCompra.Finalizada)
+            if (compra.StatusCompra == StatusCompra.Finalizada)
             {
                 foreach (var item in compra.Itens)
                 {
-                    var produto = await _produtoRepository.GetByIdAsync(item.id_produto);
+                    var produto = await _produtoRepository.GetByIdAsync(item.IdProduto);
                     if (produto is null)
                     {
                         Notificar("Produto não encontrado");
                         return false;
                     }
 
-                    produto.quantidade_estoque += item.quantidade;
+                    produto.QuantidadeEstoque += item.Quantidade;
 
                     await _produtoRepository.UpdateAsync(produto);
                 }
@@ -90,38 +90,38 @@ namespace FinoSabor.Application.Services
                 if (!ExecutarValidacao(new Itens_CompraValidation(), item)) return false;
             }
 
-            if (!await _fornecedorRepository.Existe(c => c.id == compra.id_fornecedor))
+            if (!await _fornecedorRepository.Existe(c => c.Id == compra.IdFornecedor))
             {
                 Notificar("Fornecedor não encontrado");
                 return false;
             }
 
-            var compraBD = await _compraRepository.GetByIdAsync(compra.id);
+            var compraBD = await _compraRepository.GetByIdAsync(compra.Id);
             if (compraBD is null)
             {
                 Notificar("Compra não encontrada");
                 return false;
             }
 
-            if (compraBD.status_compra == StatusCompra.Finalizada)
+            if (compraBD.StatusCompra == StatusCompra.Finalizada)
             {
                 Notificar("A compra não pode ser atualizada, porque já foi finalizada.");
                 return false;
             }
 
 
-            if (compra.status_compra == StatusCompra.Finalizada)
+            if (compra.StatusCompra == StatusCompra.Finalizada)
             {
                 foreach (var item in compra.Itens)
                 {
-                    var produto = await _produtoRepository.GetByIdAsync(item.id_produto);
+                    var produto = await _produtoRepository.GetByIdAsync(item.IdProduto);
                     if (produto is null)
                     {
                         Notificar("Produto não encontrado");
                         return false;
                     }
 
-                    produto.quantidade_estoque += item.quantidade;
+                    produto.QuantidadeEstoque += item.Quantidade;
 
                     await _produtoRepository.UpdateAsync(produto);
                 }
@@ -146,8 +146,8 @@ namespace FinoSabor.Application.Services
                 {
                     var produto = await _produtoRepository.GetByIdAsync(item.id_produto);
 
-                    produto.quantidade_estoque = 
-                        produto.quantidade_estoque <= 0 ? 0 : produto.quantidade_estoque -= item.quantidade;
+                    produto.QuantidadeEstoque = 
+                        produto.QuantidadeEstoque <= 0 ? 0 : produto.QuantidadeEstoque -= item.quantidade;
 
                     await _produtoRepository.UpdateAsync(produto);
                 }

@@ -26,19 +26,19 @@ namespace FinoSabor.Infra.Data.Repository
 
         public async Task<Fornecedor> ObterFornecedorEndereco(Guid id)
         {
-            return await Db.fornecedor.AsNoTracking()
+            return await Db.Fornecedores.AsNoTracking()
                 .Include(c => c.Endereco)
-                .FirstOrDefaultAsync(c => c.id == id);
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<PagedList<FornecedorViewModel>> PaginacaoAsync(int PagNumero, int PagRegistro, string busca = null)
         {
-            var sql = @$"SELECT * FROM fornecedor
+            var sql = @$"SELECT * FROM Fornecedores
                       WHERE (@Nome IS NULL OR Nome LIKE '%' + @Nome + '%') 
                       ORDER BY [Nome] 
                       OFFSET {PagRegistro * (PagNumero - 1)} ROWS 
                       FETCH NEXT {PagRegistro} ROWS ONLY 
-                      SELECT COUNT(Id) FROM fornecedor 
+                      SELECT COUNT(Id) FROM Fornecedores 
                       WHERE (@Nome IS NULL OR Nome LIKE '%' + @Nome + '%')";
 
             var multi = await Db.Database.GetDbConnection()
@@ -59,9 +59,9 @@ namespace FinoSabor.Infra.Data.Repository
 
         public async Task<Fornecedor> ObterFornecedorProdutosEndereco(Guid id)
         {
-            return await Db.fornecedor.AsNoTracking()
+            return await Db.Fornecedores.AsNoTracking()
                 .Include(c => c.Endereco)
-                .FirstOrDefaultAsync(c => c.id == id);
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
     }
 }

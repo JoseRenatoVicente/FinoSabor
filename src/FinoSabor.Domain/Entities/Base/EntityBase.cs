@@ -6,10 +6,10 @@ namespace FinoSabor.Domain.Entities.Base
     {
         protected EntityBase()
         {
-            id = Guid.NewGuid();
+            Id = Guid.NewGuid();
         }
 
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
 
         
     }

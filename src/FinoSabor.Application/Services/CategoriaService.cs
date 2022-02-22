@@ -37,13 +37,13 @@ namespace FinoSabor.Application.Services
         {
             if (!ExecutarValidacao(new CategoriaValidation(), categoria)) return false;
 
-            if (await _categoriaRepository.Existe(c => c.slug == categoria.slug))
+            if (await _categoriaRepository.Existe(c => c.Slug == categoria.Slug))
             {
-                Notificar("Já existe uma categoria com o nome " + categoria.nome);
+                Notificar("Já existe uma categoria com o nome " + categoria.Nome);
                 return false;
             }
 
-            categoria.slug = categoria.nome.Slugify();
+            categoria.Slug = categoria.Nome.Slugify();
 
             await _categoriaRepository.AddAsync(categoria);
             return true;
@@ -53,7 +53,7 @@ namespace FinoSabor.Application.Services
         {
             if (!ExecutarValidacao(new CategoriaValidation(), categoria)) return false;
 
-            categoria.slug = categoria.nome.Slugify();
+            categoria.Slug = categoria.Nome.Slugify();
 
             await _categoriaRepository.UpdateAsync(categoria);
             return true;

@@ -9,16 +9,16 @@ namespace FinoSabor.Domain.Validations
     {
         public FornecedorValidation()
         {
-            RuleFor(f => f.nome)
+            RuleFor(f => f.Nome)
                 .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
                 .Length(2, 100)
                 .WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");
 
 
 
-            RuleFor(f => f.cnpj.Length).Equal(CnpjValidacao.TamanhoCnpj)
+            RuleFor(f => f.Cnpj.Length).Equal(CnpjValidacao.TamanhoCnpj)
                 .WithMessage("O campo cnpj precisa ter {ComparisonValue} caracteres e foi fornecido {PropertyValue}.");
-            RuleFor(f => CnpjValidacao.Validar(f.cnpj)).Equal(true)
+            RuleFor(f => CnpjValidacao.Validar(f.Cnpj)).Equal(true)
                 .WithMessage("O cnpj fornecido é inválido.");
 
         }

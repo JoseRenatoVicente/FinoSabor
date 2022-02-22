@@ -8,17 +8,16 @@ namespace FinoSabor.Domain.Entities
 {
     public class Compra : EntityBase
     {
-        public DateTime data { get; set; } = DateTime.UtcNow;
+        public DateTime Data { get; set; } = DateTime.UtcNow;
 
-        public StatusCompra status_compra { get; set; }
+        public StatusCompra StatusCompra { get; set; }
         //Banco de dados
-        public Guid id_fornecedor { get; set; }
+        public Guid IdFornecedor { get; set; }
 
         //EF Relation
-        [ForeignKey("id_fornecedor")]
         public Fornecedor Fornecedor { get; set; }
 
         /* EF Relations */
-        public ICollection<Itens_Compra> Itens { get; set; }
+        public ICollection<ItensCompra> Itens { get; set; }
     }
 }

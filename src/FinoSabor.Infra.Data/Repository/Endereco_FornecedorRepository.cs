@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FinoSabor.Infra.Data.Repository
 {
-    public class Endereco_FornecedorRepository : BaseRepository<Endereco_Fornecedor>, IEnderecoRepository
+    public class Endereco_FornecedorRepository : BaseRepository<EnderecoFornecedor>, IEnderecoRepository
     {
         public Endereco_FornecedorRepository(FinoSaborContext context) : base(context) { }
 

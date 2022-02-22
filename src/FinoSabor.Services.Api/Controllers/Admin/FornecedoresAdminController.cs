@@ -67,7 +67,7 @@ namespace FinoSabor.Services.Api.Controllers.Colaborador
         }
 
         [HttpPut("endereco")]
-        public async Task<IActionResult> AtualizarEndereco(Endereco_Fornecedor endereco)
+        public async Task<IActionResult> AtualizarEndereco(EnderecoFornecedor endereco)
         {
             return !ModelState.IsValid ? CustomResponse(ModelState) : CustomResponse(await _fornecedorService.AtualizarEndereco(endereco));
         }

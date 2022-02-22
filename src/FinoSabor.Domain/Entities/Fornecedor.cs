@@ -1,8 +1,5 @@
 ﻿using FinoSabor.Domain.Entities.Base;
-using FinoSabor.Domain.Entities.Enums;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinoSabor.Domain.Entities
 {
@@ -12,23 +9,22 @@ namespace FinoSabor.Domain.Entities
         {
         }
 
-        public Fornecedor(string nome, string cnpj, bool ativo, Guid id_endereco)
+        public Fornecedor(string nome, string cnpj, bool ativo, Guid idEndereco)
         {
-            this.nome = nome;
-            this.cnpj = cnpj;
-            this.ativo = ativo;
-            this.id_endereco = id_endereco;
+            Nome = nome;
+            Cnpj = cnpj;
+            Ativo = ativo;
+            IdEndereco = idEndereco;
         }
 
-        public string nome { get; set; }
-        public string cnpj { get; set; }
-        public bool ativo { get; set; }
+        public string Nome { get; set; }
+        public string Cnpj { get; set; }
+        public bool Ativo { get; set; }
 
-        public Guid id_endereco { get; set; }
+        public Guid IdEndereco { get; set; }
 
         /* EF Relation */
-        [ForeignKey("id_endereco")]
-        public Endereco_Fornecedor Endereco { get; set; }
+        public EnderecoFornecedor Endereco { get; set; }
         
     }
 }

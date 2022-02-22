@@ -46,7 +46,7 @@ namespace FinoSabor.Services.Api.Controllers.Identity
                 var usertoRole = await _authenticationService.UserManager.FindByNameAsync(usuarioRegistro.Email);
                 await _authenticationService.UserManager.AddToRoleAsync(usertoRole, "usuario");
 
-                await _authenticationService._pessoaRepository.AddAsync(new Pessoa { id_usuario = usertoRole.Id, Nome = usuarioRegistro.Nome, data_cadastro = DateTime.Now });
+                await _authenticationService._pessoaRepository.AddAsync(new Pessoa { IdUsuario = usertoRole.Id, Nome = usuarioRegistro.Nome, DataCadastro = DateTime.Now });
                 //TODO: arrumar
 
                 await _authenticationService.SignInManager.SignInAsync(user, false);

@@ -49,7 +49,7 @@ namespace FinoSabor.Application.Services
             if (!ExecutarValidacao(new FornecedorValidation(), fornecedor)
                 || !ExecutarValidacao(new Endereco_FornecedorValidation(), fornecedor.Endereco)) return false;
 
-            if (await _fornecedorRepository.Existe(f => f.cnpj == fornecedor.cnpj))
+            if (await _fornecedorRepository.Existe(f => f.Cnpj == fornecedor.Cnpj))
             {
                 Notificar("Já existe um fornecedor com este cnpj informado.");
                 return false;
@@ -67,7 +67,7 @@ namespace FinoSabor.Application.Services
         {
             if (!ExecutarValidacao(new FornecedorValidation(), fornecedor)) return false;
 
-            if (await _fornecedorRepository.Existe(f => f.cnpj == fornecedor.cnpj && f.id != fornecedor.id))
+            if (await _fornecedorRepository.Existe(f => f.Cnpj == fornecedor.Cnpj && f.Id != fornecedor.Id))
             {
                 Notificar("Já existe um fornecedor com este cnpj informado.");
                 return false;
@@ -83,7 +83,7 @@ namespace FinoSabor.Application.Services
             return true;
         }
 
-        public async Task<bool> AtualizarEndereco(Endereco_Fornecedor endereco)
+        public async Task<bool> AtualizarEndereco(EnderecoFornecedor endereco)
         {
             if (!ExecutarValidacao(new Endereco_FornecedorValidation(), endereco)) return false;
 

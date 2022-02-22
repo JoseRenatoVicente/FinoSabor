@@ -7,7 +7,7 @@ namespace FinoSabor.Domain.Validations
     {
         public PedidoValidation()
         {
-            RuleFor(c => c.forma_pagamento).NotNull()
+            RuleFor(c => c.FormaPagamento).NotNull()
                 .WithMessage("O campo Forma de pagamento precisa ser fornecido");
         }
     }

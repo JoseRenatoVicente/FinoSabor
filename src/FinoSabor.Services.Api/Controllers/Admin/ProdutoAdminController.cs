@@ -84,7 +84,7 @@ namespace FinoSabor.Services.Api.Controllers.Colaborador
         [HttpPost]
         public async Task<ActionResult<ProdutoInsertViewModel>> Adicionar(ProdutoInsertViewModel produtoViewModel)
         {
-            produtoViewModel.id = Guid.NewGuid();
+            produtoViewModel.Id = Guid.NewGuid();
             var produto = await _produtoService.Adicionar(_mapper.Map<Produto>(produtoViewModel));
 
             if (produto)
@@ -186,7 +186,7 @@ namespace FinoSabor.Services.Api.Controllers.Colaborador
                                     <td>{6}</td>
                                     <td>{7}</td>
                                     <td>{8}</td>
-                                  </tr>", pro.nome, pro.descricao, pro.valor, pro.ativo, pro.quantidade_estoque, pro.quantidade_minima);
+                                  </tr>", pro.Nome, pro.Descricao, pro.Valor, pro.Ativo, pro.QuantidadeEstoque, pro.QuantidadeMinima);
             }
             sb.Append(@"
                                 </table>

@@ -34,22 +34,22 @@ namespace FinoSabor.Infra.Data
             base.OnConfiguring(optionsBuilder);
         }
 
-        public DbSet<Categoria> categoria { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
         //public DbSet<EmailConfig> EmailConfigs { get; set; }
         //public DbSet<EmailModelo> EmailModelos { get; set; }
-        public DbSet<Endereco_Fornecedor> endereco_fornecedor { get; set; }
-        public DbSet<Fornecedor> fornecedor { get; set; }
-        public DbSet<Imagem_Produto> imagem_produto { get; set; }
-        public DbSet<Compra> compra { get; set; }
-        public DbSet<Itens_Compra> itens_compra { get; set; }
-        public DbSet<Log> log { get; set; }
-        public DbSet<Pedido> pedido { get; set; }
-        public DbSet<Itens_Pedido> itens_pedido { get; set; }
-        public DbSet<Pessoa> pessoa { get; set; }
-        public DbSet<Produto> produto { get; set; }
+        public DbSet<EnderecoFornecedor> EnderecoFornecedores { get; set; }
+        public DbSet<Fornecedor> Fornecedores { get; set; }
+        public DbSet<ImagemProduto> ImagemProdutos { get; set; }
+        public DbSet<Compra> Compras { get; set; }
+        public DbSet<ItensCompra> ItensCompras { get; set; }
+        public DbSet<Log> Logs { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<ItensPedido> ItensPedidos { get; set; }
+        public DbSet<Pessoa> Pessoas { get; set; }
+        public DbSet<Produto> Produtos { get; set; }
 
         //identity
-        public DbSet<RefreshToken> refresh_token { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

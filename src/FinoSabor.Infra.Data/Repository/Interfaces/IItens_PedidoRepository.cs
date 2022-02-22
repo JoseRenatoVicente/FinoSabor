@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FinoSabor.Infra.Data.Repository.Interfaces
 {
-    public interface IItens_PedidoRepository : IBaseRepository<Itens_Pedido>
+    public interface IItens_PedidoRepository : IBaseRepository<ItensPedido>
     {
     }
 }

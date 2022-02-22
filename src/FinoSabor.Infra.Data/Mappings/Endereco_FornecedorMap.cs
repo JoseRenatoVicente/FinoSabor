@@ -4,9 +4,9 @@ using FinoSabor.Domain.Entities;
 
 namespace FinoSabor.Infra.Data.Mappings
 {
-    public class Endereco_FornecedorMap : IEntityTypeConfiguration<Endereco_Fornecedor>
+    public class Endereco_FornecedorMap : IEntityTypeConfiguration<EnderecoFornecedor>
     {
-        public void Configure(EntityTypeBuilder<Endereco_Fornecedor> builder)
+        public void Configure(EntityTypeBuilder<EnderecoFornecedor> builder)
         {
 
         }

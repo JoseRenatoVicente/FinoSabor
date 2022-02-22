@@ -1,6 +1,4 @@
 ﻿using FinoSabor.Domain.Entities.Base;
-using System;
-using System.ComponentModel.DataAnnotations;
 using FinoSabor.Domain.Helpers;
 
 namespace FinoSabor.Domain.Entities
@@ -15,12 +13,13 @@ namespace FinoSabor.Domain.Entities
 
         public Categoria(string nome)
         {
-            this.nome = nome;
-            this.slug = nome.Slugify();
+            Nome = nome;
+            Slug = nome.Slugify();
         }
-        public string nome { get; set; }
 
-        public string slug { get; set; } 
+        public string Nome { get; set; }
+
+        public string Slug { get; set; } 
 
         /*
          * Auto-relacionamento

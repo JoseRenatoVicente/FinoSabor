@@ -4,9 +4,9 @@ using FinoSabor.Domain.Entities;
 
 namespace FinoSabor.Infra.Data.Mappings
 {
-    public class Imagem_ProdutoMap : IEntityTypeConfiguration<Imagem_Produto>
+    public class Imagem_ProdutoMap : IEntityTypeConfiguration<ImagemProduto>
     {
-        public void Configure(EntityTypeBuilder<Imagem_Produto> builder)
+        public void Configure(EntityTypeBuilder<ImagemProduto> builder)
         {
 
         }

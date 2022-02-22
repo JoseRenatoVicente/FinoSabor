@@ -4,7 +4,7 @@ using FinoSabor.Infra.Data.Repository.Interfaces;
 
 namespace FinoSabor.Infra.Data.Repository
 {
-    public class Itens_PedidoRepository : BaseRepository<Itens_Pedido>, IItens_PedidoRepository
+    public class Itens_PedidoRepository : BaseRepository<ItensPedido>, IItens_PedidoRepository
     {
         public Itens_PedidoRepository(FinoSaborContext context) : base(context) { }
     }

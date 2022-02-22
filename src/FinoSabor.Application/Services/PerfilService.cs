@@ -40,19 +40,19 @@ namespace FinoSabor.Application.Services
         {
             if (!ExecutarValidacao(new PessoaValidation(), pessoa)) return false;
 
-            if (await _pessoaRepository.Existe(f => f.cpf == pessoa.cpf && f.id_usuario != pessoa.id_usuario))
+            if (await _pessoaRepository.Existe(f => f.Cpf == pessoa.Cpf && f.IdUsuario != pessoa.IdUsuario))
             {
                 Notificar("Já existe um Usuário com este CPF informado.");
                 return false;
             }
-            var pessoaBD = await _pessoaRepository.ObterPor(c => c.id_usuario == pessoa.id_usuario);
+            var pessoaBD = await _pessoaRepository.ObterPor(c => c.IdUsuario == pessoa.IdUsuario);
 
             if (pessoaBD == null)
             {
                 Notificar("Usuário não encontrado");
                 return false;
             }
-            pessoa.id = pessoaBD.id;
+            pessoa.Id = pessoaBD.Id;
             await _pessoaRepository.UpdateAsync(pessoa);
             return true;
         }

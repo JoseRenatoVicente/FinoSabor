@@ -63,17 +63,17 @@ namespace FinoSabor.Application.Services
         {
             if (!ExecutarValidacao(new ProdutoValidation(), produto)) return false;
 
-            if (!await _categoriaRepository.Existe(c => c.id == produto.id_categoria))
+            if (!await _categoriaRepository.Existe(c => c.Id == produto.IdCategoria))
             {
                 Notificar("Categoria não encontrada");
                 return false;
             }
-            if (await _produtoRepository.Existe(c => c.slug == produto.slug))
+            if (await _produtoRepository.Existe(c => c.Slug == produto.Slug))
             {
-                Notificar("Já existe um produto com o nome " + produto.nome);
+                Notificar("Já existe um produto com o nome " + produto.Nome);
                 return false;
             }            
-            produto.slug = produto.nome.Slugify();
+            produto.Slug = produto.Nome.Slugify();
 
             await _produtoRepository.AddAsync(produto);
             return true;
@@ -81,7 +81,7 @@ namespace FinoSabor.Application.Services
 
         public async Task<bool> Atualizar(Produto produto)
         {
-            produto.slug = produto.nome.Slugify();
+            produto.Slug = produto.Nome.Slugify();
             if (!ExecutarValidacao(new ProdutoValidation(), produto)) return false;
 
             await _produtoRepository.UpdateAsync(produto);
@@ -103,7 +103,7 @@ namespace FinoSabor.Application.Services
 
             var produto = await _produtoRepository.GetByIdAsync(id_produto);
 
-            if (!await _produtoRepository.Existe(c => c.id == id_produto))
+            if (!await _produtoRepository.Existe(c => c.Id == id_produto))
             {
                 Notificar("Produto não encontrado");
                 return false;
@@ -119,23 +119,23 @@ namespace FinoSabor.Application.Services
             }
             if (ImagemPrincipal)
             {
-                if (produto.imagem_principal != null)
+                if (produto.ImagemPrincipal != null)
                 {
-                    await _imagemRepository.AddAsync(new Imagem_Produto { caminho = produto.imagem_principal, id_produto = produto.id });
+                    await _imagemRepository.AddAsync(new ImagemProduto { Caminho = produto.ImagemPrincipal, IdProduto = produto.Id });
                 }
-                produto.imagem_principal = nome;
+                produto.ImagemPrincipal = nome;
                 await _produtoRepository.UpdateAsync(produto);
             }
             else
             {
-                await _imagemRepository.AddAsync(new Imagem_Produto { caminho = nome, id_produto = id_produto });
+                await _imagemRepository.AddAsync(new ImagemProduto { Caminho = nome, IdProduto = id_produto });
             }
 
             return true;
         }
         public async Task<bool> MudarImagemPrincipal(string caminhoImagem)
         {
-            var imagem = await _imagemRepository.ObterPor(c => c.caminho == caminhoImagem);
+            var imagem = await _imagemRepository.ObterPor(c => c.Caminho == caminhoImagem);
 
             if (imagem is null)
             {
@@ -143,16 +143,16 @@ namespace FinoSabor.Application.Services
                 return false;
             }
 
-            var produto = await _produtoRepository.GetByIdAsync(imagem.id_produto);
+            var produto = await _produtoRepository.GetByIdAsync(imagem.IdProduto);
 
-            if (produto.imagem_principal != null)
+            if (produto.ImagemPrincipal != null)
             {
-                await _imagemRepository.AddAsync(new Imagem_Produto { caminho = produto.imagem_principal, id_produto = imagem.id_produto });
+                await _imagemRepository.AddAsync(new ImagemProduto { Caminho = produto.ImagemPrincipal, IdProduto = imagem.IdProduto });
             }
 
-            produto.imagem_principal = imagem.caminho;
+            produto.ImagemPrincipal = imagem.Caminho;
             await _produtoRepository.UpdateAsync(produto);
-            await _imagemRepository.DeleteAsync(imagem.id);
+            await _imagemRepository.DeleteAsync(imagem.Id);
 
             return true;
         }
@@ -160,21 +160,21 @@ namespace FinoSabor.Application.Services
 
         public async Task<bool> RemoverImagem(string caminho)
         {
-            var imagem = await _imagemRepository.ObterPor(c => c.caminho == caminho);
+            var imagem = await _imagemRepository.ObterPor(c => c.Caminho == caminho);
 
             string imagemDeletada;
             if (imagem != null)
             {
-                await _imagemRepository.DeleteAsync(imagem.id);
-                imagemDeletada = imagem.caminho;
+                await _imagemRepository.DeleteAsync(imagem.Id);
+                imagemDeletada = imagem.Caminho;
             }
-            else if (await _produtoRepository.Existe(c => c.imagem_principal == caminho))
+            else if (await _produtoRepository.Existe(c => c.ImagemPrincipal == caminho))
             {
-                var produto = await _produtoRepository.ObterPor(c => c.imagem_principal == caminho);
+                var produto = await _produtoRepository.ObterPor(c => c.ImagemPrincipal == caminho);
                 
-                imagemDeletada = produto.imagem_principal;
+                imagemDeletada = produto.ImagemPrincipal;
 
-                produto.imagem_principal = null;
+                produto.ImagemPrincipal = null;
                 await _produtoRepository.UpdateAsync(produto);
 
             }

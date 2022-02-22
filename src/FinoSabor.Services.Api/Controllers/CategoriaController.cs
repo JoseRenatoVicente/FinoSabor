@@ -42,7 +42,7 @@ namespace FinoSabor.Services.Api.Controllers
         [HttpGet("produtos/{slug}")]
         public async Task<IEnumerable<ProdutoClienteObterTodosViewModel>> ObterProdutoPorCategoria(string slug)
         {
-            return (await _produtoRepository.GetAllAsync()).Where(c => c.Categoria.slug == slug)
+            return (await _produtoRepository.GetAllAsync()).Where(c => c.Categoria.Slug == slug)
                 .ProjectTo<ProdutoClienteObterTodosViewModel>(_mapper.ConfigurationProvider);
         }
     }

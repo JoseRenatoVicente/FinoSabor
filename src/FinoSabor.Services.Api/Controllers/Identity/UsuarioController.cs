@@ -44,7 +44,7 @@ namespace FinoSabor.Services.Api.Controllers.Identity
         {
             return await (await _pessoaRepository.GetAllAsync())
             .ProjectTo<PessoaDetalhesViewModel>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync(x => x.id == id);
+                .FirstOrDefaultAsync(x => x.Id == id);
 
         }
 

@@ -8,7 +8,7 @@ namespace FinoSabor.Domain.Validations
     {
         public CompraValidation()
         {
-            RuleFor(c => c.id_fornecedor)
+            RuleFor(c => c.IdFornecedor)
                     .NotEqual(Guid.Empty)
                     .WithMessage("Id do Fornecedor inválido");
 

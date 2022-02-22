@@ -49,12 +49,12 @@ namespace FinoSabor.Services.Api.Controllers.Colaborador
         public async Task<ActionResult<PedidoDetalhadoViewModel>> Adicionar(PedidoInsertViewModel pedido)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
-            pedido.id = Guid.NewGuid();
+            pedido.Id = Guid.NewGuid();
             pedido.id_usuario = AppUser.ObterUserId();
 
             await _pedidoService.Adicionar(_mapper.Map<Pedido>(pedido));
 
-            return CustomResponse(await ObterPorId(pedido.id));
+            return CustomResponse(await ObterPorId(pedido.Id));
         }
 
         [HttpPut]

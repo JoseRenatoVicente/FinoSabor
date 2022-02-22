@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FinoSabor.Domain.Validations
 {
-    public class Imagem_ProdutoValidation : AbstractValidator<Imagem_Produto>
+    public class Imagem_ProdutoValidation : AbstractValidator<ImagemProduto>
     {
         public Imagem_ProdutoValidation()
         {
