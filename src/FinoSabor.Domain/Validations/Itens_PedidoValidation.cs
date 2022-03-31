@@ -1,5 +1,5 @@
-﻿using FluentValidation;
-using FinoSabor.Domain.Entities;
+﻿using FinoSabor.Domain.Entities;
+using FluentValidation;
 
 namespace FinoSabor.Domain.Validations
 {

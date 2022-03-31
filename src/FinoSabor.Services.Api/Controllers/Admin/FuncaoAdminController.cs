@@ -1,17 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using FinoSabor.Domain.Entities.Identity;
+using FinoSabor.Infra.CrossCutting.Identity.Extensions;
+using FinoSabor.Services.Api.Controllers.Base;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using FinoSabor.Application.Notificacoes.Interface;
-using FinoSabor.Infra.CrossCutting.Identity.Extensions;
-using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
-using FinoSabor.Services.Api.Controllers.Base;
-using System;
-using System.Collections.Generic;
-using FinoSabor.Application.ViewModels;
 using System.Threading.Tasks;
-using AutoMapper;
-using FinoSabor.Domain.Entities.Identity;
 
 namespace FinoSabor.Services.Api.Controllers.Colaborador
 {
@@ -19,32 +14,29 @@ namespace FinoSabor.Services.Api.Controllers.Colaborador
     [Route("api/Admin/Funcao")]
     public class FuncaoAdminController : MainController
     {
-        public readonly SignInManager<Usuario> SignInManager;
-        public readonly UserManager<Usuario> UserManager;
-        public readonly RoleManager<Funcao> _roleManager;
+        private readonly SignInManager<Usuario> SignInManager;
+        private readonly UserManager<Usuario> UserManager;
+        private readonly RoleManager<Funcao> _roleManager;
         private readonly AppSettings _appSettings;
         private readonly IMapper _mapper;
 
-        private readonly IAspNetUser _aspNetUser;
 
-        public FuncaoAdminController(INotificador notificador, IAspNetUser user,
+        public FuncaoAdminController(
             SignInManager<Usuario> signInManager,
             UserManager<Usuario> userManager,
             RoleManager<Funcao> roleManager,
             IOptions<AppSettings> appSettings,
-            IMapper mapper,
-            IAspNetUser aspNetUser) : base(notificador, user)
+            IMapper mapper)
         {
             SignInManager = signInManager;
             UserManager = userManager;
             _roleManager = roleManager;
             _appSettings = appSettings.Value;
-            _aspNetUser = aspNetUser;
             _mapper = mapper;
         }
 
 
-        
+
 
         [HttpPost("AdicionarFuncaoAdmin")]
         public async Task<ActionResult> AdicionarFuncaoUsuario(string email)
@@ -55,7 +47,7 @@ namespace FinoSabor.Services.Api.Controllers.Colaborador
 
             await UserManager.AddToRoleAsync(user, "admin");
 
-            return CustomResponse();
+            return CustomResponseAsync();
         }
 
 
@@ -68,7 +60,7 @@ namespace FinoSabor.Services.Api.Controllers.Colaborador
 
             await UserManager.AddToRoleAsync(user, "usuario");
 
-            return CustomResponse();
+            return CustomResponseAsync();
         }
     }
 }

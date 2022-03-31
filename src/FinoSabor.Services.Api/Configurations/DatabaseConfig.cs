@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FinoSabor.Infra.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using FinoSabor.Infra.Data;
 using System;
 
 namespace FinoSabor.Services.Api.Configurations

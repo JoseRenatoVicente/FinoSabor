@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FinoSabor.Domain.Core.Responses;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using FinoSabor.Application.Notificacoes;
-using FinoSabor.Application.Notificacoes.Interface;
-using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,33 +10,11 @@ namespace FinoSabor.Services.Api.Controllers.Base
     [ApiController]
     public abstract class MainController : ControllerBase
     {
-        private readonly INotificador _notificador;
-        public readonly IAspNetUser AppUser;
+        protected readonly ICollection<string> _errors = new List<string>();
 
-        protected Guid UsuarioId { get; set; }
-        protected bool UsuarioAutenticado { get; set; }
-
-        protected MainController(INotificador notificador,
-                                 IAspNetUser appUser)
+        protected ActionResult CustomResponseAsync(object result = null)
         {
-            _notificador = notificador;
-            AppUser = appUser;
-
-            if (appUser.EstaAutenticado())
-            {
-                UsuarioId = appUser.ObterUserId();
-                UsuarioAutenticado = true;
-            }
-        }
-
-        protected bool OperacaoValida()
-        {
-            return !_notificador.TemNotificacao();
-        }
-
-        protected ActionResult CustomResponse(object result = null)
-        {
-            if (OperacaoValida())
+            if (IsOperationValid())
             {
                 return Ok(result);
             }
@@ -46,29 +22,58 @@ namespace FinoSabor.Services.Api.Controllers.Base
             return BadRequest(new
             {
                 success = false,
-                errors = _notificador.ObterNotificacoes().Select(n => n.Mensagem)
+                errors = _errors.ToArray()
             });
         }
 
-        protected ActionResult CustomResponse(ModelStateDictionary modelState)
-        {
-            if (!modelState.IsValid) NotificarErroModelInvalida(modelState);
-            return CustomResponse();
-        }
-
-        protected void NotificarErroModelInvalida(ModelStateDictionary modelState)
+        protected ActionResult CustomResponseAsync(ModelStateDictionary modelState)
         {
             var erros = modelState.Values.SelectMany(e => e.Errors);
             foreach (var erro in erros)
             {
-                var errorMsg = erro.Exception is null ? erro.ErrorMessage : erro.Exception.Message;
-                NotificarErro(errorMsg);
+                AddError(erro.ErrorMessage);
             }
+
+            return CustomResponseAsync();
         }
 
-        protected void NotificarErro(string mensagem)
+        protected ActionResult CustomResponseAsync(ValidationResult validationResult)
         {
-            _notificador.Handle(new Notificacao(mensagem));
+            foreach (var erro in validationResult.Errors)
+            {
+                AddError(erro.ErrorMessage);
+            }
+
+            return CustomResponseAsync();
+        }
+
+        protected ActionResult CustomResponseAsync(BaseResponse baseResponse)
+        {
+            if (baseResponse.isSuccess)
+            {
+                return Ok(baseResponse.Entity);
+            }
+
+            return BadRequest(new
+            {
+                success = false,
+                errors = baseResponse.errors
+            });
+        }
+
+        protected bool IsOperationValid()
+        {
+            return !_errors.Any();
+        }
+
+        protected void AddError(string erro)
+        {
+            _errors.Add(erro);
+        }
+
+        protected void ClearErrors()
+        {
+            _errors.Clear();
         }
     }
 }

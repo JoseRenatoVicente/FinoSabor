@@ -37,8 +37,8 @@ namespace FinoSabor.Application.Services
 
         public async Task<IEnumerable<CompraViewModel>> ObterTodos()
         {
-           return await (await _compraRepository.GetAllAsync())
-                .ProjectTo<CompraViewModel>(_mapper.ConfigurationProvider).OrderByDescending(c => c.data).ToListAsync();
+            return await (await _compraRepository.GetAllAsync())
+                 .ProjectTo<CompraViewModel>(_mapper.ConfigurationProvider).OrderByDescending(c => c.data).ToListAsync();
         }
         public async Task<CompraDetalhadaViewModel> ObterPorId(Guid id)
         {
@@ -56,7 +56,7 @@ namespace FinoSabor.Application.Services
                 if (!ExecutarValidacao(new Itens_CompraValidation(), item)) return false;
             }
 
-            if (!await _fornecedorRepository.Existe(c => c.Id == compra.IdFornecedor))
+            if (!await _fornecedorRepository.Existe(c => c.Id == compra.FornecedorId))
             {
                 Notificar("Fornecedor não encontrado");
                 return false;
@@ -65,7 +65,7 @@ namespace FinoSabor.Application.Services
             {
                 foreach (var item in compra.Itens)
                 {
-                    var produto = await _produtoRepository.GetByIdAsync(item.IdProduto);
+                    var produto = await _produtoRepository.GetByIdAsync(item.ProdutoId);
                     if (produto is null)
                     {
                         Notificar("Produto não encontrado");
@@ -90,7 +90,7 @@ namespace FinoSabor.Application.Services
                 if (!ExecutarValidacao(new Itens_CompraValidation(), item)) return false;
             }
 
-            if (!await _fornecedorRepository.Existe(c => c.Id == compra.IdFornecedor))
+            if (!await _fornecedorRepository.Existe(c => c.Id == compra.FornecedorId))
             {
                 Notificar("Fornecedor não encontrado");
                 return false;
@@ -114,7 +114,7 @@ namespace FinoSabor.Application.Services
             {
                 foreach (var item in compra.Itens)
                 {
-                    var produto = await _produtoRepository.GetByIdAsync(item.IdProduto);
+                    var produto = await _produtoRepository.GetByIdAsync(item.ProdutoId);
                     if (produto is null)
                     {
                         Notificar("Produto não encontrado");
@@ -146,7 +146,7 @@ namespace FinoSabor.Application.Services
                 {
                     var produto = await _produtoRepository.GetByIdAsync(item.id_produto);
 
-                    produto.QuantidadeEstoque = 
+                    produto.QuantidadeEstoque =
                         produto.QuantidadeEstoque <= 0 ? 0 : produto.QuantidadeEstoque -= item.quantidade;
 
                     await _produtoRepository.UpdateAsync(produto);

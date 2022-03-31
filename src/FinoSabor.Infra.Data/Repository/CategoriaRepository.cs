@@ -1,12 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using FinoSabor.Domain.Entities;
+﻿using FinoSabor.Domain.Entities;
 using FinoSabor.Infra.Data.Base.Repository;
-using FinoSabor.Infra.Data;
 using FinoSabor.Infra.Data.Repository.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FinoSabor.Infra.Data.Repository
 {

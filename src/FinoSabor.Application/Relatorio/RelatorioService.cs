@@ -12,7 +12,7 @@ namespace FinoSabor.Application.Relatorio
         {
             _converter = converter;
         }
-                
+
 
         public Task<byte[]> CreatePDF(GlobalSettings optionalGlobalSettings, ObjectSettings ObjectSettings)
         {
@@ -43,7 +43,7 @@ namespace FinoSabor.Application.Relatorio
                 return _converter.Convert(pdf);
 
             });
-            
+
         }
     }
 }

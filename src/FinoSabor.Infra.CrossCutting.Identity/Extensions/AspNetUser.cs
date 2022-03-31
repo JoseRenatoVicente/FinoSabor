@@ -1,8 +1,8 @@
-﻿using System;
+﻿using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
-using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
 
 namespace FinoSabor.Infra.CrossCutting.Identity.Extensions
 {

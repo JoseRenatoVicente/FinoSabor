@@ -9,9 +9,9 @@ namespace FinoSabor.Infra.CrossCutting.Identity.ViewModels
             Token = Guid.NewGuid();
         }
 
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
         public string Username { get; set; }
-        public Guid Token{ get; set; }
+        public Guid Token { get; set; }
         public DateTime ExpirationDate { get; set; }
     }
 }

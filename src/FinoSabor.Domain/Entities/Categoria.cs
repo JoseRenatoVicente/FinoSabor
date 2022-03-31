@@ -8,7 +8,7 @@ namespace FinoSabor.Domain.Entities
 
         public Categoria()
         {
-                
+
         }
 
         public Categoria(string nome)
@@ -17,9 +17,14 @@ namespace FinoSabor.Domain.Entities
             Slug = nome.Slugify();
         }
 
+        public Categoria(string nome, string slug) : this(nome)
+        {
+            Slug = slug;
+        }
+
         public string Nome { get; set; }
 
-        public string Slug { get; set; } 
+        public string Slug { get; set; }
 
         /*
          * Auto-relacionamento

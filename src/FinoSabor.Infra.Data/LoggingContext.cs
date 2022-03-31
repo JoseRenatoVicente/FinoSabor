@@ -1,11 +1,10 @@
-﻿using JsonDiffPatchDotNet;
+﻿using FinoSabor.Domain.Entities;
+using FinoSabor.Domain.Entities.Base;
+using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
+using JsonDiffPatchDotNet;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using FinoSabor.Domain.Entities;
-using FinoSabor.Domain.Entities.Base;
-using FinoSabor.Infra.CrossCutting.Identity.Extensions;
-using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +18,8 @@ namespace FinoSabor.Infra.Data
 
         public static async Task LogChanges(this FinoSaborContext context, IAspNetUser appuser)
         {
-            //var logTime = DateTime.Now;
             const string emptyJson = "{}";
-            const string idColumn = "id";
+            const string idColumn = "Id";
 
             Guid? user = null;
             if (!string.IsNullOrEmpty(appuser.ObterUserId().ToString()))
@@ -43,14 +41,11 @@ namespace FinoSabor.Infra.Data
                 {
                     var dbValues = await item.GetDatabaseValuesAsync();
 
-                    if (dbValues != null)
+                    if (dbValues is not null)
                     {
                         original = JsonConvert.SerializeObject(dbValues.Properties.ToDictionary(pn => pn.Name, pn => dbValues[pn]));
-                        //creationDate = dbValues.GetValue<DateTime>("DataCadastro");
                     }
                 }
-
-                //item.Property("DataCadastro").CurrentValue = creationDate;
 
                 string jsonDiff = jdp.Diff(original, updated);
 
@@ -61,10 +56,9 @@ namespace FinoSabor.Infra.Data
                     var log = new Log()
                     {
                         NomeEntidade = item.Entity.GetType().Name,
-                        IdEntidade = new Guid(item.CurrentValues[idColumn].ToString()),
-                        //LogDateTime = logTime,
+                        EntidadeId = new Guid(item.CurrentValues[idColumn].ToString()),
                         Operacao = item.State.ToString(),
-                        IdUsuario = user,
+                        UsuarioId = user,
                         ValoresAlterados = EntityDiff,
                     };
 

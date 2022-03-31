@@ -17,7 +17,7 @@ namespace FinoSabor.Infra.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.2")
+                .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -48,10 +48,7 @@ namespace FinoSabor.Infra.Data.Migrations
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("FornecedorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdFornecedor")
+                    b.Property<Guid>("FornecedorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("StatusCompra")
@@ -108,10 +105,7 @@ namespace FinoSabor.Infra.Data.Migrations
                     b.Property<string>("Cnpj")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("EnderecoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdEndereco")
+                    b.Property<Guid>("EnderecoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Nome")
@@ -267,10 +261,7 @@ namespace FinoSabor.Infra.Data.Migrations
                     b.Property<string>("Caminho")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("IdProduto")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ProdutoId")
+                    b.Property<Guid>("ProdutoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -286,16 +277,10 @@ namespace FinoSabor.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CompraId")
+                    b.Property<Guid>("CompraId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("IdCompra")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdProduto")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ProdutoId")
+                    b.Property<Guid>("ProdutoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantidade")
@@ -319,16 +304,10 @@ namespace FinoSabor.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("IdPedido")
+                    b.Property<Guid>("PedidoId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("IdProduto")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("PedidoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ProdutoId")
+                    b.Property<Guid>("ProdutoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantidade")
@@ -355,10 +334,7 @@ namespace FinoSabor.Infra.Data.Migrations
                     b.Property<DateTime?>("DataCadastro")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("IdEntidade")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("IdUsuario")
+                    b.Property<Guid>("EntidadeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("NomeEntidade")
@@ -366,6 +342,9 @@ namespace FinoSabor.Infra.Data.Migrations
 
                     b.Property<string>("Operacao")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ValoresAlterados")
                         .HasColumnType("nvarchar(max)");
@@ -387,13 +366,10 @@ namespace FinoSabor.Infra.Data.Migrations
                     b.Property<int>("FormaPagamento")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("IdUsuario")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("UsuarioId")
+                    b.Property<Guid>("UsuarioId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -433,7 +409,7 @@ namespace FinoSabor.Infra.Data.Migrations
                     b.Property<string>("Estado")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("IdUsuario")
+                    b.Property<Guid?>("IdUsuario")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Nome")
@@ -448,10 +424,14 @@ namespace FinoSabor.Infra.Data.Migrations
                     b.Property<string>("Telefone")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdUsuario")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[IdUsuario] IS NOT NULL");
 
                     b.ToTable("Pessoas");
                 });
@@ -465,14 +445,14 @@ namespace FinoSabor.Infra.Data.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
-                    b.Property<Guid?>("CategoriaId")
+                    b.Property<Guid>("CategoriaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("IdCategoria")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<bool>("Excluido")
+                        .HasColumnType("bit");
 
                     b.Property<string>("ImagemPrincipal")
                         .HasColumnType("nvarchar(max)");
@@ -595,7 +575,9 @@ namespace FinoSabor.Infra.Data.Migrations
                 {
                     b.HasOne("FinoSabor.Domain.Entities.Fornecedor", "Fornecedor")
                         .WithMany()
-                        .HasForeignKey("FornecedorId");
+                        .HasForeignKey("FornecedorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Fornecedor");
                 });
@@ -604,7 +586,9 @@ namespace FinoSabor.Infra.Data.Migrations
                 {
                     b.HasOne("FinoSabor.Domain.Entities.EnderecoFornecedor", "Endereco")
                         .WithMany()
-                        .HasForeignKey("EnderecoId");
+                        .HasForeignKey("EnderecoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Endereco");
                 });
@@ -632,7 +616,9 @@ namespace FinoSabor.Infra.Data.Migrations
                 {
                     b.HasOne("FinoSabor.Domain.Entities.Produto", "Produto")
                         .WithMany("Imagem")
-                        .HasForeignKey("ProdutoId");
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Produto");
                 });
@@ -641,11 +627,15 @@ namespace FinoSabor.Infra.Data.Migrations
                 {
                     b.HasOne("FinoSabor.Domain.Entities.Compra", "Compra")
                         .WithMany("Itens")
-                        .HasForeignKey("CompraId");
+                        .HasForeignKey("CompraId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("FinoSabor.Domain.Entities.Produto", "Produto")
                         .WithMany()
-                        .HasForeignKey("ProdutoId");
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Compra");
 
@@ -656,11 +646,15 @@ namespace FinoSabor.Infra.Data.Migrations
                 {
                     b.HasOne("FinoSabor.Domain.Entities.Pedido", "Pedido")
                         .WithMany("Itens")
-                        .HasForeignKey("PedidoId");
+                        .HasForeignKey("PedidoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("FinoSabor.Domain.Entities.Produto", "Produto")
                         .WithMany()
-                        .HasForeignKey("ProdutoId");
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Pedido");
 
@@ -671,7 +665,9 @@ namespace FinoSabor.Infra.Data.Migrations
                 {
                     b.HasOne("FinoSabor.Domain.Entities.Identity.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuario");
                 });
@@ -680,9 +676,7 @@ namespace FinoSabor.Infra.Data.Migrations
                 {
                     b.HasOne("FinoSabor.Domain.Entities.Identity.Usuario", "Usuario")
                         .WithOne("Pessoa")
-                        .HasForeignKey("FinoSabor.Domain.Entities.Pessoa", "IdUsuario")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FinoSabor.Domain.Entities.Pessoa", "IdUsuario");
 
                     b.Navigation("Usuario");
                 });
@@ -691,7 +685,9 @@ namespace FinoSabor.Infra.Data.Migrations
                 {
                     b.HasOne("FinoSabor.Domain.Entities.Categoria", "Categoria")
                         .WithMany()
-                        .HasForeignKey("CategoriaId");
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Categoria");
                 });

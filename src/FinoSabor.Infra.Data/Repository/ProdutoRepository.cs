@@ -1,17 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Dapper;
 using FinoSabor.Application.ViewModels;
+using FinoSabor.Application.ViewModels.Cliente;
 using FinoSabor.Domain.Entities;
+using FinoSabor.Domain.Helpers;
 using FinoSabor.Infra.Data.Base.Repository;
 using FinoSabor.Infra.Data.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using FinoSabor.Application.ViewModels.Cliente;
-using FinoSabor.Domain.Helpers;
-using Dapper;
 
 namespace FinoSabor.Infra.Data.Repository
 {
@@ -66,12 +66,12 @@ namespace FinoSabor.Infra.Data.Repository
 
         public async Task<PagedList<ProdutoViewModel>> PaginacaoAdminAsync(int PagNumero, int PagRegistro, string busca = null)
         {
-            var sql = @$"SELECT id, nome, valor, descricao, ativo, quantidade_estoque, quantidade_minima, imagem_principal, id_categoria FROM produto
+            var sql = @$"SELECT Id, Nome, Valor, Descricao, Ativo, QuantidadeEstoque, QuantidadeMinima, ImagemPrincipal, CategoriaId FROM Produtos
                       WHERE (@Nome IS NULL OR Nome LIKE '%' + @Nome + '%') 
                       ORDER BY [Nome] 
                       OFFSET {PagRegistro * (PagNumero - 1)} ROWS 
                       FETCH NEXT {PagRegistro} ROWS ONLY 
-                      SELECT COUNT(Id) FROM produto 
+                      SELECT COUNT(Id) FROM Produtos
                       WHERE (@Nome IS NULL OR Nome LIKE '%' + @Nome + '%')";
 
             var multi = await Db.Database.GetDbConnection()

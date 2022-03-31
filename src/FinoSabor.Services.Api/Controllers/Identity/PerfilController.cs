@@ -1,65 +1,59 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using FinoSabor.Application.Notificacoes.Interface;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using FinoSabor.Application.Pessoas.Commands;
 using FinoSabor.Application.Services.Interfaces;
 using FinoSabor.Domain.Entities.Identity;
+using FinoSabor.Domain.ViewModels.Pessoa;
 using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
 using FinoSabor.Infra.CrossCutting.Identity.ViewModels;
+using FinoSabor.Infra.Data.Repository.Interfaces;
 using FinoSabor.Services.Api.Controllers.Base;
+using MediatR;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using FinoSabor.Domain.ViewModels;
-using FinoSabor.Domain.Entities;
-using AutoMapper;
-using FinoSabor.Domain.ViewModels.Pessoa;
 
 namespace FinoSabor.Services.Api.Controllers.Identity
 {
     [Route("api/[controller]")]
     public class PerfilController : MainController
     {
-
-        private readonly IPerfilService _perfilService;
         private readonly IMapper _mapper;
+        private readonly IMediator  _mediator;
+        private readonly IPessoaRepository _pessoaRepository;
+        private readonly IAspNetUser _user;
 
-        private readonly SignInManager<Usuario> _signInManager;
         private readonly UserManager<Usuario> _userManager;
-        private readonly ILogger _logger;
 
         private readonly IEmailService _emailService;
 
-        public PerfilController(INotificador notificador, IAspNetUser user,
-                              IPerfilService perfilService,
-                              SignInManager<Usuario> signInManager,
-                              IEmailService emailService,
-                              IMapper mapper,
-                              UserManager<Usuario> userManager, ILogger<AutenticaçãoController> logger) : base(notificador, user)
+        public PerfilController(IMapper mapper, IMediator mediator, IPessoaRepository pessoaRepository, IAspNetUser user, UserManager<Usuario> userManager, IEmailService emailService)
         {
-            _perfilService = perfilService;
-            _signInManager = signInManager;
+            _mapper = mapper;
+            _mediator = mediator;
+            _pessoaRepository = pessoaRepository;
+            _user = user;
             _userManager = userManager;
             _emailService = emailService;
-            _mapper = mapper;
-            _logger = logger;
         }
-
 
         [HttpGet]
         public async Task<IActionResult> ObterDados()
         {
-            var data = await _perfilService.ObterDados(AppUser.ObterUserId());
+            var data = await (await _pessoaRepository.GetAllAsync())
+            .ProjectTo<PessoaUpdateViewModel>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync(x => x.id_usuario == _user.ObterUserId());
 
-            return data is null ? NotFound() : CustomResponse(data);
+            return data is null ? NotFound() : CustomResponseAsync(data);
         }
 
         [HttpPut]
-        public async Task<IActionResult> AtualizarDados(PessoaUpdateViewModel pessoa)
+        public async Task<IActionResult> AtualizarDados(AtualizarPessoaCommand atualizarPessoaCommand)
         {
-            pessoa.id_usuario = AppUser.ObterUserId();
-            return !ModelState.IsValid ? CustomResponse(ModelState) : CustomResponse(await _perfilService.Atualizar(_mapper.Map<Pessoa>(pessoa)));
-
+            atualizarPessoaCommand.UsuarioId = _user.ObterUserId();
+            return !ModelState.IsValid ? CustomResponseAsync(ModelState) : CustomResponseAsync(await _mediator.Send(atualizarPessoaCommand));
         }
-
 
         /// <summary>
         /// Requisição usada para mudar a senha de um usuário que esta logado
@@ -69,44 +63,22 @@ namespace FinoSabor.Services.Api.Controllers.Identity
         [HttpPost("MudarSenha")]
         public async Task<ActionResult> MudarSenha(MudarSenhaViewModel mudarSenha)
         {
-            if (!ModelState.IsValid) return CustomResponse(ModelState);
-            var user = await _userManager.FindByIdAsync(AppUser.ObterUserId().ToString());
+            if (!ModelState.IsValid) return CustomResponseAsync(ModelState);
+            var user = await _userManager.FindByIdAsync(_user.ObterUserId().ToString());
             var result = await _userManager.ChangePasswordAsync(user, mudarSenha.SenhaAtual, mudarSenha.NovaSenha);
 
             if (result.Succeeded)
             {
                 await _emailService.SendEmailAsync(user.Email, "Sua senha foi alterada", "proteja sua conta");
-                return CustomResponse();
+                return CustomResponseAsync();
             }
             foreach (var error in result.Errors)
             {
-                NotificarErro(error.Description);
+                AddError(error.Description);
             }
 
-            return CustomResponse();
+            return CustomResponseAsync();
 
         }
-
-       /* [HttpPost("MudarSenha")]
-        public async Task<ActionResult> MudarSenha(MudarSenhaViewModel mudarSenha)
-        {
-            if (!ModelState.IsValid) return CustomResponse(ModelState);
-            var user = await _userManager.FindByIdAsync(AppUser.ObterUserId().ToString());
-            var result = await _userManager.ChangePasswordAsync(user, mudarSenha.SenhaAtual, mudarSenha.NovaSenha);
-
-            if (result.Succeeded)
-            {
-                await _emailService.SendEmailAsync(user.Email, "Sua senha foi alterada", "proteja sua conta");
-                return CustomResponse();
-            }
-            foreach (var error in result.Errors)
-            {
-                NotificarErro(error.Description);
-            }
-
-            return CustomResponse();
-
-        }*/
-
     }
 }

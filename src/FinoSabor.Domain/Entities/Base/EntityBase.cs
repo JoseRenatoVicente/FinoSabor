@@ -11,6 +11,6 @@ namespace FinoSabor.Domain.Entities.Base
 
         public Guid Id { get; set; }
 
-        
+
     }
 }

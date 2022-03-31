@@ -1,13 +1,10 @@
 ﻿using FinoSabor.Domain.Entities.Base;
 using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace FinoSabor.Application.ViewModels
 {
     public class ProdutoInsertViewModel : EntityBase
     {
-
         public string nome { get; set; }
         public decimal valor { get; set; }
         public string descricao { get; set; }

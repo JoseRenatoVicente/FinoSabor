@@ -1,18 +1,14 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using FinoSabor.Application.Notificacoes.Interface;
+using AutoMapper.QueryableExtensions;
 using FinoSabor.Application.ViewModels.Cliente;
 using FinoSabor.Domain.Entities;
-using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
 using FinoSabor.Infra.Data.Repository.Interfaces;
 using FinoSabor.Services.Api.Controllers.Base;
-using System;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FinoSabor.Application.ViewModels;
-using AutoMapper.QueryableExtensions;
 
 namespace FinoSabor.Services.Api.Controllers
 {
@@ -20,13 +16,12 @@ namespace FinoSabor.Services.Api.Controllers
     [Route("api/[controller]")]
     public class CategoriaController : MainController
     {
-        private ICategoriaRepository _categoriaRepository;
-        private IProdutoRepository _produtoRepository;
+        private readonly ICategoriaRepository _categoriaRepository;
+        private readonly IProdutoRepository _produtoRepository;
         private readonly IMapper _mapper;
 
-        public CategoriaController(INotificador notificador, IAspNetUser appUser,
-                                   IMapper mapper,
-                                   ICategoriaRepository categoriaRepository, IProdutoRepository produtoRepository) : base(notificador, appUser)
+        public CategoriaController(IMapper mapper,
+                                   ICategoriaRepository categoriaRepository, IProdutoRepository produtoRepository)
         {
             _mapper = mapper;
             _categoriaRepository = categoriaRepository;
@@ -36,7 +31,7 @@ namespace FinoSabor.Services.Api.Controllers
         [HttpGet]
         public async Task<IEnumerable<Categoria>> ObterCategorias()
         {
-           return await _categoriaRepository.GetAllAsync();
+            return await _categoriaRepository.GetAllAsync();
         }
 
         [HttpGet("produtos/{slug}")]

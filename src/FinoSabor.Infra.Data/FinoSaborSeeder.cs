@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using FinoSabor.Domain.Entities;
+﻿using FinoSabor.Domain.Entities;
 using FinoSabor.Domain.Entities.Enums;
 using FinoSabor.Domain.Entities.Identity;
 using FinoSabor.Domain.Helpers;
-using System.Linq;
+using Microsoft.AspNetCore.Identity;
 using System;
+using System.Linq;
 
 namespace FinoSabor.Infra.Data
 {
@@ -48,7 +48,7 @@ namespace FinoSabor.Infra.Data
                 QuantidadeEstoque = 10,
                 QuantidadeMinima = 5,
                 Slug = "Bolo".Slugify(),
-                IdCategoria = CategoriaDoces.Id,
+                CategoriaId = CategoriaDoces.Id,
                 Valor = 10,
                 Descricao = "Muito bom",
                 Ativo = true,
@@ -61,7 +61,7 @@ namespace FinoSabor.Infra.Data
                 QuantidadeEstoque = 10,
                 QuantidadeMinima = 5,
                 Slug = "Guaraná Antártica - Lata".Slugify(),
-                IdCategoria =CategoriaBebidas.Id,
+                CategoriaId = CategoriaBebidas.Id,
                 Valor = 3.99M,
                 Descricao = "Muito bom",
                 Ativo = true,
@@ -74,7 +74,7 @@ namespace FinoSabor.Infra.Data
                 QuantidadeEstoque = 10,
                 QuantidadeMinima = 5,
                 Slug = "Esfirra".Slugify(),
-                IdCategoria = CategoriaSalgados.Id,
+                CategoriaId = CategoriaSalgados.Id,
                 Valor = 4.5M,
                 Descricao = "Muito bom",
                 Ativo = true,
@@ -87,7 +87,7 @@ namespace FinoSabor.Infra.Data
                 QuantidadeEstoque = 10,
                 QuantidadeMinima = 5,
                 Slug = "Bomba de chocolate".Slugify(),
-                IdCategoria = CategoriaDoces.Id,
+                CategoriaId = CategoriaDoces.Id,
                 Valor = 3.99M,
                 Descricao = "Muito bom",
                 Ativo = true,
@@ -100,7 +100,7 @@ namespace FinoSabor.Infra.Data
                 QuantidadeEstoque = 10,
                 QuantidadeMinima = 5,
                 Slug = "Fanta - 2l".Slugify(),
-                IdCategoria = CategoriaBebidas.Id,
+                CategoriaId = CategoriaBebidas.Id,
                 Valor = 8.5M,
                 Descricao = "Muito bom",
                 Ativo = true,
@@ -113,7 +113,7 @@ namespace FinoSabor.Infra.Data
                 QuantidadeEstoque = 10,
                 QuantidadeMinima = 5,
                 Slug = "Bauru".Slugify(),
-                IdCategoria = CategoriaSalgados.Id,
+                CategoriaId = CategoriaSalgados.Id,
                 Valor = 4.5M,
                 Descricao = "Muito bom",
                 Ativo = true,
@@ -126,7 +126,7 @@ namespace FinoSabor.Infra.Data
                 QuantidadeEstoque = 10,
                 QuantidadeMinima = 5,
                 Slug = "Pudim de chocolate".Slugify(),
-                IdCategoria = CategoriaDoces.Id,
+                CategoriaId = CategoriaDoces.Id,
                 Valor = 4.5M,
                 Descricao = "Muito bom",
                 Ativo = true,
@@ -139,7 +139,7 @@ namespace FinoSabor.Infra.Data
                 QuantidadeEstoque = 10,
                 QuantidadeMinima = 5,
                 Slug = "Coxinha".Slugify(),
-                IdCategoria = CategoriaBebidas.Id,
+                CategoriaId = CategoriaBebidas.Id,
                 Valor = 4.5M,
                 Descricao = "Muito bom",
                 Ativo = true,
@@ -152,7 +152,7 @@ namespace FinoSabor.Infra.Data
                 QuantidadeEstoque = 10,
                 QuantidadeMinima = 5,
                 Slug = "Coca Cola - Lata".Slugify(),
-                IdCategoria = CategoriaBebidas.Id,
+                CategoriaId = CategoriaBebidas.Id,
                 Valor = 4.5M,
                 Descricao = "Muito bom",
                 Ativo = true,
@@ -163,23 +163,23 @@ namespace FinoSabor.Infra.Data
             Compra compra1 = new Compra
             {
                 Data = DateTime.Now,
-                IdFornecedor = f1.Id
+                FornecedorId = f1.Id
             };
 
             ItensCompra itens_Compra1 = new ItensCompra
             {
                 Quantidade = 10,
-                IdProduto = ProdutoGuarana.Id,
+                ProdutoId = ProdutoGuarana.Id,
                 ValorUnitario = 10.50M,
-                IdCompra = compra1.Id
+                CompraId = compra1.Id
             };
 
             ItensCompra itens_Compra2 = new ItensCompra
             {
                 Quantidade = 15,
-                IdProduto = ProdutoBombaChocolate.Id,
+                ProdutoId = ProdutoBombaChocolate.Id,
                 ValorUnitario = 7.99M,
-                IdCompra = compra1.Id
+                CompraId = compra1.Id
             };
 
 
@@ -233,17 +233,17 @@ namespace FinoSabor.Infra.Data
             Pessoa pessoa1 = new Pessoa
             {
                 Nome = "José",
-                Cpf = "59765563884",
+                CPF = "59765563884",
                 Telefone = "16996204177",
                 Rua = "Rua 1",
-                Bairro= "centro",
+                Bairro = "centro",
                 Numero = 100,
                 Cep = "15900017",
                 Cidade = "Taquaritinga",
                 Estado = "SP",
                 DataCadastro = DateTime.Now,
                 DataNascimento = DateTime.Now,
-                IdUsuario = usuario1.Id
+                UsuarioId = usuario1.Id
             };
 
             //Usuario Felps
@@ -274,7 +274,7 @@ namespace FinoSabor.Infra.Data
             {
                 Nome = "Felipe",
                 DataCadastro = DateTime.Now,
-                IdUsuario = usuario2.Id
+                UsuarioId = usuario2.Id
             };//Fim Usuario Felps
 
             //Usuario Gustavo
@@ -305,30 +305,30 @@ namespace FinoSabor.Infra.Data
             {
                 Nome = "Gustavo",
                 DataCadastro = DateTime.Now,
-                IdUsuario = usuario3.Id
+                UsuarioId = usuario3.Id
             };//Fim Usuario Gustavo
 
             Pedido pedido1 = new Pedido
             {
                 FormaPagamento = FormaPagamento.CartaoCredito,
-                IdUsuario = usuario1.Id,
+                UsuarioId = usuario1.Id,
                 Status = StatusPedido.Entregue,
                 DataPedido = DateTime.Now
             };
 
             ItensPedido itens_Pedido1 = new ItensPedido
-            { 
-                IdPedido = pedido1.Id,
-                IdProduto = ProdutoBauru.Id,
+            {
+                PedidoId = pedido1.Id,
+                ProdutoId = ProdutoBauru.Id,
                 Quantidade = 10,
-                ValorUnitario = ProdutoBauru.Valor                
+                ValorUnitario = ProdutoBauru.Valor
 
             };
 
             ItensPedido itens_Pedido2 = new ItensPedido
             {
-                IdPedido = pedido1.Id,
-                IdProduto = ProdutoCocaCola.Id,
+                PedidoId = pedido1.Id,
+                ProdutoId = ProdutoCocaCola.Id,
                 Quantidade = 8,
                 ValorUnitario = ProdutoCocaCola.Valor
 
@@ -340,7 +340,7 @@ namespace FinoSabor.Infra.Data
             await _context.Pessoas.AddRangeAsync(pessoa1, pessoa2);
 
             await _context.Fornecedores.AddRangeAsync(f1, f2);
-            await _context.Categorias.AddRangeAsync(CategoriaBebidas, CategoriaDoces,CategoriaSalgados);
+            await _context.Categorias.AddRangeAsync(CategoriaBebidas, CategoriaDoces, CategoriaSalgados);
             await _context.EnderecoFornecedores.AddRangeAsync(e1, e2);
             await _context.Produtos.AddRangeAsync(ProdutoBauru, ProdutoBolo, ProdutoBombaChocolate, ProdutoCocaCola, ProdutoCoxinha, ProdutoEsfirra, ProdutoFanta, ProdutoGuarana, ProdutoPudim);
 

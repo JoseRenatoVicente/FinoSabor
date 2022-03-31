@@ -12,8 +12,8 @@ namespace FinoSabor.Domain.Entities
         public DateTime DataPedido { get; set; } = DateTime.UtcNow;
         public StatusPedido Status { get; set; }
         public FormaPagamento FormaPagamento { get; set; }
-        [NotMapped] public decimal Total { get; set; }        
-        public Guid IdUsuario { get; set; }
+        [NotMapped] public decimal Total { get; set; }
+        public Guid UsuarioId { get; set; }
 
         /* EF Relations */
         public Usuario Usuario { get; set; }

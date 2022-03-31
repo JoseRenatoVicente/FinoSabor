@@ -8,10 +8,10 @@ namespace FinoSabor.Domain.Entities.Identity
     {
         public Usuario()
         {
-            
+
         }
 
-        
+
         /// <summary>
         /// Navigation property for the roles this user belongs to.
         /// </summary>

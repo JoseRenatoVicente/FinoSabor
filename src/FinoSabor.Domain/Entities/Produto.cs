@@ -2,6 +2,7 @@
 using FinoSabor.Domain.Helpers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinoSabor.Domain.Entities
 {
@@ -11,7 +12,7 @@ namespace FinoSabor.Domain.Entities
         {
         }
 
-        public Produto(string nome, decimal valor, string descricao, string imagemPrincipal, bool ativo, int quantidadeEstoque, int quantidadeMinima, string slug, Guid idCategoria)
+        public Produto(string nome, decimal valor, string descricao, string imagemPrincipal, bool ativo, int quantidadeEstoque, int quantidadeMinima, Guid categoriaId)
         {
             Nome = nome;
             Valor = valor;
@@ -22,19 +23,27 @@ namespace FinoSabor.Domain.Entities
             QuantidadeMinima = quantidadeMinima;
             //TODO:checar
             Slug = nome.Slugify();
-            IdCategoria = idCategoria;
+            CategoriaId = categoriaId;
         }
 
+        public Produto(string nome, decimal valor, string descricao, string imagemPrincipal, bool ativo, int quantidadeEstoque, int quantidadeMinima, Guid categoriaId, Guid id) : this(nome, valor, descricao, imagemPrincipal, ativo, quantidadeEstoque, quantidadeMinima, categoriaId)
+        {
+            Id = id;
+        }
+
+
         public string Nome { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Valor { get; set; }
         public string Descricao { get; set; }
         public string ImagemPrincipal { get; set; }
-        public bool Ativo { get; set; }
+        public bool Ativo { get; set; } = true;
+        public bool Excluido { get; set; } = false;
         public int QuantidadeEstoque { get; set; }
         public int QuantidadeMinima { get; set; }
-	    public string Slug { get; set; }
+        public string Slug { get; set; }
 
-        public Guid IdCategoria { get; set; }
+        public Guid CategoriaId { get; set; }
         public Categoria Categoria { get; set; }
 
 

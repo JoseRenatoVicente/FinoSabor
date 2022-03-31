@@ -2,7 +2,6 @@
 using FinoSabor.Domain.Entities;
 using FinoSabor.Domain.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FinoSabor.Application.Services.Interfaces

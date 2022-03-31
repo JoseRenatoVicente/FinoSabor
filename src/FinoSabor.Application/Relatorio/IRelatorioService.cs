@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace FinoSabor.Application.Relatorio
 {
-    public interface IRelatorioService 
+    public interface IRelatorioService
     {
         Task<byte[]> CreatePDF(GlobalSettings optionalGlobalSettings, ObjectSettings ObjectSettings);
     }

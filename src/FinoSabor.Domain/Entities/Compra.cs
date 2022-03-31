@@ -2,7 +2,6 @@
 using FinoSabor.Domain.Entities.Enums;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinoSabor.Domain.Entities
 {
@@ -12,7 +11,7 @@ namespace FinoSabor.Domain.Entities
 
         public StatusCompra StatusCompra { get; set; }
         //Banco de dados
-        public Guid IdFornecedor { get; set; }
+        public Guid FornecedorId { get; set; }
 
         //EF Relation
         public Fornecedor Fornecedor { get; set; }

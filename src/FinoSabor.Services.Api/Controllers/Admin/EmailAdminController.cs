@@ -1,13 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SendGrid;
-using SendGrid.Helpers.Mail;
-using FinoSabor.Application.Notificacoes.Interface;
-using FinoSabor.Application.Services.Interfaces;
-using FinoSabor.Domain.Entities;
-using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
+﻿using FinoSabor.Application.Services.Interfaces;
 using FinoSabor.Infra.Data.Repository.Interfaces;
 using FinoSabor.Services.Api.Controllers.Base;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
@@ -21,10 +16,8 @@ namespace FinoSabor.Services.Api.Controllers
         private readonly IEmailService _mailService;
         private readonly IEmailConfigRepository _emailConfigRepository;
 
-        public EmailAdminController(INotificador notificador,
-                               IAspNetUser user,
-                               IEmailService mailService,
-                               IEmailConfigRepository emailConfigRepository) : base(notificador, user)
+        public EmailAdminController(IEmailService mailService,
+                               IEmailConfigRepository emailConfigRepository)
         {
             _mailService = mailService;
             _emailConfigRepository = emailConfigRepository;
@@ -41,7 +34,7 @@ namespace FinoSabor.Services.Api.Controllers
         public async Task<ActionResult<Categoria>> Adicionar(EmailConfig email)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
-            if (await _emailConfigRepository.PegarEmailPorPrioridade(email.Prioridade) != null)
+            if (await _emailConfigRepository.PegarEmailPorPrioridade(email.Prioridade) is not null)
             {
                 NotificarErro("ja exite um email na prioridade" + email.Prioridade);
                 return CustomResponse();
@@ -61,7 +54,7 @@ namespace FinoSabor.Services.Api.Controllers
             if (!await _emailConfigRepository.ExisteId(id)) return NotFound();
 
             var prioridade = await _emailConfigRepository.PegarEmailPorPrioridade(email.Prioridade);
-            if (prioridade != null && prioridade.id != id )
+            if (prioridade is not null && prioridade.id != id )
             {
                 NotificarErro("ja exite um email na prioridade " + email.Prioridade);
                 return CustomResponse();
@@ -90,14 +83,14 @@ namespace FinoSabor.Services.Api.Controllers
             try
             {
                 await _mailService.Test(email, nome);
-                return CustomResponse();
+                return CustomResponseAsync();
             }
             catch (Exception e)
             {
-                NotificarErro("erro ao enviar email, tente novamente mais tarde "+e);
-                return CustomResponse();
+                AddError("erro ao enviar email, tente novamente mais tarde " + e);
+                return CustomResponseAsync();
             }
-            
+
         }
     }
 }

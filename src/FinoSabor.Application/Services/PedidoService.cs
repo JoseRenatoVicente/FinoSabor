@@ -35,7 +35,7 @@ namespace FinoSabor.Application.Services
         public async Task<IEnumerable<PedidoViewModel>> ObterPedidosDoUsuario(Guid id_usuario)
         {
             return await (await _pedidoRepository.GetAllAsync())
-                .Where(c => c.IdUsuario == id_usuario)
+                .Where(c => c.UsuarioId == id_usuario)
                 .ProjectTo<PedidoViewModel>(_mapper.ConfigurationProvider)
                 .OrderByDescending(c => c.data_pedido).ToListAsync();
         }
@@ -80,14 +80,14 @@ namespace FinoSabor.Application.Services
 
             foreach (var item in pedido.Itens)
             {
-                var produto = await _produtoRepository.GetByIdAsync(item.IdProduto);
+                var produto = await _produtoRepository.GetByIdAsync(item.ProdutoId);
                 if (produto is null || produto.QuantidadeEstoque <= 0)
                 {
                     Notificar("Produto não pode ser adicionado");
                     return false;
                 }
 
-                item.IdPedido = pedido.Id;
+                item.PedidoId = pedido.Id;
                 item.ValorUnitario = produto.Valor;
 
 
@@ -101,7 +101,7 @@ namespace FinoSabor.Application.Services
         }
 
         public async Task<bool> Atualizar(Pedido pedido, Guid id_usuario)
-         {          
+        {
 
             if (!ExecutarValidacao(new PedidoValidation(), pedido)) return false;
 
@@ -112,7 +112,7 @@ namespace FinoSabor.Application.Services
 
 
             var pedidoBD = await _pedidoRepository.GetByIdAsync(pedido.Id);
-            if (pedidoBD is null || pedidoBD.IdUsuario != id_usuario)
+            if (pedidoBD is null || pedidoBD.UsuarioId != id_usuario)
             {
                 Notificar("Pedido não encontrado");
                 return false;
@@ -121,14 +121,14 @@ namespace FinoSabor.Application.Services
 
             foreach (var item in pedido.Itens)
             {
-                var produto = await _produtoRepository.GetByIdAsync(item.IdProduto);
+                var produto = await _produtoRepository.GetByIdAsync(item.ProdutoId);
                 if (produto is null || produto.QuantidadeEstoque <= 0 || item.Quantidade > produto.QuantidadeEstoque)
                 {
                     Notificar("Produto não pode ser adicionado");
                     return false;
                 }
 
-                item.IdPedido = pedido.Id;
+                item.PedidoId = pedido.Id;
                 item.ValorUnitario = produto.Valor;
 
 

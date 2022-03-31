@@ -7,24 +7,22 @@ namespace FinoSabor.Application.ViewModels
 {
     public class ProdutoViewModel : EntityBase
     {
-        public string nome { get; set; }
-        public decimal valor { get; set; }
-        public string descricao { get; set; }
-        public bool ativo { get; set; }
-        public int quantidade_estoque { get; set; }
-        public int quantidade_minima { get; set; }
-        public string slug { get; set; }
+        public string Nome { get; set; }
+        public decimal Valor { get; set; }
+        public string Descricao { get; set; }
+        public bool Ativo { get; set; }
+        public int QuantidadeEstoque { get; set; }
+        public int QuantidadeMinima { get; set; }
+        public string Slug { get; set; }
 
         [ScaffoldColumn(false)]
         public string NomeCategoria { get; set; }
-        public string imagem_principal { get; set; }
+        public string ImagemPrincipal { get; set; }
 
         public IEnumerable<ImagemViewModel> Imagem { get; set; }
 
 
         //Banco de dados
-        public Guid id_categoria { get; set; }
-
-
+        public Guid CategoriaId { get; set; }
     }
 }

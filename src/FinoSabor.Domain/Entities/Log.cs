@@ -5,8 +5,8 @@ namespace FinoSabor.Domain.Entities
 {
     public class Log : EntityBase
     {
-        public Guid? IdUsuario { get; set; }
-        public Guid IdEntidade { get; set; }
+        public Guid? UsuarioId { get; set; }
+        public Guid EntidadeId { get; set; }
         public string NomeEntidade { get; set; }
         public string Operacao { get; set; }
         public string ValoresAlterados { get; set; }

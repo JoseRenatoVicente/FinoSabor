@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using FinoSabor.Domain.Entities.Identity;
+﻿using FinoSabor.Domain.Entities.Identity;
 using FinoSabor.Infra.CrossCutting.Identity.Extensions;
-using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
 using FinoSabor.Infra.CrossCutting.Identity.ViewModels;
 using FinoSabor.Infra.Data;
 using FinoSabor.Infra.Data.Repository.Interfaces;
@@ -15,6 +7,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FinoSabor.Application.Services
 {
@@ -138,7 +137,7 @@ namespace FinoSabor.Application.Services
             var token = await _context.refresh_token.AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Token == refreshToken);
 
-            return token != null && token.ExpirationDate.ToLocalTime() > DateTime.Now
+            return token is not null && token.ExpirationDate.ToLocalTime() > DateTime.Now
                 ? token
                 : null;
         }
@@ -148,7 +147,7 @@ namespace FinoSabor.Application.Services
             var token = await _context.refresh_token.AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Token == refreshToken);
 
-            return token != null && token.ExpirationDate > DateTime.UtcNow
+            return token is not null && token.ExpirationDate > DateTime.UtcNow
                 ? token : null;
         }*/
     }

@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace FinoSabor.Infra.Data.Base.Repository
 {
-    public abstract class BaseRepository<TEntity> : 
-        IBaseRepository<TEntity> 
+    public abstract class BaseRepository<TEntity> :
+        IBaseRepository<TEntity>
         where TEntity : EntityBase, new()
     {
         protected readonly FinoSaborContext Db;

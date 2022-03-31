@@ -1,14 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FinoSabor.Application.Services.Interfaces;
+using FinoSabor.Domain.Entities.Identity;
+using FinoSabor.Infra.CrossCutting.Identity.ViewModels;
+using FinoSabor.Services.Api.Controllers.Base;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using FinoSabor.Application.Notificacoes.Interface;
-using FinoSabor.Application.Services.Interfaces;
-using FinoSabor.Domain.Entities.Identity;
-using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
-using FinoSabor.Infra.CrossCutting.Identity.ViewModels;
-using FinoSabor.Infra.Data.Repository.Interfaces;
-using FinoSabor.Services.Api.Controllers.Base;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
@@ -24,10 +21,9 @@ namespace FinoSabor.Services.Api.Controllers.Identity
 
         private readonly IEmailService _emailService;
 
-        public ContaController(INotificador notificador, IAspNetUser user,
-                              SignInManager<Usuario> signInManager,
+        public ContaController(SignInManager<Usuario> signInManager,
                               IEmailService emailService,
-        UserManager<Usuario> userManager, ILogger<AutenticaçãoController> logger) : base(notificador, user)
+        UserManager<Usuario> userManager, ILogger<AutenticacaoController> logger)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -46,14 +42,14 @@ namespace FinoSabor.Services.Api.Controllers.Identity
         [HttpPost("EsqueceuSenha")]
         public async Task<ActionResult> EsqueceuSenha(string email)
         {
-            if (!ModelState.IsValid) return CustomResponse(ModelState);
+            if (!ModelState.IsValid) return CustomResponseAsync(ModelState);
             var user = await _userManager.FindByEmailAsync(email);
 
-            if (user == null)
+            if (user is null)
             {
                 // Não revelar se o usuario nao existe ou nao esta confirmado
-                NotificarErro("O Usuário já tem um email enviado para confirmação");
-                return CustomResponse();
+                AddError("O Usuário já tem um email enviado para confirmação");
+                return CustomResponseAsync();
             }
 
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -74,7 +70,7 @@ namespace FinoSabor.Services.Api.Controllers.Identity
         [HttpPost("ResetSenha")]
         public async Task<ActionResult> ResetSenha(ResetPasswordViewModel resetPassword)
         {
-            if (!ModelState.IsValid) return CustomResponse(ModelState);
+            if (!ModelState.IsValid) return CustomResponseAsync(ModelState);
 
             var user = await _userManager.FindByIdAsync(resetPassword.UserId);
             var result = await _userManager.ResetPasswordAsync(user, resetPassword.Token.Replace(" ", "+"), resetPassword.Password);
@@ -84,10 +80,10 @@ namespace FinoSabor.Services.Api.Controllers.Identity
             }
             foreach (var error in result.Errors)
             {
-                NotificarErro(error.Description);
+                AddError(error.Description);
             }
 
-            return CustomResponse();
+            return CustomResponseAsync();
 
         }
 
@@ -103,13 +99,13 @@ namespace FinoSabor.Services.Api.Controllers.Identity
         [HttpPost("ConfirmarEmail")]
         public async Task<ActionResult> ConfirmarEmail([Required] Guid userId, [Required] string code)
         {
-            if (!ModelState.IsValid) return CustomResponse(ModelState);
+            if (!ModelState.IsValid) return CustomResponseAsync(ModelState);
 
             var result = await _userManager.ConfirmEmailAsync(new Usuario { Id = userId }, code);
 
-            if (!result.Succeeded) NotificarErro("Link expirado");
+            if (!result.Succeeded) AddError("Link expirado");
 
-            return CustomResponse();
+            return CustomResponseAsync();
         }
 
 

@@ -1,7 +1,6 @@
-﻿using FluentValidation;
-using FinoSabor.Domain.Entities;
-using FinoSabor.Domain.Entities.Enums;
+﻿using FinoSabor.Domain.Entities;
 using FinoSabor.Domain.Validations.cnpjs;
+using FluentValidation;
 
 namespace FinoSabor.Domain.Validations
 {

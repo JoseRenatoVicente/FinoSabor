@@ -1,59 +1,59 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using FinoSabor.Application.Notificacoes.Interface;
+using FinoSabor.Application.Categorias.Commands;
+using FinoSabor.Application.Categorias.Queries;
 using FinoSabor.Application.Services.Interfaces;
 using FinoSabor.Application.ViewModels;
 using FinoSabor.Domain.Entities;
-using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
 using FinoSabor.Services.Api.Controllers.Base;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FinoSabor.Services.Api.Controllers.Colaborador
 {
-    [Authorize(Roles = "admin")]
+    [AllowAnonymous]
+    //[Authorize(Roles = "admin")]
     [Route("api/Admin/Categoria")]
     public class CategoriaAdminController : MainController
     {
-        private readonly ICategoriaService _categoriaService;
-        private readonly IMapper _mapper;
+        private readonly ICategoriaQueries _categoriaQueries;
+        private readonly IMediator _mediator;
 
-        public CategoriaAdminController(INotificador notificador, IAspNetUser appUser,
-                                   IMapper mapper,
-                                   ICategoriaService categoriaService) : base(notificador, appUser)
+        public CategoriaAdminController(ICategoriaQueries categoriaQueries, IMediator mediator)
         {
-            _mapper = mapper;
-            _categoriaService = categoriaService;
+            _categoriaQueries = categoriaQueries;
+            _mediator = mediator;
         }
 
         [HttpGet]
         public async Task<IEnumerable<Categoria>> ObterCategorias()
         {
-            return await _categoriaService.ObterCategorias();
+            return await _categoriaQueries.ObterCategorias();
         }
 
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<Categoria>> ObterPorId(Guid id)
         {
-            return await _categoriaService.ObterCategoriaPorId(id);
+            return await _categoriaQueries.ObterCategoriaPorId(id);
         }
 
         [HttpPost]
-        public async Task<ActionResult<CategoriaViewModel>> Adicionar(CategoriaViewModel categoriaViewModel)
+        public async Task<ActionResult<CategoriaViewModel>> Adicionar(AdicionarCategoriaCommand adicionarCategoriaCommand)
         {
-            return !ModelState.IsValid ? CustomResponse(ModelState) : CustomResponse(await _categoriaService.Adicionar(_mapper.Map<Categoria>(categoriaViewModel)));
+            return !ModelState.IsValid ? CustomResponseAsync(ModelState) : CustomResponseAsync(await _mediator.Send(adicionarCategoriaCommand));
         }
 
         [HttpPut]
-        public async Task<ActionResult<Categoria>> Atualizar(Categoria categoria)
+        public async Task<ActionResult<Categoria>> Atualizar(AtualizarCategoriaCommand atualizarCategoriaCommand)
         {
-            return !ModelState.IsValid ? CustomResponse(ModelState) : CustomResponse(await _categoriaService.Atualizar(categoria));
+            return !ModelState.IsValid ? CustomResponseAsync(ModelState) : CustomResponseAsync(await _mediator.Send(atualizarCategoriaCommand));
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<ActionResult<Categoria>> Excluir(Guid id)
+        public async Task<ActionResult<Categoria>> Excluir(RemoverCategoriaCommand removerCategoriaCommand)
         {
             /*
             if (!await _categoriaRepository.ExisteId(id)) return NotFound();
@@ -93,7 +93,7 @@ namespace FinoSabor.Services.Api.Controllers.Colaborador
 
             return CustomResponse();*/
 
-            return CustomResponse(await _categoriaService.Remover(id));
+            return CustomResponseAsync(await _mediator.Send(removerCategoriaCommand));
         }
 
     }

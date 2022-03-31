@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using FinoSabor.Domain.Entities;
+﻿using FinoSabor.Domain.Entities;
 using FinoSabor.Domain.Entities.Identity;
 using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
 using FinoSabor.Infra.Data.Mappings;
 using FinoSabor.Infra.Data.Mappings.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -61,12 +61,12 @@ namespace FinoSabor.Infra.Data
             modelBuilder.ApplyConfiguration(new ProdutoMap());
             modelBuilder.ApplyConfiguration(new LogMap());
             modelBuilder.ApplyConfiguration(new PedidoMap());
-            modelBuilder.ApplyConfiguration(new Itens_PedidoMap());
+            modelBuilder.ApplyConfiguration(new ItensPedidoMap());
             modelBuilder.ApplyConfiguration(new CompraMap());
-            modelBuilder.ApplyConfiguration(new Itens_CompraMap());
-            modelBuilder.ApplyConfiguration(new Imagem_ProdutoMap());
+            modelBuilder.ApplyConfiguration(new ItensCompraMap());
+            modelBuilder.ApplyConfiguration(new ImagemProdutoMap());
             modelBuilder.ApplyConfiguration(new FornecedorMap());
-            modelBuilder.ApplyConfiguration(new Endereco_FornecedorMap());
+            modelBuilder.ApplyConfiguration(new EnderecoFornecedorMap());
 
 
 

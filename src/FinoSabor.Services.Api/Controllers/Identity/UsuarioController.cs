@@ -1,21 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using FinoSabor.Domain.Entities.Identity;
+using FinoSabor.Domain.Helpers;
+using FinoSabor.Domain.ViewModels.Pessoa;
+using FinoSabor.Infra.Data.Repository.Interfaces;
+using FinoSabor.Services.Api.Controllers.Base;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using FinoSabor.Application.Notificacoes.Interface;
-using FinoSabor.Application.ViewModels;
-using FinoSabor.Domain.Entities.Identity;
-using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
-using FinoSabor.Services.Api.Controllers.Base;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using FinoSabor.Infra.Data.Repository.Interfaces;
-using FinoSabor.Domain.ViewModels.Pessoa;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using FinoSabor.Domain.Helpers;
 
 namespace FinoSabor.Services.Api.Controllers.Identity
 {
@@ -29,9 +24,8 @@ namespace FinoSabor.Services.Api.Controllers.Identity
 
         private readonly IMapper _mapper;
         public UsuarioController(IPessoaRepository pessoaRepository,
-            INotificador notificador, IAspNetUser appUser,
             IMapper mapper,
-                                 UserManager<Usuario> userManager) : base(notificador, appUser)
+            UserManager<Usuario> userManager)
         {
             _pessoaRepository = pessoaRepository;
             _mapper = mapper;

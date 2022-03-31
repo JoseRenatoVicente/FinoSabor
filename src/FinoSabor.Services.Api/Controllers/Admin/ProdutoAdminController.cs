@@ -1,22 +1,24 @@
-﻿using AutoMapper;
-using DinkToPdf;
+﻿using DinkToPdf;
+using FinoSabor.Application.Imagem.Commands;
+using FinoSabor.Application.Produtos.Commands.AdicionarProduto;
+using FinoSabor.Application.Produtos.Commands.AtualizarProduto;
+using FinoSabor.Application.Produtos.Commands.RemoverProduto;
+using FinoSabor.Application.Produtos.Queries;
+using FinoSabor.Application.Relatorio;
+using FinoSabor.Application.ViewModels;
+using FinoSabor.Domain.Entities.Identity;
+using FinoSabor.Domain.Helpers;
+using FinoSabor.Infra.Data.Repository.Interfaces;
+using FinoSabor.Services.Api.Controllers.Base;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using FinoSabor.Application.Notificacoes.Interface;
-using FinoSabor.Application.Relatorio;
-using FinoSabor.Application.Services.Interfaces;
-using FinoSabor.Application.ViewModels;
-using FinoSabor.Domain.Entities;
-using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
-using FinoSabor.Infra.Data.Repository.Interfaces;
-using FinoSabor.Services.Api.Controllers.Base;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using FinoSabor.Domain.Helpers;
 
 namespace FinoSabor.Services.Api.Controllers.Colaborador
 {
@@ -24,104 +26,94 @@ namespace FinoSabor.Services.Api.Controllers.Colaborador
     [Route("api/Admin/Produto")]
     public class ProdutoAdminController : MainController
     {
+        private readonly IMediator _mediator;
+        private readonly IProdutoQueries _produtoQueries;
         private readonly IProdutoRepository _produtoRepository;
-        private readonly IProdutoService _produtoService;
-        private readonly IMapper _mapper;
         private readonly IRelatorioService _relatorioService;
 
-
-        public ProdutoAdminController(INotificador notificador,
-                                  IProdutoRepository produtoRepository,
-                                  IProdutoService produtoService,
-                                  IRelatorioService relatorioService,
-                                  IMapper mapper,
-                                  IAspNetUser user) : base(notificador, user)
+        public ProdutoAdminController(IMediator mediator, IProdutoQueries produtoQueries, IRelatorioService relatorioService, IProdutoRepository produtoRepository)
         {
+            _mediator = mediator;
+            _produtoQueries = produtoQueries;
             _produtoRepository = produtoRepository;
-            _produtoService = produtoService;
-            _mapper = mapper;
             _relatorioService = relatorioService;
         }
-
 
         /// <summary>
         /// Retorna todos os produtos
         /// </summary>
         /// <returns></returns>
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProdutoViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-   /*     [HttpGet]
-        public async Task<IEnumerable<ProdutoViewModel>> ObterTodos()
-        {
-            return await _produtoService.ObterProdutos();
-        }
-   */
         [HttpGet]
         public async Task<PagedList<ProdutoViewModel>> ObterTodos(int PagNumero = 1, int PagRegistro = 10, string busca = null)
         {
-            return await _produtoService.ObterProdutos(PagNumero, PagRegistro, busca);
+            return await _produtoQueries.ObterProdutos(PagNumero, PagRegistro, busca);
         }
 
         /// <summary>
-        /// Retrieves a specific product by unique id
+        /// Retorna um produto específico através de seu Id que é único
         /// </summary>
-        /// <remarks>Awesomeness!</remarks>
-        /// <param name="id" example="123">The product id</param>
-        /// <response code="200">Product created</response>
-        /// <response code="400">Product has missing/invalid values</response>
-        /// <response code="500">Oops! Can't create your product right now</response>
+        /// <remarks>Retorna um produto específico através de seu Id que é único</remarks>
+        /// <param name="id" example="3fa85f64-5717-4562-b3fc-2c963f66afa6">The product id</param>
+        /// <response code="200">Sucesso</response>
+        /// <response code="400">O produto tem valores ausentes/inválidos</response>
+        /// <response code="500">Erro ao retornar produto</response>
 
         [HttpGet("{id:guid}")]
-        [ProducesResponseType(typeof(ProdutoViewModel), 200)]
+        [ProducesResponseType(typeof(ProdutoViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
         [ProducesResponseType(500)]
         public async Task<ActionResult<ProdutoViewModel>> ObterPorId(Guid id)
         {
-            return await _produtoService.ObterProdutosPorId(id);
+            return await _produtoQueries.ObterProdutosPorId(id);
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProdutoInsertViewModel>> Adicionar(ProdutoInsertViewModel produtoViewModel)
+        public async Task<ActionResult> Adicionar(AdicionarProdutoCommand adicionarProdutoCommand)
         {
-            produtoViewModel.Id = Guid.NewGuid();
-            var produto = await _produtoService.Adicionar(_mapper.Map<Produto>(produtoViewModel));
+
+            //Produto produto = await _mediator.Send(new ObterPorId(produtoViewModel.Id));
+            return CustomResponseAsync(await _mediator.Send(adicionarProdutoCommand));
+
+            /*var produto = await _produtoService.Adicionar(_mapper.Map<Produto>(produtoViewModel));
 
             if (produto)
             {
                 return Ok(produtoViewModel);
             }
-            return CustomResponse(produto);
+            return CustomResponse(produto);*/
         }
 
         [HttpPut]
-        public async Task<IActionResult> Atualizar(ProdutoInsertViewModel produtoViewModel)
+        public async Task<IActionResult> Atualizar(AtualizarProdutoCommand atualizarProdutoCommand)
         {
-            return !ModelState.IsValid ? CustomResponse(ModelState) : CustomResponse(await _produtoService.Atualizar(_mapper.Map<Produto>(produtoViewModel)));
+            return !ModelState.IsValid ? CustomResponseAsync(ModelState) : CustomResponseAsync(await _mediator.Send(atualizarProdutoCommand));
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<ActionResult<ProdutoViewModel>> Excluir(Guid id)
+        public async Task<ActionResult> Excluir(RemoverProdutoCommand removerProdutoCommand)
         {
-            return CustomResponse(await _produtoService.Remover(id));
+            return CustomResponseAsync(await _mediator.Send(removerProdutoCommand));
+        }
+        [HttpPost("uploadImage/{id:guid}")]
+        public async Task<ActionResult> AdicionarImagemProduto(Guid id, IFormFile file, bool imagemPrincipal = false)
+        {
+            return CustomResponseAsync(await _mediator.Send(new AdicionarImagemCommand(id, file, imagemPrincipal)));
         }
 
         [HttpPost("tornarImagemPrincipal/{caminhoImagem}")]
-        public async Task<ActionResult> AdicionarImagemProduto(string caminhoImagem)
+        public async Task<ActionResult> TornarImagemPrincipal(string caminhoImagem)
         {
-            return CustomResponse(await _produtoService.MudarImagemPrincipal(caminhoImagem));
+            return CustomResponseAsync(await _mediator.Send(new MudarImagemPrincipalCommand(caminhoImagem)));
         }
 
-        [HttpPost("uploadImage/{id:guid}")]
-        public async Task<ActionResult> AdicionarImagemProduto(Guid id, IFormFile file, bool ImagemPrincipal = false)
-        {
-            return CustomResponse(await _produtoService.AdicionarImagem(id, file, ImagemPrincipal));
-        }
 
         [HttpDelete("deleteImage{caminhoImagem}")]
         public async Task<ActionResult<ProdutoViewModel>> ExcluirImagem(string caminhoImagem)
         {
-            return CustomResponse(await _produtoService.RemoverImagem(caminhoImagem));
+            return CustomResponseAsync(await _mediator.Send(new RemoverImagemCommand(caminhoImagem)));
         }
 
         [HttpGet("relatorio")]
@@ -147,8 +139,8 @@ namespace FinoSabor.Services.Api.Controllers.Colaborador
             }
             catch (Exception exception)
             {
-                NotificarErro(exception +"");
-                return CustomResponse(); 
+                AddError(exception + "");
+                return CustomResponseAsync();
             }
         }
 

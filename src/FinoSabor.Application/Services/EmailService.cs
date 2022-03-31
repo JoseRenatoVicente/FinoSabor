@@ -109,7 +109,7 @@ namespace FinoSabor.Application.Services
             email.To.Add(MailboxAddress.Parse(ParaEmail));
             email.Subject = Titulo;
             var builder = new BodyBuilder();
-            /*if (mailRequest.Attachments != null)
+            /*if (mailRequest.Attachments is not null)
             {
                 byte[] fileBytes;
                 foreach (var file in mailRequest.Attachments)

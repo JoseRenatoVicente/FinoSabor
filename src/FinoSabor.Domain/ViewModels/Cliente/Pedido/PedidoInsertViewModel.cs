@@ -2,7 +2,6 @@
 using FinoSabor.Domain.Entities.Enums;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace FinoSabor.Domain.ViewModels.Cliente.Pedido
 {

@@ -1,7 +1,5 @@
-﻿using FinoSabor.Application.Notificacoes.Interface;
-using FinoSabor.Application.Services.Interfaces;
+﻿using FinoSabor.Application.Services.Interfaces;
 using FinoSabor.Domain.Helpers;
-using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
 using FinoSabor.Services.Api.Controllers.Base;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,10 +11,9 @@ namespace FinoSabor.Services.Api.Controllers
     //[EnableCors("AllowAllHeaders")]
     public class OperationsController : MainController
     {
-        IEmailService _emailService;
+        private readonly IEmailService _emailService;
 
-        public OperationsController(IEmailService emailService,
-            INotificador notificador, IAspNetUser appUser) : base(notificador, appUser)
+        public OperationsController(IEmailService emailService)
         {
             _emailService = emailService;
         }
@@ -49,12 +46,12 @@ namespace FinoSabor.Services.Api.Controllers
             try
             {
                 await _emailService.Test(email, nome);
-                return CustomResponse("Email enviado com sucesso");
+                return CustomResponseAsync("Email enviado com sucesso");
             }
             catch (Exception e)
             {
-                NotificarErro("erro ao enviar email, tente novamente mais tarde " + e);
-                return CustomResponse();
+                AddError("erro ao enviar email, tente novamente mais tarde " + e);
+                return CustomResponseAsync();
             }
 
         }

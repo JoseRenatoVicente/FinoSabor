@@ -6,14 +6,15 @@ namespace FinoSabor.Domain.Entities
 {
     public class ItensPedido : EntityBase
     {
+        [Column(TypeName = "decimal(18,2)")]
         public decimal ValorUnitario { get; set; }
         public int Quantidade { get; set; }
 
         [NotMapped] public decimal ValorItem { get; set; }
 
         //Banco de dados
-        public Guid IdProduto { get; set; }
-        public Guid IdPedido { get; set; }
+        public Guid ProdutoId { get; set; }
+        public Guid PedidoId { get; set; }
 
         //EF Relation
         public Produto Produto { get; set; }

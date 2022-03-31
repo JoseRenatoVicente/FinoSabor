@@ -8,7 +8,6 @@ using FinoSabor.Domain.Helpers;
 using FinoSabor.Domain.Validations;
 using FinoSabor.Infra.Data.Repository.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FinoSabor.Application.Services
@@ -29,7 +28,7 @@ namespace FinoSabor.Application.Services
             _enderecoRepository = enderecoRepository;
         }
 
-        public async Task<PagedList<FornecedorViewModel>> ObterFornecedores(int PagNumero, int PagRegistro, string busca= null)
+        public async Task<PagedList<FornecedorViewModel>> ObterFornecedores(int PagNumero, int PagRegistro, string busca = null)
         {
             return await _fornecedorRepository.PaginacaoAsync(PagNumero, PagRegistro, busca);
         }
@@ -55,13 +54,9 @@ namespace FinoSabor.Application.Services
                 return false;
             }
 
-           // fornecedor.id = Guid.NewGuid();
-            //fornecedor.Endereco.id = Guid.NewGuid();
-
             await _fornecedorRepository.AddAsync(fornecedor);
             return true;
         }
-
 
         public async Task<bool> Atualizar(Fornecedor fornecedor)
         {
@@ -90,8 +85,6 @@ namespace FinoSabor.Application.Services
             await _enderecoRepository.UpdateAsync(endereco);
             return true;
         }
-
-        
 
         private async Task<Fornecedor> ObterFornecedorProdutosEndereco(Guid id)
         {

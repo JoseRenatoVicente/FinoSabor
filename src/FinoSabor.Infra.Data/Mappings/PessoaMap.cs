@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FinoSabor.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using FinoSabor.Domain.Entities;
 
 namespace FinoSabor.Infra.Data.Mappings
 {

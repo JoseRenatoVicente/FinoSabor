@@ -1,7 +1,4 @@
 ﻿using FinoSabor.Domain.Entities.Base;
-using FinoSabor.Domain.Entities.Enums;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace FinoSabor.Application.ViewModels
 {

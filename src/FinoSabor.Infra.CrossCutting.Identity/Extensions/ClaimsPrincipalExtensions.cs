@@ -7,7 +7,7 @@ namespace FinoSabor.Infra.CrossCutting.Identity.Extensions
     {
         public static string GetUserId(this ClaimsPrincipal principal)
         {
-            if (principal == null)
+            if (principal is null)
             {
                 throw new ArgumentException(nameof(principal));
             }
@@ -18,7 +18,7 @@ namespace FinoSabor.Infra.CrossCutting.Identity.Extensions
 
         public static string GetUserEmail(this ClaimsPrincipal principal)
         {
-            if (principal == null)
+            if (principal is null)
             {
                 throw new ArgumentException(nameof(principal));
             }
@@ -29,7 +29,7 @@ namespace FinoSabor.Infra.CrossCutting.Identity.Extensions
 
         public static string GetUserToken(this ClaimsPrincipal principal)
         {
-            if (principal == null)
+            if (principal is null)
             {
                 throw new ArgumentException(nameof(principal));
             }
@@ -40,7 +40,7 @@ namespace FinoSabor.Infra.CrossCutting.Identity.Extensions
 
         public static string GetUserRefreshToken(this ClaimsPrincipal principal)
         {
-            if (principal == null)
+            if (principal is null)
             {
                 throw new ArgumentException(nameof(principal));
             }

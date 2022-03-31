@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO.Compression;
+using System.Text.Json.Serialization;
 
 namespace FinoSabor.Services.Api.Configurations
 {
@@ -24,7 +25,7 @@ namespace FinoSabor.Services.Api.Configurations
 
                 .AddJsonOptions(options =>
                 {
-                    options.JsonSerializerOptions.IgnoreNullValues = true;
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                 });
 
             // Configura o modo de compressão

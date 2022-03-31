@@ -12,13 +12,13 @@
         </member>
         <member name="M:FinoSabor.Services.Api.Controllers.Colaborador.ProdutoAdminController.ObterPorId(System.Guid)">
             <summary>
-            Retrieves a specific product by unique id
+            Retorna um produto específico através de seu Id que é único
             </summary>
-            <remarks>Awesomeness!</remarks>
-            <param name="id" example="123">The product id</param>
-            <response code="200">Product created</response>
-            <response code="400">Product has missing/invalid values</response>
-            <response code="500">Oops! Can't create your product right now</response>
+            <remarks>Retorna um produto específico através de seu Id que é único</remarks>
+            <param name="id" example="3fa85f64-5717-4562-b3fc-2c963f66afa6">The product id</param>
+            <response code="200">Sucesso</response>
+            <response code="400">O produto tem valores ausentes/inválidos</response>
+            <response code="500">Erro ao retornar produto</response>
         </member>
         <member name="M:FinoSabor.Services.Api.Controllers.Admin.CompraAdminController.ObterTodos">
             <summary>

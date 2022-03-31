@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30517.126
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Presentation", "1 - Presentation", "{A9579A2E-586D-44B4-8783-9428102F59A7}"
 EndProject
@@ -26,6 +26,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinoSabor.Infra.Data", "src\FinoSabor.Infra.Data\FinoSabor.Infra.Data.csproj", "{F16944B9-81B0-4AAB-900E-37CC998F63E9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinoSabor.Infra.CrossCutting.Identity", "src\FinoSabor.Infra.CrossCutting.Identity\FinoSabor.Infra.CrossCutting.Identity.csproj", "{E5DDD76F-B45F-4303-906A-FD36CA712323}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{E4140B07-6A4A-4BDD-A5E3-9D675719F176}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinoSabor.Domain.Core", "src\FinoSabor.Domain.Core\FinoSabor.Domain.Core.csproj", "{FF6CDF2E-74C7-4FA3-B0D0-B7C42C286260}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +57,14 @@ Global
 		{E5DDD76F-B45F-4303-906A-FD36CA712323}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5DDD76F-B45F-4303-906A-FD36CA712323}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5DDD76F-B45F-4303-906A-FD36CA712323}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4140B07-6A4A-4BDD-A5E3-9D675719F176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4140B07-6A4A-4BDD-A5E3-9D675719F176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4140B07-6A4A-4BDD-A5E3-9D675719F176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4140B07-6A4A-4BDD-A5E3-9D675719F176}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF6CDF2E-74C7-4FA3-B0D0-B7C42C286260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF6CDF2E-74C7-4FA3-B0D0-B7C42C286260}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF6CDF2E-74C7-4FA3-B0D0-B7C42C286260}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF6CDF2E-74C7-4FA3-B0D0-B7C42C286260}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +77,7 @@ Global
 		{206222F8-E9C0-4D99-B37C-B689071643CB} = {E7C84DD5-18BD-4EF0-8460-D831C842FDD4}
 		{F16944B9-81B0-4AAB-900E-37CC998F63E9} = {54C1608B-7799-4B40-AD1B-6BB9D01160E1}
 		{E5DDD76F-B45F-4303-906A-FD36CA712323} = {EBA305AC-178C-44D7-8FD2-1C38D27045F2}
+		{FF6CDF2E-74C7-4FA3-B0D0-B7C42C286260} = {DDCD99C4-AF1E-4A55-9745-4368F3FAC83A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44BB342A-042C-4CFD-9EBC-EE851DF431E7}

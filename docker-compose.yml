@@ -1,0 +1,8 @@
+version: '3.9'
+
+services:
+  finosabor.services.api:
+    image: ${DOCKER_REGISTRY-}finosaborservicesapi
+    build:
+      context: .
+      dockerfile: src/FinoSabor.Services.Api/Dockerfile

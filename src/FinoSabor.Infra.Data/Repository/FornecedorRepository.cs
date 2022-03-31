@@ -1,16 +1,14 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
+using Dapper;
 using FinoSabor.Application.ViewModels;
-using FinoSabor.Application.ViewModels.Cliente;
 using FinoSabor.Domain.Entities;
 using FinoSabor.Domain.Helpers;
 using FinoSabor.Infra.Data.Base.Repository;
 using FinoSabor.Infra.Data.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Dapper;
 
 namespace FinoSabor.Infra.Data.Repository
 {

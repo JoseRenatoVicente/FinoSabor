@@ -1,15 +1,9 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using FinoSabor.Application.Notificacoes.Interface;
-using FinoSabor.Application.Services.Interfaces;
+﻿using FinoSabor.Application.Services.Interfaces;
 using FinoSabor.Application.ViewModels.Cliente;
-using FinoSabor.Domain.Entities;
-using FinoSabor.Domain.ViewModels.Frete;
-using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
 using FinoSabor.Infra.Data.Repository.Interfaces;
 using FinoSabor.Services.Api.Controllers.Base;
-using System;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,20 +13,12 @@ namespace FinoSabor.Services.Api.Controllers.Cliente
     [Route("api/[controller]")]
     public class ProdutoController : MainController
     {
-        private readonly IProdutoService _produtoService;
         private readonly IProdutoRepository _produtoRepository;
-        private readonly IMapper _mapper;
 
-        public ProdutoController(INotificador notificador, IAspNetUser appUser,
-                                 IProdutoRepository produtoRepository,
-                                 IProdutoService produtoService,
-                                 IMapper mapper) : base(notificador, appUser)
+        public ProdutoController(IProdutoRepository produtoRepository)
         {
             _produtoRepository = produtoRepository;
-            _produtoService = produtoService;
-            _mapper = mapper;
         }
-
 
         [HttpGet]
         public async Task<IEnumerable<ProdutoClienteObterTodosViewModel>> ObterTodos()
@@ -50,7 +36,6 @@ namespace FinoSabor.Services.Api.Controllers.Cliente
         public async Task<ActionResult<ProdutoClienteViewModel>> ObterPorId(string slug)
         {
             return await _produtoRepository.ObterProdutoPorSlug(slug);
-
         }
 
 

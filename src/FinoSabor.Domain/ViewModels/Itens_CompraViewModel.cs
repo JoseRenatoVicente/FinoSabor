@@ -1,5 +1,4 @@
-﻿using FinoSabor.Application.ViewModels.Cliente;
-using FinoSabor.Domain.Entities.Base;
+﻿using FinoSabor.Domain.Entities.Base;
 using System;
 
 namespace FinoSabor.Domain.ViewModels
@@ -14,6 +13,6 @@ namespace FinoSabor.Domain.ViewModels
         //Banco de dados
         public Guid id_produto { get; set; }
 
-        public string nomeProduto{ get; set; }
+        public string nomeProduto { get; set; }
     }
 }

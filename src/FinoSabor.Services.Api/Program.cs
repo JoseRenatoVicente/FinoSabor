@@ -3,7 +3,6 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
 using System.IO;
-using System.Security.Authentication;
 
 namespace FinoSabor.Services.Api
 {

@@ -19,10 +19,10 @@ namespace FinoSabor.Services.Api.Configurations
             CreateMap<ProdutoViewModel, Produto>().ReverseMap();
             CreateMap<CategoriaViewModel, Categoria>().ReverseMap();
 
-            
+
             CreateMap<ImagemViewModel, ImagemProduto>().ReverseMap();
 
-            
+
 
             CreateMap<Compra, CompraViewModel>()
                 .ForMember(dest => dest.nomeFornecedor, opt => opt.MapFrom(src => src.Fornecedor.Nome))
@@ -72,13 +72,13 @@ namespace FinoSabor.Services.Api.Configurations
             CreateMap<ProdutoInsertViewModel, Produto>().ReverseMap();
 
             CreateMap<Usuario, UsuarioViewModel>()
-                .ForMember(dest => dest.cpf, opt => opt.MapFrom(src => src.Pessoa.Cpf))
+                .ForMember(dest => dest.cpf, opt => opt.MapFrom(src => src.Pessoa.CPF))
                 .ForMember(dest => dest.data_cadastro, opt => opt.MapFrom(src => src.Pessoa.DataCadastro))
                 .ForMember(dest => dest.data_nascimento, opt => opt.MapFrom(src => src.Pessoa.DataNascimento));
 
             CreateMap<ProdutoClienteObterTodosViewModel, Produto>().ReverseMap();
 
-           
+
 
 
         }

@@ -1,10 +1,12 @@
+using FinoSabor.Application.Produtos.Commands.AdicionarProduto;
+using FinoSabor.Infra.Data;
+using FinoSabor.Services.Api.Configurations;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using FinoSabor.Infra.Data;
-using FinoSabor.Services.Api.Configurations;
 
 namespace FinoSabor.Services.Api
 {
@@ -36,6 +38,9 @@ namespace FinoSabor.Services.Api
 
             // AutoMapper Settings
             services.AddAutoMapper(typeof(Startup));
+
+            // We only need to register ONE command from the library and MediatR will resolve the rest
+            services.AddMediatR(typeof(AdicionarProdutoCommand));
 
             // Addinge Health Check
             //services.AddHealthChecks();

@@ -12,16 +12,16 @@ namespace FinoSabor.Domain.Entities
 
         }
 
-        public ImagemProduto(string caminho, Guid idProduto)
+        public ImagemProduto(string caminho, Guid produtoId)
         {
             Caminho = caminho;
-            IdProduto = idProduto;
+            ProdutoId = produtoId;
         }
 
         public string Caminho { get; set; }
 
         //Banco de dados
-        public Guid IdProduto { get; set; }
+        public Guid ProdutoId { get; set; }
 
         //EF Relation
         public Produto Produto { get; set; }

@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
+﻿using FinoSabor.Application.Categorias.Queries;
+using FinoSabor.Application.Fornecedores.Queries;
 using FinoSabor.Application.Notificacoes;
 using FinoSabor.Application.Notificacoes.Interface;
+using FinoSabor.Application.Produtos.Queries;
 using FinoSabor.Application.Relatorio;
 using FinoSabor.Application.Services;
 using FinoSabor.Application.Services.Interfaces;
@@ -10,6 +11,8 @@ using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
 using FinoSabor.Infra.Data;
 using FinoSabor.Infra.Data.Repository;
 using FinoSabor.Infra.Data.Repository.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace FinoSabor.Services.Api.Configurations
@@ -20,14 +23,16 @@ namespace FinoSabor.Services.Api.Configurations
         {
             if (services is null) throw new ArgumentNullException(nameof(services));
 
+            //queries
+            services.AddScoped<IProdutoQueries, ProdutoQueries>();
+            services.AddScoped<ICategoriaQueries, CategoriaQueries>();
+            services.AddScoped<IFornecedorQueries, FornecedorQueries>();
+
             //services
             services.AddScoped<IFornecedorService, FornecedorService>();
-            services.AddScoped<IProdutoService, ProdutoService>();
-            services.AddScoped<ICategoriaService, CategoriaService>();
             services.AddScoped<IRelatorioService, RelatorioService>();
             services.AddScoped<ICompraService, CompraService>();
             services.AddScoped<IPedidoService, PedidoService>();
-            services.AddScoped<IPerfilService, PerfilService>();
 
             //Email            
             services.AddTransient<IEmailService, EmailService>();
@@ -38,9 +43,9 @@ namespace FinoSabor.Services.Api.Configurations
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IFornecedorRepository, FornecedorRepository>();
             services.AddScoped<IPedidoRepository, PedidoRepository>();
-            services.AddScoped<IEnderecoRepository, Endereco_FornecedorRepository>();
+            services.AddScoped<IEnderecoRepository, EnderecoFornecedorRepository>();
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
-            services.AddScoped<IItens_PedidoRepository, Itens_PedidoRepository>();
+            services.AddScoped<IItens_PedidoRepository, ItensPedidoRepository>();
             services.AddScoped<ICompraRepository, CompraRepository>();
             services.AddScoped<IPessoaRepository, PessoaRepository>();
 

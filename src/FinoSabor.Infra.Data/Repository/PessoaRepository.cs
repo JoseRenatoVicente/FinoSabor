@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using FinoSabor.Application.ViewModels;
 using FinoSabor.Domain.Entities;
 using FinoSabor.Domain.Helpers;
 using FinoSabor.Domain.ViewModels.Pessoa;
@@ -7,7 +6,6 @@ using FinoSabor.Infra.Data.Base.Repository;
 using FinoSabor.Infra.Data.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,17 +19,17 @@ namespace FinoSabor.Infra.Data.Repository
 
         public async Task<PagedList<PessoaViewModel>> PaginacaoGetAllAdminAsync(int PagNumero, int PagRegistro, string busca = null)
         {
-            var sql = @$"SELECT pessoa.id, pessoa.Nome, pessoa.telefone, pessoa.cpf, pessoa.data_nascimento, pessoa.data_cadastro, usuario.Email
-                      FROM pessoa
-                      INNER JOIN usuario
-                      ON usuario.Id = pessoa.id_usuario
-                      INNER JOIN usuario_funcao
-                      ON usuario.Id = usuario_funcao.UserId 
+            var sql = @$"SELECT pessoa.Id, pessoa.Nome, pessoa.Telefone, pessoa.CPF, pessoa.DataNascimento, pessoa.DataCadastro, usuario.Email
+                      FROM Pessoa
+                      INNER JOIN Usuario
+                      ON Usuario.Id = Pessoa.UsuarioId
+                      INNER JOIN UsuarioFuncao
+                      ON usuario.Id = UsuarioFuncao.UserId 
                       WHERE RoleId = '4EFE97B7-493D-4EAF-BA0B-7407C76C6803' AND (@Nome IS NULL OR Nome LIKE '%' + @Nome + '%') 
                       ORDER BY [Nome] 
                       OFFSET {PagRegistro * (PagNumero - 1)} ROWS 
                       FETCH NEXT {PagRegistro} ROWS ONLY 
-                      SELECT COUNT(Id) FROM pessoa 
+                      SELECT COUNT(Id) FROM Pessoa 
                       WHERE (@Nome IS NULL OR Nome LIKE '%' + @Nome + '%')";
 
             var multi = await Db.Database.GetDbConnection()

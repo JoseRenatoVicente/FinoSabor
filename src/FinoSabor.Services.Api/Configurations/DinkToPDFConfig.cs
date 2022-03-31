@@ -1,6 +1,5 @@
 ﻿using DinkToPdf;
 using DinkToPdf.Contracts;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;

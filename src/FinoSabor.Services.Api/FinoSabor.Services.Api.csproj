@@ -4,6 +4,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>5ef9b6c5-c2a3-4c3f-9340-7a817cee39a8</UserSecretsId>
     <Nullable>warnings</Nullable>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -53,13 +56,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
   </ItemGroup>
 
   <ItemGroup>

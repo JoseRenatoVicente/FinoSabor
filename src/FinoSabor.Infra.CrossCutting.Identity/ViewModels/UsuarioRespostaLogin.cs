@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FinoSabor.Infra.CrossCutting.Identity.ViewModels
+﻿namespace FinoSabor.Infra.CrossCutting.Identity.ViewModels
 {
     public class UsuarioRespostaLogin
     {

@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using FinoSabor.Domain.Entities.Identity;
+using FinoSabor.Infra.CrossCutting.Identity.Extensions;
+using FinoSabor.Infra.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using FinoSabor.Domain.Entities.Identity;
-using FinoSabor.Infra.CrossCutting.Identity.Extensions;
-using FinoSabor.Infra.Data;
 using System;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace FinoSabor.Services.Api.Configurations
 {
@@ -73,7 +72,7 @@ namespace FinoSabor.Services.Api.Configurations
                     builder.RequireRole("usuario");
                 });
             });*/
-        }       
+        }
     }
-    
+
 }
