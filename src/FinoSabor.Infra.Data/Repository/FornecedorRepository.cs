@@ -24,7 +24,7 @@ namespace FinoSabor.Infra.Data.Repository
 
         public async Task<Fornecedor> ObterFornecedorEndereco(Guid id)
         {
-            return await Db.Fornecedores.AsNoTracking()
+            return await Db.Fornecedore.AsNoTracking()
                 .Include(c => c.Endereco)
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
@@ -57,7 +57,7 @@ namespace FinoSabor.Infra.Data.Repository
 
         public async Task<Fornecedor> ObterFornecedorProdutosEndereco(Guid id)
         {
-            return await Db.Fornecedores.AsNoTracking()
+            return await Db.Fornecedore.AsNoTracking()
                 .Include(c => c.Endereco)
                 .FirstOrDefaultAsync(c => c.Id == id);
         }

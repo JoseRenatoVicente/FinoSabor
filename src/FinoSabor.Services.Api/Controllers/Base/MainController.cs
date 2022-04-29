@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FinoSabor.Services.Api.Controllers.Base
 {
@@ -12,9 +13,9 @@ namespace FinoSabor.Services.Api.Controllers.Base
     {
         protected readonly ICollection<string> _errors = new List<string>();
 
-        protected ActionResult CustomResponseAsync(object result = null)
+        protected async Task<ActionResult> CustomResponseAsync(object result = null)
         {
-            if (IsOperationValid())
+            if (await IsOperationValid())
             {
                 return Ok(result);
             }
@@ -26,25 +27,25 @@ namespace FinoSabor.Services.Api.Controllers.Base
             });
         }
 
-        protected ActionResult CustomResponseAsync(ModelStateDictionary modelState)
+        protected async Task<ActionResult> CustomResponseAsync(ModelStateDictionary modelState)
         {
             var erros = modelState.Values.SelectMany(e => e.Errors);
             foreach (var erro in erros)
             {
-                AddError(erro.ErrorMessage);
+                await AddError(erro.ErrorMessage);
             }
 
-            return CustomResponseAsync();
+            return await CustomResponseAsync();
         }
 
-        protected ActionResult CustomResponseAsync(ValidationResult validationResult)
+        protected async Task<ActionResult> CustomResponseAsync(ValidationResult validationResult)
         {
             foreach (var erro in validationResult.Errors)
             {
-                AddError(erro.ErrorMessage);
+                await AddError(erro.ErrorMessage);
             }
 
-            return CustomResponseAsync();
+            return await CustomResponseAsync();
         }
 
         protected ActionResult CustomResponseAsync(BaseResponse baseResponse)
@@ -61,14 +62,14 @@ namespace FinoSabor.Services.Api.Controllers.Base
             });
         }
 
-        protected bool IsOperationValid()
+        protected Task<bool> IsOperationValid()
         {
-            return !_errors.Any();
+            return Task.Run(() => !_errors.Any());
         }
 
-        protected void AddError(string erro)
+        protected Task AddError(string erro)
         {
-            _errors.Add(erro);
+            return Task.Run(() => _errors.Add(erro));
         }
 
         protected void ClearErrors()

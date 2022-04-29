@@ -8,6 +8,7 @@ using FinoSabor.Application.Relatorio;
 using FinoSabor.Application.ViewModels;
 using FinoSabor.Domain.Entities.Identity;
 using FinoSabor.Domain.Helpers;
+using FinoSabor.Domain.Mediator;
 using FinoSabor.Infra.Data.Repository.Interfaces;
 using FinoSabor.Services.Api.Controllers.Base;
 using MediatR;
@@ -26,12 +27,12 @@ namespace FinoSabor.Services.Api.Controllers.Colaborador
     [Route("api/Admin/Produto")]
     public class ProdutoAdminController : MainController
     {
-        private readonly IMediator _mediator;
+        private readonly IMediatorHandler _mediator;
         private readonly IProdutoQueries _produtoQueries;
         private readonly IProdutoRepository _produtoRepository;
         private readonly IRelatorioService _relatorioService;
 
-        public ProdutoAdminController(IMediator mediator, IProdutoQueries produtoQueries, IRelatorioService relatorioService, IProdutoRepository produtoRepository)
+        public ProdutoAdminController(IMediatorHandler mediator, IProdutoQueries produtoQueries, IRelatorioService relatorioService, IProdutoRepository produtoRepository)
         {
             _mediator = mediator;
             _produtoQueries = produtoQueries;

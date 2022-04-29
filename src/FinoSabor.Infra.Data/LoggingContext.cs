@@ -62,7 +62,7 @@ namespace FinoSabor.Infra.Data
                         ValoresAlterados = EntityDiff,
                     };
 
-                    context.Logs.Add(log);
+                    context.Log.Add(log);
                 }
 
             }

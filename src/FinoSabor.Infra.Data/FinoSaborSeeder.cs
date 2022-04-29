@@ -23,9 +23,9 @@ namespace FinoSabor.Infra.Data
         public async void Seed()
         {
 
-            if (_context.Produtos.Any() ||
-                _context.Categorias.Any() ||
-                _context.Fornecedores.Any())
+            if (_context.Produto.Any() ||
+                _context.Categoria.Any() ||
+                _context.Fornecedore.Any())
             {
                 return;
             }
@@ -337,18 +337,18 @@ namespace FinoSabor.Infra.Data
             await _context.Set<Funcao>().AddRangeAsync(funcao1, funcao2, funcao3);
             await _context.Set<Usuario>().AddRangeAsync(usuario1, usuario2);
             await _context.Set<UsuarioFuncao>().AddRangeAsync(usuarioFuncao1, usuarioFuncao2);
-            await _context.Pessoas.AddRangeAsync(pessoa1, pessoa2);
+            await _context.Pessoa.AddRangeAsync(pessoa1, pessoa2);
 
-            await _context.Fornecedores.AddRangeAsync(f1, f2);
-            await _context.Categorias.AddRangeAsync(CategoriaBebidas, CategoriaDoces, CategoriaSalgados);
-            await _context.EnderecoFornecedores.AddRangeAsync(e1, e2);
-            await _context.Produtos.AddRangeAsync(ProdutoBauru, ProdutoBolo, ProdutoBombaChocolate, ProdutoCocaCola, ProdutoCoxinha, ProdutoEsfirra, ProdutoFanta, ProdutoGuarana, ProdutoPudim);
+            await _context.Fornecedore.AddRangeAsync(f1, f2);
+            await _context.Categoria.AddRangeAsync(CategoriaBebidas, CategoriaDoces, CategoriaSalgados);
+            await _context.EnderecoFornecedore.AddRangeAsync(e1, e2);
+            await _context.Produto.AddRangeAsync(ProdutoBauru, ProdutoBolo, ProdutoBombaChocolate, ProdutoCocaCola, ProdutoCoxinha, ProdutoEsfirra, ProdutoFanta, ProdutoGuarana, ProdutoPudim);
 
-            await _context.Pedidos.AddRangeAsync(pedido1, pedido1);
-            await _context.ItensPedidos.AddRangeAsync(itens_Pedido1, itens_Pedido2);
+            await _context.Pedido.AddRangeAsync(pedido1, pedido1);
+            await _context.ItensPedido.AddRangeAsync(itens_Pedido1, itens_Pedido2);
 
-            await _context.Compras.AddRangeAsync(compra1);
-            await _context.ItensCompras.AddRangeAsync(itens_Compra1, itens_Compra2);
+            await _context.Compra.AddRangeAsync(compra1);
+            await _context.ItensCompra.AddRangeAsync(itens_Compra1, itens_Compra2);
 
             _context.SaveChanges();
 

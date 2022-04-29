@@ -2,6 +2,7 @@
 using FinoSabor.Domain.Core.Responses;
 using FinoSabor.Domain.Entities;
 using FinoSabor.Infra.Data.Repository.Interfaces;
+using FluentValidation.Results;
 using MediatR;
 using System;
 using System.IO;
@@ -11,9 +12,9 @@ using System.Threading.Tasks;
 namespace FinoSabor.Application.Imagem.Commands
 {
     public class ImagemCommandHandler: CommandHandler,
-        IRequestHandler<AdicionarImagemCommand, BaseResponse>,
-        IRequestHandler<MudarImagemPrincipalCommand, BaseResponse>,
-        IRequestHandler<RemoverImagemCommand, BaseResponse>
+        IRequestHandler<AdicionarImagemCommand, ValidationResult>,
+        IRequestHandler<MudarImagemPrincipalCommand, ValidationResult>,
+        IRequestHandler<RemoverImagemCommand, ValidationResult>
     {
         private readonly IProdutoRepository _produtoRepository;
         private readonly IImagemRepository _imagemRepository;
@@ -25,12 +26,12 @@ namespace FinoSabor.Application.Imagem.Commands
             _imagemRepository = imagemRepository;
         }
 
-        public async Task<BaseResponse> Handle(AdicionarImagemCommand request, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(AdicionarImagemCommand request, CancellationToken cancellationToken)
         {
             if (request.File is null || request.File.Length == 0)
             {
                 AdicionarErro("Forneça uma imagem para este produto!");
-                return new BaseResponse(ValidationResult);
+                return ValidationResult;
             }
 
             var produto = await _produtoRepository.GetByIdAsync(request.ProdutoId);
@@ -38,7 +39,7 @@ namespace FinoSabor.Application.Imagem.Commands
             if (!await _produtoRepository.Existe(c => c.Id == request.ProdutoId))
             {
                 AdicionarErro("Produto não encontrado");
-                return new BaseResponse(ValidationResult);
+                return ValidationResult;
             }
 
 
@@ -63,16 +64,16 @@ namespace FinoSabor.Application.Imagem.Commands
                 await _imagemRepository.AddAsync(new ImagemProduto { Caminho = nome, ProdutoId = request.ProdutoId });
             }
 
-            return new BaseResponse();
+            return ValidationResult;
         }
-        public async Task<BaseResponse> Handle(MudarImagemPrincipalCommand request, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(MudarImagemPrincipalCommand request, CancellationToken cancellationToken)
         {
             var imagem = await _imagemRepository.ObterPor(c => c.Caminho == request.CaminhoImagem);
 
             if (imagem is null)
             {
                 AdicionarErro("Imagem não encontrada");
-                return new BaseResponse(ValidationResult);
+                return ValidationResult;
             }
 
             var produto = await _produtoRepository.GetByIdAsync(imagem.ProdutoId);
@@ -86,11 +87,11 @@ namespace FinoSabor.Application.Imagem.Commands
             await _produtoRepository.UpdateAsync(produto);
             await _imagemRepository.DeleteAsync(imagem.Id);
 
-            return new BaseResponse();
+            return ValidationResult;
         }
 
 
-        public async Task<BaseResponse> Handle(RemoverImagemCommand request, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(RemoverImagemCommand request, CancellationToken cancellationToken)
         {
             var imagem = await _imagemRepository.ObterPor(c => c.Caminho == request.CaminhoImagem);
 
@@ -113,7 +114,7 @@ namespace FinoSabor.Application.Imagem.Commands
             else
             {
                 AdicionarErro("Imagem não encontrada");
-                return new BaseResponse(ValidationResult);
+                return ValidationResult;
             }
 
 
@@ -128,7 +129,7 @@ namespace FinoSabor.Application.Imagem.Commands
                 File.Delete(file);
             }
 
-            return new BaseResponse();
+            return ValidationResult;
         }
     }
 }

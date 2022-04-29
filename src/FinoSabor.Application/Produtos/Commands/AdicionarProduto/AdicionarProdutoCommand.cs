@@ -1,10 +1,11 @@
 ﻿using FinoSabor.Domain.Core.Responses;
+using FinoSabor.Domain.Messages;
 using MediatR;
 using System;
 
 namespace FinoSabor.Application.Produtos.Commands.AdicionarProduto
 {
-    public class AdicionarProdutoCommand : IRequest<BaseResponse>
+    public class AdicionarProdutoCommand : Command
     {
         public string Nome { get; set; }
         public decimal Valor { get; set; }

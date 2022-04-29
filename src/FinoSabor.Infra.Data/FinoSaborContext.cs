@@ -34,22 +34,22 @@ namespace FinoSabor.Infra.Data
             base.OnConfiguring(optionsBuilder);
         }
 
-        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<Categoria> Categoria { get; set; }
         //public DbSet<EmailConfig> EmailConfigs { get; set; }
         //public DbSet<EmailModelo> EmailModelos { get; set; }
-        public DbSet<EnderecoFornecedor> EnderecoFornecedores { get; set; }
-        public DbSet<Fornecedor> Fornecedores { get; set; }
-        public DbSet<ImagemProduto> ImagemProdutos { get; set; }
-        public DbSet<Compra> Compras { get; set; }
-        public DbSet<ItensCompra> ItensCompras { get; set; }
-        public DbSet<Log> Logs { get; set; }
-        public DbSet<Pedido> Pedidos { get; set; }
-        public DbSet<ItensPedido> ItensPedidos { get; set; }
-        public DbSet<Pessoa> Pessoas { get; set; }
-        public DbSet<Produto> Produtos { get; set; }
+        public DbSet<EnderecoFornecedor> EnderecoFornecedore { get; set; }
+        public DbSet<Fornecedor> Fornecedore { get; set; }
+        public DbSet<ImagemProduto> ImagemProduto { get; set; }
+        public DbSet<Compra> Compra { get; set; }
+        public DbSet<ItensCompra> ItensCompra { get; set; }
+        public DbSet<Log> Log { get; set; }
+        public DbSet<Pedido> Pedido { get; set; }
+        public DbSet<ItensPedido> ItensPedido { get; set; }
+        public DbSet<Pessoa> Pessoa { get; set; }
+        public DbSet<Produto> Produto { get; set; }
 
         //identity
-        public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<RefreshToken> RefreshToken { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -67,8 +67,6 @@ namespace FinoSabor.Infra.Data
             modelBuilder.ApplyConfiguration(new ImagemProdutoMap());
             modelBuilder.ApplyConfiguration(new FornecedorMap());
             modelBuilder.ApplyConfiguration(new EnderecoFornecedorMap());
-
-
 
             //identity
             modelBuilder.ApplyConfiguration(new UsuarioFuncaoMap());

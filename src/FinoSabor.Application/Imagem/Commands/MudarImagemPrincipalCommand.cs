@@ -1,4 +1,5 @@
 ﻿using FinoSabor.Domain.Core.Responses;
+using FinoSabor.Domain.Messages;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FinoSabor.Application.Imagem.Commands
 {
-    public class MudarImagemPrincipalCommand : IRequest<BaseResponse>
+    public class MudarImagemPrincipalCommand : Command
     {
         public MudarImagemPrincipalCommand(string caminhoImagem)
         {

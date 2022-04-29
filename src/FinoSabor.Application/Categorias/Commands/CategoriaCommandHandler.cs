@@ -24,7 +24,7 @@ namespace FinoSabor.Application.Categorias.Commands
         {
             Categoria categoria = new Categoria(request.Nome);
 
-            if (!ExecutarValidacao(new CategoriaValidation(), categoria)) return new BaseResponse(ValidationResult); ;
+            if (!ExecutarValidacao(new CategoriaValidation(), categoria)) return new BaseResponse(ValidationResult);
 
             if (await _categoriaRepository.Existe(c => c.Slug == categoria.Slug))
             {

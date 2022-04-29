@@ -6,6 +6,7 @@ using FinoSabor.Application.Produtos.Queries;
 using FinoSabor.Application.Relatorio;
 using FinoSabor.Application.Services;
 using FinoSabor.Application.Services.Interfaces;
+using FinoSabor.Domain.Mediator;
 using FinoSabor.Infra.CrossCutting.Identity.Extensions;
 using FinoSabor.Infra.CrossCutting.Identity.Extensions.Interfaces;
 using FinoSabor.Infra.Data;
@@ -59,6 +60,8 @@ namespace FinoSabor.Services.Api.Configurations
 
             //notification
             services.AddScoped<INotificador, Notificador>();
+
+            services.AddScoped<IMediatorHandler, MediatorHandler>();
 
         }
     }

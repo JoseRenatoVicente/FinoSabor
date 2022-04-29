@@ -1,4 +1,5 @@
 ﻿using FinoSabor.Domain.Core.Responses;
+using FinoSabor.Domain.Messages;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FinoSabor.Application.Imagem.Commands
 {
-    public class AdicionarImagemCommand : IRequest<BaseResponse>
+    public class AdicionarImagemCommand : Command
     {
         public AdicionarImagemCommand(Guid produtoId, IFormFile file, bool imagemPrincipal)
         {

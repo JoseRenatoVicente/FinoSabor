@@ -1,12 +1,14 @@
 ﻿using FinoSabor.Domain.Core.Responses;
 using FinoSabor.Domain.Entities.Base;
+using FinoSabor.Domain.Messages;
 using MediatR;
 using System;
 
 namespace FinoSabor.Application.Produtos.Commands.AtualizarProduto
 {
-    public class AtualizarProdutoCommand : EntityBase, IRequest<BaseResponse>
+    public class AtualizarProdutoCommand : Command
     {
+        public Guid Id { get; set; }
         public string Nome { get; set; }
         public decimal Valor { get; set; }
         public string Descricao { get; set; }

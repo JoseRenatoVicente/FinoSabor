@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Presentation", "1 - Presentation", "{A9579A2E-586D-44B4-8783-9428102F59A7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Services", "1 - Services", "{9F97FD57-A420-4C87-9C07-F1F61244E254}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Services", "2 - Services", "{9F97FD57-A420-4C87-9C07-F1F61244E254}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Application", "2 - Application", "{E7C84DD5-18BD-4EF0-8460-D831C842FDD4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Application", "3 - Application", "{E7C84DD5-18BD-4EF0-8460-D831C842FDD4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Domain", "3 - Domain", "{DDCD99C4-AF1E-4A55-9745-4368F3FAC83A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Domain", "4 - Domain", "{DDCD99C4-AF1E-4A55-9745-4368F3FAC83A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Infrastructure", "5 - Infrastructure", "{A8F6E6F7-4D30-4AE0-A1A6-3E748EABF58E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infrastructure", "4 - Infrastructure", "{A8F6E6F7-4D30-4AE0-A1A6-3E748EABF58E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.2 - CrossCutting", "5.2 - CrossCutting", "{EBA305AC-178C-44D7-8FD2-1C38D27045F2}"
 EndProject
@@ -29,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinoSabor.Infra.CrossCuttin
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{E4140B07-6A4A-4BDD-A5E3-9D675719F176}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinoSabor.Domain.Core", "src\FinoSabor.Domain.Core\FinoSabor.Domain.Core.csproj", "{FF6CDF2E-74C7-4FA3-B0D0-B7C42C286260}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinoSabor.Domain.Core", "src\FinoSabor.Domain.Core\FinoSabor.Domain.Core.csproj", "{FF6CDF2E-74C7-4FA3-B0D0-B7C42C286260}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 Tests", "5 Tests", "{C8FF0C69-E2C4-4235-B027-FE60BCC59BEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
